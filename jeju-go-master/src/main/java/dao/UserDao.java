@@ -51,4 +51,8 @@ public class UserDao {
 	public void update(User user) {
 		sqlSession.getMapper(UserMapper.class).update(user);
 	}
+
+	public void deleterequest(User user) {
+		sqlSession.getMapper(UserMapper.class).deleterequest(user);
+	}
 }

@@ -29,4 +29,7 @@ public interface UserMapper {
 	
 	@Update("update member set phone=#{phone} where userid=#{userid}")
 	void update(User user);
+
+	@Update("update member set deleterequest='Y' where userid=#{userid}")
+	void deleterequest(User user);
 }

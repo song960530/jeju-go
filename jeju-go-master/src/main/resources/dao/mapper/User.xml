@@ -5,8 +5,8 @@
 <select id="list"  parameterType="map" resultType="User">
 		select * from member
 		<where>
-			<if test="delete != null">
-				and delete='Y'
+			<if test="deleterequest != null">
+				and deleterequest='Y'
 			</if>
 		</where>
 	</select>
