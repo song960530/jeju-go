@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -330,5 +331,25 @@ public class JejuService {
 
 	public void noticedelete(Board board) {
 		boarddao.noticedelete(board);
+	}
+	
+	public String MessageDigest(String password) {
+		byte[] hash = null;
+		String result = "";
+		MessageDigest md;
+		try {
+			md = MessageDigest.getInstance("SHA-256");
+			hash = md.digest(password.getBytes());
+			for (byte b : hash) {
+				result += String.format("%02X", b);
+			}
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public void DeleteRequest(User user) {
+		userdao.deleterequest(user);
 	}
 }

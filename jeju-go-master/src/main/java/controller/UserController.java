@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import exception.LogInException;
+
 @Controller
 @RequestMapping("user")
 public class UserController {
@@ -176,17 +178,6 @@ public class UserController {
 	public ModelAndView updatemypage( User user, BindingResult bindResult, HttpSession session) {
 			ModelAndView mav = new ModelAndView();
 			User loginUser = (User)session.getAttribute("loginUser");
-//			User dbuser = service.userSelect(user.getUserid());
-//			try {
-//				service.update(user);
-//				mav.setViewName("redirect:mypage.jeju?userid=" + user.getUserid());
-//				if(!loginUser.getUserid().equals("admin")) {
-//					session.setAttribute("loginUser", user);
-//				}
-//			}catch(Exception e) {
-//				e.printStackTrace();
-//				bindResult.reject("error.user.update");
-//			}
 			service.update(user);
 			System.out.println(user.getUserid());
 			mav.addObject("msg","정보 수정 완료");
@@ -194,4 +185,31 @@ public class UserController {
 			mav.setViewName("alert");
 			return mav;
 		}
+	
+	@PostMapping("withdrawal")
+	   public ModelAndView delete(User user, HttpSession session) {
+	      ModelAndView mav = new ModelAndView();
+	      User dbUser = (User)session.getAttribute("login");
+	      System.out.println(dbUser);
+		  String password = service.MessageDigest(user.getPassword());
+		  System.out.println(password);
+	      if(!dbUser.getPassword().equals(password)) {
+	         throw new LogInException("비밀번호가 틀립니다.","withdrawal.jeju?id=" + user.getUserid());
+	      }
+	      try {
+	         service.DeleteRequest(user);
+	         if (dbUser.getUserid().equals("admin")) {
+	            mav.setViewName("redirect:../admin/deletelist.jeju");
+	         } else if (!dbUser.getUserid().equals("admin")) {
+	            session.invalidate();
+	            mav.addObject("msg","탈퇴 신청되었습니다.");
+	            mav.addObject("url","main.jeju");
+	            mav.setViewName("alert");
+	         }
+	      } catch(Exception e) {
+	         e.printStackTrace();
+	         throw new LogInException("탈퇴실패", "delete.shop?id=" + dbUser.getUserid());
+	      }
+	      return mav;
+	   }
 }

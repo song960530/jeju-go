@@ -49,7 +49,7 @@ div.right {
 						onchange="allchkbox(this)"></th>
 				</tr>
 				<c:forEach items="${list}" var="user">
-				<c:if test="${!empty user.delete}">
+				<c:if test="${!empty user.deleterequest}">
 					<tr style="color: black;">
 						<td>${user.userid}</td>
 						<td>${user.username}</td>
