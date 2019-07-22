@@ -7,7 +7,16 @@ public class Room2 {
 	private String hname;
 	private String roomnum;
 	private String name;
+	private int max;
 	private List<String> roomnums;
+
+	public int getMax() {
+		return max;
+	}
+
+	public void setMax(int max) {
+		this.max = max;
+	}
 
 	public List<String> getRoomnums() {
 		return roomnums;

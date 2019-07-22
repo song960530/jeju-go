@@ -37,4 +37,19 @@ public class HreserveDao {
 		param.put("people", people);
 		return sqlSession.getMapper(HreserveMapper.class).searchroom(param);
 	}
+
+	public List<Hreserve> searchroom2(int stmon, int enmon, int startday, int lastday, int endday, int countday,
+			int countday2, int people) {
+		param.clear();
+		param.put("stmon", stmon);
+		param.put("enmon", enmon);
+		param.put("startday", startday);
+		param.put("endday", endday);
+		param.put("lastday", lastday);
+		param.put("countday", countday);
+		param.put("countday2", countday2);
+		param.put("people", people);
+		
+		return sqlSession.getMapper(HreserveMapper.class).searchroom2(param);
+	}
 }

@@ -203,13 +203,20 @@ public class JejuService {
 	}
 
 	public void yesroom(Hreserve hreserve, HttpServletRequest request) {
+		Calendar calendar = Calendar.getInstance();
+
 		String starts[] = request.getParameter("startday").split("-");
 		String ends[] = request.getParameter("endday").split("-");
+		int year = Integer.parseInt(request.getParameter("startday").split("-")[0]);
 		int stmon = Integer.parseInt(starts[1]);
 		int enmon = Integer.parseInt(ends[1]);
 		int start = Integer.parseInt(starts[2]);
 		int end = Integer.parseInt(ends[2]);
 		int max = Integer.parseInt(request.getParameter("max"));
+		int month = stmon - 1;
+		calendar.set(year, month, 1);
+		int lastday;
+
 		if (stmon == enmon) {
 			for (int i = start; i <= end; i++) {
 				hreserve.setNo(hresdao.maxno() + 1);
@@ -218,11 +225,12 @@ public class JejuService {
 				hreserve.setMax(max);
 				hresdao.insert(hreserve);
 			}
-
 		} else {
 			for (int i = stmon; i <= enmon; i++)
 				if (i == stmon) {
-					for (int j = start; j <= 31; j++) {
+					calendar.set(year, i - 1, 1);
+					lastday = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+					for (int j = start; j <= lastday; j++) {
 						hreserve.setNo(hresdao.maxno() + 1);
 						hreserve.setMon(i);
 						hreserve.setDay(j);
@@ -231,7 +239,9 @@ public class JejuService {
 					}
 
 				} else if (i != enmon) {
-					for (int j = 1; j <= 31; j++) {
+					calendar.set(year, i - 1, 1);
+					lastday = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+					for (int j = 1; j <= lastday; j++) {
 						hreserve.setNo(hresdao.maxno() + 1);
 						hreserve.setMon(i);
 						hreserve.setDay(j);
@@ -254,14 +264,31 @@ public class JejuService {
 	}
 
 	public List<Hotel> search(HttpServletRequest request) {
-		int mon = Integer.parseInt(request.getParameter("start").split("-")[1]);
+		Calendar calendar = Calendar.getInstance();
+
+		int year = Integer.parseInt(request.getParameter("start").split("-")[0]);
+		int stmon = Integer.parseInt(request.getParameter("start").split("-")[1]);
+		int enmon = Integer.parseInt(request.getParameter("end").split("-")[1]);
+		int month = stmon - 1;
+		calendar.set(year, month, 1);
 		int startday = Integer.parseInt(request.getParameter("start").split("-")[2]);
 		int endday = Integer.parseInt(request.getParameter("end").split("-")[2]);
-		int countday = (endday - startday) + 1;
+		int lastday = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+		int countday;
+		int countday2;
+
 		int people = Integer.parseInt(request.getParameter("people"));
+		List<Hreserve> hr = null;
 		List<Hotel> h = new ArrayList<Hotel>();
 		Set<Integer> s = new HashSet<Integer>();
-		List<Hreserve> hr = hresdao.searchroom(mon, startday, endday, countday, people);
+		if (stmon == enmon) {
+			countday = (endday - startday + 1);
+			hr = hresdao.searchroom(stmon, startday, endday, countday, people);
+		} else {
+			countday = lastday - startday + 1;
+			countday2 = endday;
+			hr = hresdao.searchroom2(stmon, enmon, startday, lastday, endday, countday, countday2, people);
+		}
 
 		for (Hreserve hr2 : hr) {
 			s.add(hr2.getHno());
@@ -282,15 +309,31 @@ public class JejuService {
 	}
 
 	public Hotel searchselectOne(Integer hno, String start, String end, Integer people1) {
+		Calendar calendar = Calendar.getInstance();
 		Hotel h = selectOne(hno);
 		h.setRoom(roomList(hno));
-		int mon = Integer.parseInt(start.split("-")[1]);
+
+		int year = Integer.parseInt(start.split("-")[0]);
+		int stmon = Integer.parseInt(start.split("-")[1]);
+		int enmon = Integer.parseInt(end.split("-")[1]);
+		int month = stmon - 1;
+		calendar.set(year, month, 1);
 		int startday = Integer.parseInt(start.split("-")[2]);
 		int endday = Integer.parseInt(end.split("-")[2]);
-		int countday = (endday - startday) + 1;
+		int lastday = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+		int countday;
+		int countday2;
 		int people = people1;
 
-		List<Hreserve> hr = hresdao.searchroom(mon, startday, endday, countday, people);
+		List<Hreserve> hr;
+		if (stmon == enmon) {
+			countday = (endday - startday + 1);
+			hr = hresdao.searchroom(stmon, startday, endday, countday, people);
+		} else {
+			countday = lastday - startday + 1;
+			countday2 = endday;
+			hr = hresdao.searchroom2(stmon, enmon, startday, lastday, endday, countday, countday2, people);
+		}
 
 		for (Room r2 : h.getRoom()) {
 			for (Hreserve hr2 : hr) {
