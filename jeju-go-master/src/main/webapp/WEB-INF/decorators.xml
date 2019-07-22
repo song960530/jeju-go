@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<decorators defaultdir="/decorator">
+	<decorator name="main" page="decorator.jsp">
+		<pattern>*.jeju</pattern>
+	</decorator>
+	<!-- layout 제외 설정 -->
+	<excludes>
+		<!-- <pattern>/board/imgupload*</pattern> -->
+		<!-- <pattern>/user/main.*</pattern> -->
+	</excludes>
+</decorators>

@@ -1,0 +1,54 @@
+package dao;
+
+import dao.mapper.UserMapper;
+import java.util.*;
+import logic.User;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class UserDao {
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	private final String NS = "dao.mapper.UserMapper.";
+	private Map<String, Object> param = new HashMap<String, Object>();
+
+	public void insert(User user) {
+		sqlSession.getMapper(UserMapper.class).insert(user);
+		
+	}
+
+	public User selectOne(String userId) {
+		return sqlSession.getMapper(UserMapper.class).selectOne(userId);
+	}
+
+	public List<User> list(String d) {
+		param.clear();
+		param.put("delete", d);
+		return sqlSession.selectList(NS+"list",param);
+	}
+
+	public void delete(String id) {
+		sqlSession.getMapper(UserMapper.class).delete(id);
+	}
+
+	public User check(User user) {
+		return sqlSession.getMapper(UserMapper.class).check(user);
+	}
+
+	public User useridcheck(User user) {
+		return sqlSession.getMapper(UserMapper.class).useridcheck(user);
+	}
+
+	public void getNewPwd(String password,String userid) {
+		User user = new User();
+		user.setPassword(password);
+		user.setUserid(userid);
+		sqlSession.getMapper(UserMapper.class).getNewPwd(user);
+	}
+
+	public void update(User user) {
+		sqlSession.getMapper(UserMapper.class).update(user);
+	}
+}
