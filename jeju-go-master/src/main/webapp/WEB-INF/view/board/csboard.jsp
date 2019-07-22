@@ -64,14 +64,14 @@
 <%-- type1 --%>
 <form action="csboard.jeju" method="post">
 	<div id="minfo" class="info" style="width:100%;">
-	<input type="hidden" name="pageNum" value="1">
+	<input type="hidden" name="notpageNum" value="1">
 		<table>
 		<c:if test="${noticecount > 0}">
 			<tr><td>글개수 : ${noticecount}</td></tr>
 			<tr><th>번호</th><th>제목</th><th>작성자</th><th>날짜</th></tr>
 			<c:forEach items="${noticelist}" var="board">
-				<tr><td>${boardno}</td>
-					<c:set var="boardno" value="${boardno - 1}"/>
+				<tr><td>${notboardno}</td>
+					<c:set var="notboardno" value="${notboardno - 1}"/>
 					<td style="text-align:left">
 						<a href="csdetail.jeju?no=${board.no}">${board.subject}</a></td>
 					<td>${board.userid}</td>
@@ -85,24 +85,24 @@
 				</tr>
 			</c:forEach>
 			<tr><td colspan="5">
-				<c:if test="${pageNum > 1}">
-					<a href="javascript:listcall(${pageNum - 1})">[이전]</a>
+				<c:if test="${notpageNum > 1}">
+					<a href="javascript:listcall(${notpageNum - 1})">[이전]</a>
 				</c:if>
-				<c:if test="${pageNum <= 1}">[이전]</c:if>
-				<c:forEach var="a" begin="${startpage}" end="${endpage}">
-					<c:if test="${a == pageNum}">[${a}]</c:if>
-					<c:if test="${a != pageNum}">
+				<c:if test="${notpageNum <= 1}">[이전]</c:if>
+				<c:forEach var="a" begin="${notstartpage}" end="${notendpage}">
+					<c:if test="${a == notpageNum}">[${a}]</c:if>
+					<c:if test="${a != notpageNum}">
 						<a href="javascript:listcall(${a})">[${a}]</a>
 					</c:if>
 				</c:forEach>
-				<c:if test="${pageNum < maxpage}">
-					<a href="javascript:listcall(${pageNum + 1})">[다음]</a>
+				<c:if test="${notpageNum < notmaxpage}">
+					<a href="javascript:listcall(${notpageNum + 1})">[다음]</a>
 				</c:if>
-				<c:if test="${pageNum >= maxpage}">[다음]</c:if>
+				<c:if test="${notpageNum >= notmaxpage}">[다음]</c:if>
 				</td>
 			</tr>
 		</c:if>
-		<c:if test="${listcount == 0}">
+		<c:if test="${noticecount == 0}">
 			<tr><td colspan="5">등록된 게시물이 없습니다.</td></tr>
 		</c:if>
 		<tr>
@@ -115,14 +115,14 @@
 	<%-- QnA --%>
 	<%-- type2 --%>
 	<div id="oinfo" class="info">
-	<input type="hidden" name="pageNum" value="1">
+	<input type="hidden" name="qnapageNum" value="1">
 		<table>
 		<c:if test="${qnacount > 0}">
 			<tr><td>글개수 : ${qnacount}</td></tr>
 			<tr><th>번호</th><th>제목</th><th>작성자</th><th>날짜</th></tr>
 			<c:forEach items="${qnalist}" var="board">
-				<tr><td>${boardno}</td>
-					<c:set var="boardno" value="${boardno - 1}"/>
+				<tr><td>${qnaboardno}</td>
+					<c:set var="qnaboardno" value="${qnaboardno - 1}"/>
 					<td style="text-align:left">
 						<a href="csdetail.jeju?no=${board.no}">${board.subject}</a></td>
 					<td>${board.userid}</td>
@@ -136,24 +136,24 @@
 				</tr>
 			</c:forEach>
 			<tr><td colspan="5">
-				<c:if test="${pageNum > 1}">
-					<a href="javascript:listcall(${pageNum - 1})">[이전]</a>
+				<c:if test="${qnapageNum > 1}">
+					<a href="javascript:listcall(${qnapageNum - 1})">[이전]</a>
 				</c:if>
-				<c:if test="${pageNum <= 1}">[이전]</c:if>
-				<c:forEach var="a" begin="${startpage}" end="${endpage}">
-					<c:if test="${a == pageNum}">[${a}]</c:if>
-					<c:if test="${a != pageNum}">
+				<c:if test="${qnapageNum <= 1}">[이전]</c:if>
+				<c:forEach var="a" begin="${qnastartpage}" end="${qnaendpage}">
+					<c:if test="${a == qnapageNum}">[${a}]</c:if>
+					<c:if test="${a != qnapageNum}">
 						<a href="javascript:listcall(${a})">[${a}]</a>
 					</c:if>
 				</c:forEach>
-				<c:if test="${pageNum < maxpage}">
-					<a href="javascript:listcall(${pageNum + 1})">[다음]</a>
+				<c:if test="${qnapageNum < qnamaxpage}">
+					<a href="javascript:listcall(${qnapageNum + 1})">[다음]</a>
 				</c:if>
-				<c:if test="${pageNum >= maxpage}">[다음]</c:if>
+				<c:if test="${qnapageNum >= qnamaxpage}">[다음]</c:if>
 				</td>
 			</tr>
 		</c:if>
-		<c:if test="${listcount == 0}">
+		<c:if test="${qnacount == 0}">
 			<tr><td colspan="5">등록된 게시물이 없습니다.</td></tr>
 		</c:if>
 		<tr>
