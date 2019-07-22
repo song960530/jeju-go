@@ -32,30 +32,51 @@ public class BoardController {
 		return mav;
 	}
 	@RequestMapping("csboard")
-	public ModelAndView notice(Integer pageNum) {
+	public ModelAndView notice(Integer notpageNum, Integer qnapageNum) {
 		ModelAndView mav = new ModelAndView();
-		if(pageNum == null || pageNum.toString().equals("")) {pageNum = 1;}
-		int limit = 10;
+		if(notpageNum == null || notpageNum.toString().equals("")) {notpageNum = 1;}
+		int notlimit = 10;
 		int noticecount = service.boardcount(1);
+		List<Board> noticelist = service.boardlist(notpageNum, notlimit, 1);
+		int notmaxpage = (int)((double)noticecount/notlimit + 0.95);
+		int notstartpage = ((int)((notpageNum / 10.0 + 0.9) - 1) * 10 + 1);
+		int notendpage = notstartpage + 9;
+		if(notendpage > notmaxpage) {notendpage = notmaxpage;}
+		int notboardno = noticecount - (notpageNum - 1) * notlimit;
+		
+//벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽//
+		
+		int qnalimit = 10;
 		int qnacount = service.boardcount(2);
-		List<Board> noticelist = service.boardlist(pageNum, limit, 1);
-		List<Board> qnalist = service.boardlist(pageNum, limit, 2);
-		int maxpage = (int)((double)noticecount/limit + 0.95);
-		int startpage = ((int)((pageNum / 10.0 + 0.9) - 1) * 10 + 1);
-		int endpage = startpage + 9;
-		if(endpage > maxpage) {endpage = maxpage;}
-		int boardno = noticecount - (pageNum - 1) * limit;
-		mav.addObject("pageNum", pageNum);
-		mav.addObject("maxpage", maxpage);
-		mav.addObject("startpage", startpage);
-		mav.addObject("endpage", endpage);
+		List<Board> qnalist = service.boardlist(qnapageNum, qnalimit, 2);
+		int qnamaxpage = (int)((double)noticecount/qnalimit + 0.95);
+		int qnastartpage = ((int)((qnapageNum / 10.0 + 0.9) - 1) * 10 + 1);
+		int qnaendpage = qnastartpage + 9;
+		if(qnaendpage > qnamaxpage) {qnaendpage = qnamaxpage;}
+		int qnaboardno = noticecount - (qnapageNum - 1) * qnalimit;
+		
+//벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽//		
+		
+		mav.addObject("notpageNum", notpageNum);
+		mav.addObject("notmaxpage", notmaxpage);
+		mav.addObject("notstartpage", notstartpage);
+		mav.addObject("notendpage", notendpage);
 		mav.addObject("noticecount", noticecount);
-		mav.addObject("qnacount", qnacount);
 		mav.addObject("noticelist", noticelist);
+		mav.addObject("notboardno", notboardno);
+
+//벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽벽//		
+		
+		mav.addObject("qnapageNum", qnapageNum);
+		mav.addObject("qnamaxpage", qnamaxpage);
+		mav.addObject("qnastartpage", qnastartpage);
+		mav.addObject("qnaendpage", qnaendpage);
+		mav.addObject("qnacount", qnacount);
 		mav.addObject("qnalist", qnalist);
-		mav.addObject("boardno", boardno);
+		mav.addObject("qnaboardno", qnaboardno);
 		return mav;
 	}
+	
 	@PostMapping("cswrite")
 	public ModelAndView noticewrite(Board board, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
@@ -78,7 +99,7 @@ public class BoardController {
 		}
 		return mav;
 	}
-	@RequestMapping("csdetail")
+	@RequestMapping("csdelete")
 	public ModelAndView csdetail(Board board, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		try {
