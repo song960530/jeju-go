@@ -124,12 +124,12 @@ body, h1, h2, h3, h4, h5, h6 {
 				</button>
 				<div class="w3-dropdown-content w3-bar-block">
 					<a href="${path}/user/mypage.jeju?userid=${login.userid}"
-						class="w3-bar-item w3-button">정보 수정</a> <a href="#"
+						class="w3-bar-item w3-button">정보 수정</a> <a href="${path}/user/updatepw.jeju"
 						class="w3-bar-item w3-button">비밀번호 변경</a> <a href="#"
 						class="w3-bar-item w3-button">포인트</a> <a href="#"
 						class="w3-bar-item w3-button">예약 내역</a> <a href="#"
-						class="w3-bar-item w3-button">찜</a> <a href="#"
-						class="w3-bar-item w3-button">1:1 문의 내역</a> <a href="#"
+						class="w3-bar-item w3-button">찜</a> <a href="${path}/user/inquiry.jeju"
+						class="w3-bar-item w3-button">1:1 문의 내역</a> <a href="${path}/user/withdrawal.jeju"
 						class="w3-bar-item w3-button">회원탈퇴 신청</a>
 				</div>
 			</div>

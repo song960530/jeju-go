@@ -407,4 +407,7 @@ public class JejuService {
 	public void admindelete(User user) {
 		userdao.admindelete(user);
 	}
+	public void updatepw(User user) {
+		userdao.updatepw(user);
+	}
 }
