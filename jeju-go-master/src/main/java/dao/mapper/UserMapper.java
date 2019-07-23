@@ -26,7 +26,7 @@ public interface UserMapper {
 
 	@Update("update member set password=#{password} where userid=#{userid}")
 	void getNewPwd(User user);
-	
+
 	@Update("update member set phone=#{phone} where userid=#{userid}")
 	void update(User user);
 
@@ -35,4 +35,7 @@ public interface UserMapper {
 
 	@Delete("delete from member where userid=#{userid}")
 	void admindelete(User user);
+
+	@Update("update member set password=#{password} where userid=#{userid}")
+	void updatepw(User user);
 }
