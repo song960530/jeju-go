@@ -114,8 +114,16 @@ public class JejuService {
 	public Room selectOne(Integer hno, String name) {
 		Room r = roomdao.selectOne(hno, name);
 		List<Photo> p = photodao.selectOne3(hno, name);
-		r.setPhoto(p);
-		r.setPhotourl(p.get(0).getPhotourl());
+		if (p != null) {
+			r.setPhoto(p);
+		} else {
+			r.setPhoto(null);
+		}
+		if (p.get(0).getPhotourl() != null) {
+			r.setPhotourl(p.get(0).getPhotourl());
+		} else {
+			r.setPhotourl(null);
+		}
 		return r;
 	}
 
