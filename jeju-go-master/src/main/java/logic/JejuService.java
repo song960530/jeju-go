@@ -51,7 +51,7 @@ public class JejuService {
 		List<MultipartFile> fileList = mtfRequest.getFiles("photoname");
 
 		for (MultipartFile mf : fileList) {
-			String originFileName = mf.getOriginalFilename(); // ¿øº» ÆÄÀÏ ¸í
+			String originFileName = mf.getOriginalFilename(); // ì›ë³¸ íŒŒì¼ ëª…
 			String path = request.getServletContext().getRealPath("/") + "img/";
 			String safeFile = path + System.currentTimeMillis() + originFileName;
 
@@ -142,9 +142,9 @@ public class JejuService {
 		MessageDigest md;
 		try {
 			md = MessageDigest.getInstance("SHA-256");
-			hash = md.digest(plain);// ÇØ½¬¾ÏÈ£ »ı¼º
+			hash = md.digest(plain);// í•´ì‰¬ì•”í˜¸ ìƒì„±
 			for (byte b : hash) {
-				result += String.format("%02X", b); // ÇÙ»ç°ªÀ¸·Î Ãâ·Â(16Áø¼ö)
+				result += String.format("%02X", b); // í•µì‚¬ê°’ìœ¼ë¡œ ì¶œë ¥(16ì§„ìˆ˜)
 			}
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -180,9 +180,9 @@ public class JejuService {
 		MessageDigest md;
 		try {
 			md = MessageDigest.getInstance("SHA-256");
-			hash = md.digest(plain);// ÇØ½¬¾ÏÈ£ »ı¼º
+			hash = md.digest(plain);// í•´ì‰¬ì•”í˜¸ ìƒì„±
 			for (byte b : hash) {
-				result += String.format("%02X", b); // ÇÙ»ç°ªÀ¸·Î Ãâ·Â(16Áø¼ö)
+				result += String.format("%02X", b); // í•µì‚¬ê°’ìœ¼ë¡œ ì¶œë ¥(16ì§„ìˆ˜)
 			}
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -360,9 +360,9 @@ public class JejuService {
 	public int boardcount(int type) {
 		return boarddao.boardcount(type);
 	}
-
-	public List<Board> boardlist(Integer pageNum, int limit, int type) {
-		return boarddao.boardlist(pageNum, limit, type);
+	
+	public List<Board> list(Integer pageNum, int limit, int type) {
+		return boarddao.list(pageNum, limit, type);
 	}
 
 	public Board getBoard(Integer No, HttpServletRequest request) {
@@ -404,7 +404,50 @@ public class JejuService {
 		userdao.deleterequest(user);
 	}
 
-	public void admindelete(User user) {
+		return boarddao.getUser(userid);
+	}
+
+	public int count(int type, String userid, Integer type2) {
+		return boarddao.count(type, userid, type2);
+	}
+	// ê´€ë¦¬ì í˜ì´ì§€ 1:1 ë¬¸ì˜ë‚´ì—­
+	public int count(int type, Integer type2) {
+		return boarddao.count(type, type2);
+	}
+	
+	public List<Board> qnalist(Integer pageNum, int limit, int type, String userid, Integer type2) {
+		return boarddao.qnalist(pageNum, limit, type, userid, type2);
+	}
+
+	public List<Board> adqnalist(Integer pageNum, int limit, int type, Integer type2) {
+		return boarddao.adqnalist(pageNum, limit, type, type2);
+	}
+
+	public void reply(Board board, HttpServletRequest request) {
+		boarddao.updaterefstep(board);
+		int num = boarddao.maxnum();
+		board.setNo(++num);
+		board.setReflevel(board.getReflevel() + 1);
+		board.setRefstep(board.getRefstep() + 1);
+		boarddao.noticewrite(board);
+	}
+
+	public List<Board> boardlist(Integer pageNum, int limit, int type, int no) {
+		return boarddao.boardlist(pageNum, limit, type, no);
+	}
+
+	public Board qnablist(Integer no) {
+		return boarddao.qnablist(no);
+	}
+
+	public int qnacount(Integer no) {
+		return boarddao.qnacount(no);
+	}
+
+	public Board qnarlist(Integer no, int reflevel) {
+		return boarddao.qnarlist(no, reflevel);
+    
+  public void admindelete(User user) {
 		userdao.admindelete(user);
 	}
 	public void updatepw(User user) {

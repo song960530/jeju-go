@@ -6,7 +6,14 @@
 		select count(*) from board
 		<where>
 		<if test="type != null">
-			type = #{type}			
+			type = #{type}
+			<if test="type2 != null">
+				and type2 = #{type2}
+			</if>
+			<if test="userid != null">
+				and userid = #{userid}
+			</if>
+				and reflevel = 0		
 		</if>
 		</where>
 	</select>
@@ -17,10 +24,31 @@
 				 no = #{no}
 			</if>
 			<if test="type != null">
-				and type = #{type}			
+				and type = #{type}
+				<if test="type2 != null">
+					and type2 = #{type2}
+				</if>
+				<if test="userid != null">
+					and userid = #{userid}
+				</if>			
 			</if>
 		</where>
-		<if test="startrow != null">
+		<if test="startrow != null and limit != null">
+			order by ref desc, refstep asc limit #{startrow}, #{limit}
+		</if>
+	</select>
+	
+	<select id="replist" parameterType="map" resultType="Board">
+		select * from board
+		<where>
+			<if test="no != null">
+				 no = #{no}
+				 <if test="type != null">
+				 	and type = #{type}
+				 </if>
+			</if>
+		</where>
+		<if test="startrow != null and limit != null">
 			order by ref desc, refstep asc limit #{startrow}, #{limit}
 		</if>
 	</select>

@@ -9,6 +9,10 @@
 <script type="text/javascript" src="http://cdn.ckeditor.com/4.5.7/full/ckeditor.js"></script>
 <script>
 function boardchk(f) {
+	if (f.type2.value == "") {
+		alert("유형선택 ㄱㄱ");
+		return false;
+	}
 	if (f.subject.value == "") {
 		alert("제목입력 ㄱㄱ");
 		return false;
@@ -27,26 +31,30 @@ body{
 </style>
 </head>
 <body>
-<form:form modelAttribute="board" action="cswrite.jeju" name="f" onsubmit="return boardchk(this)">
+<form:form modelAttribute="board" action="qnawrite.jeju" name="f" onsubmit="return boardchk(this)">
 <input type="hidden" name="type" value="${param.type}">
 	<div class="container">
 	    <div class="row">
 	        <div class="recent">
-	          <h2 class="widgetheading" style="text-align: center;">Write</h2>
+	          <h2 class="widgetheading" style="text-align: center;">Wrtie</h2>
 	        </div>
 	        <div class="form-group">
 	            <input type="hidden" class="form-control" name="userid" value="${login.userid}" readonly/>
 	            <div class="validation"></div>
 	        </div>
+	        <select name="type2">
+				<option value="1">탈퇴</option>
+				<option value="2">결제</option>
+				<option value="3">예약</option>
+			</select>
 	        <div class="form-group">
 	            <input type="text" name="subject" class="form-control" placeholder="제목"/>
 	            <div class="validation"></div>
 	        </div>
 	        <div class="form-group">
 	        	<div>
-		            <textarea name="content" class="form-control" placeholder="내용" style="width:100%; height:500px"></textarea>
-		            <div class="validation"></div>
-	        	</div>
+	            <textarea name="content" class="form-control" placeholder="내용" style="width:100%; height:500px"></textarea>
+	            <div class="validation"></div>
 	        </div>
 	        <div style="text-align:center">
 				<button type="submit"

@@ -28,9 +28,13 @@
 	function list_disp(id) {
 		$("#" + id).toggle();
 	}
-	function listcall(page) {
-		document.searchform.pageNum.value=page;
-		document.searchform.submit();
+	function notlistcall(page) {
+		document.csboard.notpageNum.value=page;
+		document.csboard.submit();
+	}
+	function qnalistcall(page) {
+		document.csboard.qnapageNum.value=page;
+		document.csboard.submit();
 	}
 </script>
 <style type="text/css">
@@ -53,18 +57,17 @@
 		<td id="tab1" class="tab">
 			<a href="javascript:disp_div('minfo','tab1')">공지사항</a>
 		</td>
-		<c:if test="${user.userId != 'admin'}">
-			<td id="tab2" class="tab">
-				<a href="javascript:disp_div('oinfo', 'tab2')">QnA</a>
-			</td>
-		</c:if>
+		<td id="tab2" class="tab">
+			<a href="javascript:disp_div('oinfo', 'tab2')">QnA</a>
+		</td>
 	</tr>
 </table>
 <%-- 공지사항 --%>
 <%-- type1 --%>
-<form action="csboard.jeju" method="post">
+<form action="csboard.jeju" method="post" name="csboard">
+<input type="hidden" name="notpageNum" value="1">
+<input type="hidden" name="qnapageNum" value="1">
 	<div id="minfo" class="info" style="width:100%;">
-	<input type="hidden" name="notpageNum" value="1">
 		<table>
 		<c:if test="${noticecount > 0}">
 			<tr><td>글개수 : ${noticecount}</td></tr>
@@ -73,7 +76,7 @@
 				<tr><td>${notboardno}</td>
 					<c:set var="notboardno" value="${notboardno - 1}"/>
 					<td style="text-align:left">
-						<a href="csdetail.jeju?no=${board.no}">${board.subject}</a></td>
+						<a href="../board/csdetail.jeju?no=${board.no}&type=${board.type}&type2=${board.type2}">${board.subject}</a></td>
 					<td>${board.userid}</td>
 					<td><fmt:formatDate var="rdate" value="${board.regdate}" pattern="yyyyMMdd"/>
 		                 <c:if test="${today == rdate}">
@@ -86,17 +89,17 @@
 			</c:forEach>
 			<tr><td colspan="5">
 				<c:if test="${notpageNum > 1}">
-					<a href="javascript:listcall(${notpageNum - 1})">[이전]</a>
+					<a href="javascript:notlistcall(${notpageNum - 1})">[이전]</a>
 				</c:if>
 				<c:if test="${notpageNum <= 1}">[이전]</c:if>
 				<c:forEach var="a" begin="${notstartpage}" end="${notendpage}">
 					<c:if test="${a == notpageNum}">[${a}]</c:if>
 					<c:if test="${a != notpageNum}">
-						<a href="javascript:listcall(${a})">[${a}]</a>
+						<a href="javascript:notlistcall(${a})">[${a}]</a>
 					</c:if>
 				</c:forEach>
 				<c:if test="${notpageNum < notmaxpage}">
-					<a href="javascript:listcall(${notpageNum + 1})">[다음]</a>
+					<a href="javascript:notlistcall(${notpageNum + 1})">[다음]</a>
 				</c:if>
 				<c:if test="${notpageNum >= notmaxpage}">[다음]</c:if>
 				</td>
@@ -105,17 +108,18 @@
 		<c:if test="${noticecount == 0}">
 			<tr><td colspan="5">등록된 게시물이 없습니다.</td></tr>
 		</c:if>
+		<c:if test="${login.userid == 'admin'}">
 		<tr>
 			<td colspan="5" align="right">
 				<a href="cswrite.jeju?type=1">[글쓰기]</a>
 			</td>
 		</tr>
+		</c:if>
 		</table>
 	</div>
 	<%-- QnA --%>
 	<%-- type2 --%>
 	<div id="oinfo" class="info">
-	<input type="hidden" name="qnapageNum" value="1">
 		<table>
 		<c:if test="${qnacount > 0}">
 			<tr><td>글개수 : ${qnacount}</td></tr>
@@ -137,17 +141,17 @@
 			</c:forEach>
 			<tr><td colspan="5">
 				<c:if test="${qnapageNum > 1}">
-					<a href="javascript:listcall(${qnapageNum - 1})">[이전]</a>
+					<a href="javascript:qnalistcall(${qnapageNum - 1})">[이전]</a>
 				</c:if>
 				<c:if test="${qnapageNum <= 1}">[이전]</c:if>
 				<c:forEach var="a" begin="${qnastartpage}" end="${qnaendpage}">
 					<c:if test="${a == qnapageNum}">[${a}]</c:if>
 					<c:if test="${a != qnapageNum}">
-						<a href="javascript:listcall(${a})">[${a}]</a>
+						<a href="javascript:qnalistcall(${a})">[${a}]</a>
 					</c:if>
 				</c:forEach>
 				<c:if test="${qnapageNum < qnamaxpage}">
-					<a href="javascript:listcall(${qnapageNum + 1})">[다음]</a>
+					<a href="javascript:qnalistcall(${qnapageNum + 1})">[다음]</a>
 				</c:if>
 				<c:if test="${qnapageNum >= qnamaxpage}">[다음]</c:if>
 				</td>
@@ -156,11 +160,22 @@
 		<c:if test="${qnacount == 0}">
 			<tr><td colspan="5">등록된 게시물이 없습니다.</td></tr>
 		</c:if>
+		<c:if test="${login.userid == 'admin'}">
 		<tr>
 			<td colspan="5" align="right">
 				<a href="cswrite.jeju?type=2">[글쓰기]</a>
 			</td>
 		</tr>
+		</c:if>
+		<c:if test="${login.userid != 'admin'}">
+		<tr>
+			<td colspan="5" align="right">
+				<a href="qnawrite.jeju?type=3">[문의하기]</a>
+			</td>
+		</tr>
+		</c:if>
+		
+		
 		</table>
 	</div><br>
 </form>
