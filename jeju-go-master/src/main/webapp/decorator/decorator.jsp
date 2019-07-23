@@ -123,14 +123,13 @@ body, h1, h2, h3, h4, h5, h6 {
 					&nbsp;&nbsp;마이페이지 <i class="fa fa-caret-down"></i>
 				</button>
 				<div class="w3-dropdown-content w3-bar-block">
-					<a href="${path}/user/mypage.jeju?userid=${login.userid}"
-						class="w3-bar-item w3-button">정보 수정</a> <a href="#"
-						class="w3-bar-item w3-button">비밀번호 변경</a> <a href="#"
-						class="w3-bar-item w3-button">포인트</a> <a href="#"
-						class="w3-bar-item w3-button">예약 내역</a> <a href="#"
-						class="w3-bar-item w3-button">찜</a> <a href="#"
-						class="w3-bar-item w3-button">1:1 문의 내역</a> <a href="#"
-						class="w3-bar-item w3-button">회원탈퇴 신청</a>
+					<a href="${path}/user/mypage.jeju?userid=${login.userid}" class="w3-bar-item w3-button">정보 수정</a> 
+					<a href="#" class="w3-bar-item w3-button">비밀번호 변경</a> 
+					<a href="#" class="w3-bar-item w3-button">포인트</a>
+					<a href="#" class="w3-bar-item w3-button">예약 내역</a>
+					<a href="#" class="w3-bar-item w3-button">찜</a>
+					<a href="${path}/board/qnalist.jeju?userid=${login.userid}" class="w3-bar-item w3-button">1:1 문의 내역</a>
+					<a href="#" class="w3-bar-item w3-button">회원탈퇴 신청</a>
 				</div>
 			</div>
 		</c:if>
@@ -140,26 +139,22 @@ body, h1, h2, h3, h4, h5, h6 {
 					&nbsp;&nbsp;회원관리 <i class="fa fa-caret-down"></i>
 				</button>
 				<div class="w3-dropdown-content w3-bar-block">
-					<a href="${path}/admin/list.jeju" class="w3-bar-item w3-button">회원
-						목록</a> <a href="${path}/admin/deletelist.jeju"
-						class="w3-bar-item w3-button">탈퇴 신청 목록</a> <a href="#"
-						class="w3-bar-item w3-button">예약 신청 목록</a> <a href="#"
-						class="w3-bar-item w3-button">예약 관리 페이지</a> <a href="#"
-						class="w3-bar-item w3-button">1:1문의 목록</a>
+					<a href="${path}/admin/list.jeju" class="w3-bar-item w3-button">회원목록</a>
+					<a href="${path}/admin/deletelist.jeju" class="w3-bar-item w3-button">탈퇴 신청 목록</a>
+					<a href="#" class="w3-bar-item w3-button">예약 신청 목록</a>
+					<a href="#" class="w3-bar-item w3-button">예약 관리 페이지</a>
+					<a href="${path}/admin/qnalist.jeju" class="w3-bar-item w3-button">1:1문의 목록</a>
 				</div>
 			</div>
-
 			<div class="w3-dropdown-hover">
 				<button class="w3-button fa fa-home">
 					&nbsp;&nbsp;숙소 <i class="fa fa-caret-down"></i>
 				</button>
 				<div class="w3-dropdown-content w3-bar-block">
-					<a href="${path}/hotel/regist.jeju" class="w3-bar-item w3-button">숙소
-						등록</a> <a href="${path}/hotel/adminhotellist.jeju"
-						class="w3-bar-item w3-button">숙소 방 등록</a> <a
-						href="${path}/hotel/adminhotellist.jeju"
-						class="w3-bar-item w3-button">예약 가능 방 등록</a> <a href="#"
-						class="w3-bar-item w3-button">숙소/패키지별 이용 횟수</a>
+					<a href="${path}/hotel/regist.jeju" class="w3-bar-item w3-button">숙소 등록</a>
+					<a href="${path}/hotel/adminhotellist.jeju" class="w3-bar-item w3-button">숙소 방 등록</a>
+					<a href="${path}/hotel/adminhotellist.jeju" class="w3-bar-item w3-button">예약 가능 방 등록</a>
+					<a href="#" class="w3-bar-item w3-button">숙소/패키지별 이용 횟수</a>
 				</div>
 			</div>
 

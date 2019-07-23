@@ -309,9 +309,9 @@ public class JejuService {
 	public int boardcount(int type) {
 		return boarddao.boardcount(type);
 	}
-
-	public List<Board> boardlist(Integer pageNum, int limit, int type) {
-		return boarddao.boardlist(pageNum, limit, type);
+	
+	public List<Board> list(Integer pageNum, int limit, int type) {
+		return boarddao.list(pageNum, limit, type);
 	}
 
 	public Board getBoard(Integer No, HttpServletRequest request) {
@@ -351,5 +351,50 @@ public class JejuService {
 
 	public void DeleteRequest(User user) {
 		userdao.deleterequest(user);
+	}
+
+	public String getUser(String userid) {
+		return boarddao.getUser(userid);
+	}
+
+	public int count(int type, String userid, Integer type2) {
+		return boarddao.count(type, userid, type2);
+	}
+	// 관리자 페이지 1:1 문의내역
+	public int count(int type, Integer type2) {
+		return boarddao.count(type, type2);
+	}
+	
+	public List<Board> qnalist(Integer pageNum, int limit, int type, String userid, Integer type2) {
+		return boarddao.qnalist(pageNum, limit, type, userid, type2);
+	}
+
+	public List<Board> adqnalist(Integer pageNum, int limit, int type, Integer type2) {
+		return boarddao.adqnalist(pageNum, limit, type, type2);
+	}
+
+	public void reply(Board board, HttpServletRequest request) {
+		boarddao.updaterefstep(board);
+		int num = boarddao.maxnum();
+		board.setNo(++num);
+		board.setReflevel(board.getReflevel() + 1);
+		board.setRefstep(board.getRefstep() + 1);
+		boarddao.noticewrite(board);
+	}
+
+	public List<Board> boardlist(Integer pageNum, int limit, int type, int no) {
+		return boarddao.boardlist(pageNum, limit, type, no);
+	}
+
+	public Board qnablist(Integer no) {
+		return boarddao.qnablist(no);
+	}
+
+	public int qnacount(Integer no) {
+		return boarddao.qnacount(no);
+	}
+
+	public Board qnarlist(Integer no, int reflevel) {
+		return boarddao.qnarlist(no, reflevel);
 	}
 }

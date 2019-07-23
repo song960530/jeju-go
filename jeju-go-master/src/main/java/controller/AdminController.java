@@ -3,6 +3,8 @@ package controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
+import logic.Board;
 import logic.JejuService;
 import logic.User;
 
@@ -50,5 +52,26 @@ public class AdminController {
 		mav.setViewName("alert");
 		return mav;
 	}
-
+	@RequestMapping("qnalist")
+	public ModelAndView qnalist(Integer pageNum, Integer type2, String userid) {
+		ModelAndView mav = new ModelAndView();
+		if(pageNum == null || pageNum.toString().equals("")) {pageNum = 1;}
+		int limit = 10;
+		if(type2 == null || type2.toString().equals("")) {type2 = null;}
+		int count = service.count(3, type2);
+		List<Board> list = service.adqnalist(pageNum, limit, 3, type2);
+		int maxpage = (int)((double)count/limit + 0.95);
+		int startpage = ((int)((pageNum / 10.0 + 0.9) - 1) * 10 + 1);
+		int endpage = startpage + 9;
+		if(endpage > maxpage) {endpage = maxpage;}
+		int boardno = count - (pageNum - 1) * limit;
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("maxpage", maxpage);
+		mav.addObject("startpage", startpage);
+		mav.addObject("endpage", endpage);
+		mav.addObject("count", count);
+		mav.addObject("list", list);
+		mav.addObject("boardno", boardno);
+		return mav;
+	}
 }
