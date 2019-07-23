@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+
 @Controller
 @RequestMapping("hotel")
 public class HotelController {
@@ -135,9 +136,9 @@ public class HotelController {
 	}
 
 	@PostMapping("yesroom")
-	public ModelAndView yesroom(Hreserve hreserve,HttpServletRequest request) {
+	public ModelAndView yesroom(Hreserve hreserve, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		service.yesroom(hreserve,request);
+		service.yesroom(hreserve, request);
 		return mav;
 	}
 
@@ -148,19 +149,72 @@ public class HotelController {
 		mav.addObject("list", hotel);
 		mav.addObject("startday", request.getParameter("start"));
 		mav.addObject("endday", request.getParameter("end"));
-		mav.addObject("people",request.getParameter("people"));
+		mav.addObject("people", request.getParameter("people"));
 		mav.setViewName("hotel/searchlist");
 		return mav;
 	}
-	
+
 	@GetMapping("searchhoteldetail")
-	public ModelAndView searchhoteldetail(int no, String start, String end,int people) {
+	public ModelAndView searchhoteldetail(int no, String start, String end, int people, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		Hotel hotel = service.searchselectOne(no, start, end,people);
+		Hotel hotel = service.searchselectOne(no, start, end, people);
+		ArrayList<Latlng> arr = null;
+		String path = request.getSession().getServletContext().getRealPath("/") + "csv/cctv.csv";
+		try {
+			InputStreamReader is = new InputStreamReader(new FileInputStream(path), "EUC-KR");
+			CSVReader reader = new CSVReader(is);
+			List<String[]> list = reader.readAll();
+			arr = new ArrayList<Latlng>();
+
+			for (String[] str : list) {
+				Latlng entity = new Latlng();
+				entity.setLat(str[10]);
+				entity.setLng(str[11]);
+				arr.add(entity);
+			}
+			arr.remove(0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mav.addObject("cctv", arr);
 		mav.addObject("hotel", hotel);
 		mav.addObject("startday", start);
 		mav.addObject("endday", end);
+		mav.addObject("people", people);
+
 		mav.setViewName("hotel/hoteldetail2");
+		return mav;
+	}
+
+	@RequestMapping("searchroomdetail")
+	public ModelAndView searchroomdetail(int no, String start, String end, int people, String name,
+			HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		Room r = service.selectOne(no, name);
+
+		List<String> con = new ArrayList<String>();
+		String[] sr = r.getConvenient().split(",");
+
+		for (String sss : sr) {
+			con.add(sss);
+		}
+
+		Hotel hotel = service.searchselectOne(no, start, end, people);
+
+		int count=0;
+		for (Room r2 : hotel.getRoom()) {
+			if (r2.getName().equals(name))
+				count = r2.getRoomcount();
+		}
+
+		mav.addObject("convenient", con);
+		mav.addObject("room", r);
+		mav.addObject("startday", start);
+		mav.addObject("endday", end);
+		mav.addObject("people", people);
+		mav.addObject("name", name);
+		mav.addObject("count", count);
+		mav.setViewName("hotel/roomdetail2");
 		return mav;
 	}
 

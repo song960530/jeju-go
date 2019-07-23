@@ -22,6 +22,6 @@ public interface RoomMapper {
 	@Select("select * from room where hno=#{hno} and name=#{name}")
 	Room selectOne(Map<String, Object> param);
 
-	@Select("select h.no,h.hname,r.roomnum,r.name from hotel h,room r where h.no=#{hno} and r.hno=#{hno}")
+	@Select("select h.no,h.hname,r.roomnum,r.name,r.max from hotel h,room r where h.no=#{hno} and r.hno=#{hno}")
 	List<Room2> selectRoom2(Integer hno);
 }

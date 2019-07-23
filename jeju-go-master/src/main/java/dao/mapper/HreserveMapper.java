@@ -20,4 +20,12 @@ public interface HreserveMapper {
 	@Select("select hno,roomnum,name from hreserve h where mon=#{mon} and day between #{startday} and #{endday} and subscriber is null and max>=#{people} group by hno,name,roomnum having count(*)=${countday} order by hno")
 	List<Hreserve> searchroom(Map<String, Object> param);
 
+	@Select("select hno,roomnum,name from hreserve where (mon=#{stmon}) and (day between #{startday} and #{lastday}) and (subscriber is null) and (max>=#{people})" + 
+			" group by hno,name,roomnum having count(*)=#{countday} " + 
+			"INTERSECT " + 
+			"select hno,roomnum,name from hreserve where (mon=#{enmon}) and (day between 1 and #{endday}) and (subscriber is null) and (max>=#{people}) " + 
+			"group by hno,name,roomnum having count(*)=#{countday2} order by hno" + 
+			"")
+	List<Hreserve> searchroom2(Map<String, Object> param);
+
 }

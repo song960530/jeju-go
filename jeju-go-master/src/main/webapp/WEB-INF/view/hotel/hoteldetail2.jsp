@@ -42,6 +42,9 @@ color:black;}
 <script type="text/javascript">
 var lat = null;
 var lng = null;
+
+var cctvlat = [];
+var cctvlng = [];
 // Slideshow
 var slideIndex = 1;
 $(document).ready(function(){
@@ -107,6 +110,13 @@ function showDivs(n) {
             lat = location1
             lng = location2
          }</script>
+         <c:forEach items="${cctv}" var="c">
+         <script>cctv(${c.lat}, ${c.lng})
+         function cctv(loc1, loc2) {
+        	 cctvlat.push(loc1)
+        	 cctvlng.push(loc2)
+         }</script>
+         </c:forEach>
          <p>${h.content}</p>
          <p>${h.tel}</p>
       </h2>
@@ -128,7 +138,8 @@ function showDivs(n) {
               	 예약불가
                </c:if>
                <c:if test="${r.roomcount>0}">
-              	 <b style="color:red; text-align: right;">방 ${r.roomcount }개 남음</b> <a href="#"> 예약하러 가기</a>
+              	 <b style="color:red; text-align: right;">방 ${r.roomcount }개 남음</b> 
+              	 <a href="searchroomdetail.jeju?no=${r.hno}&start=${startday}&end=${endday}&people=${people}&name=${r.name}"> 예약하러 가기</a>
                </c:if>
             </div>
          </div>
@@ -138,16 +149,32 @@ function showDivs(n) {
 <script>
 var markers = [];
 var infoWindows = [];
+var cctvmarkers = [];
 
 var HOME_PATH = window.HOME_PATH || '.';
-
 var map = new naver.maps.Map('map', {
     center: new naver.maps.LatLng(lat, lng),
     zoom: 11
 });
 
-var position = new naver.maps.LatLng(lat, lng);
+for(var i = 0; i < cctvlat.length; i++) {
+	var position = new naver.maps.LatLng(cctvlat[i], cctvlng[i]);
+	
+	var cctvmarker = new naver.maps.Marker({
+	    map: map,
+	    position: position,
+	    title: name[i],
+	    icon: {
+	    	url: '../markerimg/marker.png',
+	        anchor: new naver.maps.Point(12, 37),
+	        origin: new naver.maps.Point(0, 0)
+	    },
+	    zIndex: 100
+	});
+	cctvmarkers.push(cctvmarker);
+}
 
+var position = new naver.maps.LatLng(lat, lng);
 var marker = new naver.maps.Marker({
     map: map,
     position: position,
@@ -157,7 +184,7 @@ var marker = new naver.maps.Marker({
         anchor: new naver.maps.Point(12, 37),
         origin: new naver.maps.Point(0, 0)
     },
-    zIndex: 150
+    zIndex: 100
 });
 
 var contents = '<div><p>aaa</p></div>'
@@ -165,15 +192,28 @@ var contents = '<div><p>aaa</p></div>'
 var infoWindow = new naver.maps.InfoWindow({
     content:contents
 });
-          
 markers.push(marker);
 infoWindows.push(infoWindow);
 
 naver.maps.Event.addListener(map, 'idle', function() {
     updateMarkers(map, markers);
+    cctvupdateMarkers(map, markers);
 });
 
-// 해당 마커의 인덱스를 seq라는 클로저 변수로 저장하는 이벤트 핸들러를 반환합니다.
+//화면 범위 바깥의 마커를 숨김 
+function showMarker(map, marker) {
+
+    if (marker.setMap()) return;
+    marker.setMap(map);
+}
+
+function hideMarker(map, marker) {
+
+    if (!marker.setMap()) return;
+    marker.setMap(null);
+}
+
+// 마커 클릭 이벤트
 function getClickHandler(seq) {
     return function(e) {
         var marker = markers[seq],
@@ -186,10 +226,10 @@ function getClickHandler(seq) {
         }
     }
 }
-
 for (var i=0, ii=markers.length; i<ii; i++) {
     naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i));
 }
+// 여기까지
 
 function updateMarkers(map, markers) {
 
@@ -205,6 +245,23 @@ function updateMarkers(map, markers) {
             showMarker(map, marker);
         } else {
             hideMarker(map, marker);
+        }
+    }
+}
+function cctvupdateMarkers(map, cctvmarkers) {
+
+    var mapBounds = map.getBounds();
+    var cctvmarker, position;
+
+    for (var i = 0; i < cctvmarkers.length; i++) {
+
+    	cctvmarker = cctvmarkers[i]
+        position = cctvmarker.getPosition();
+
+        if (mapBounds.hasLatLng(position)) {
+            showMarker(map, cctvmarker);
+        } else {
+            hideMarker(map, cctvmarker);
         }
     }
 }
