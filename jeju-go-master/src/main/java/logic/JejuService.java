@@ -51,7 +51,7 @@ public class JejuService {
 		List<MultipartFile> fileList = mtfRequest.getFiles("photoname");
 
 		for (MultipartFile mf : fileList) {
-			String originFileName = mf.getOriginalFilename(); // ¿øº» ÆÄÀÏ ¸í
+			String originFileName = mf.getOriginalFilename(); // ì›ë³¸ íŒŒì¼ ëª…
 			String path = request.getServletContext().getRealPath("/") + "img/";
 			String safeFile = path + System.currentTimeMillis() + originFileName;
 
@@ -142,9 +142,9 @@ public class JejuService {
 		MessageDigest md;
 		try {
 			md = MessageDigest.getInstance("SHA-256");
-			hash = md.digest(plain);// ÇØ½¬¾ÏÈ£ »ı¼º
+			hash = md.digest(plain);// í•´ì‰¬ì•”í˜¸ ìƒì„±
 			for (byte b : hash) {
-				result += String.format("%02X", b); // ÇÙ»ç°ªÀ¸·Î Ãâ·Â(16Áø¼ö)
+				result += String.format("%02X", b); // í•µì‚¬ê°’ìœ¼ë¡œ ì¶œë ¥(16ì§„ìˆ˜)
 			}
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -180,9 +180,9 @@ public class JejuService {
 		MessageDigest md;
 		try {
 			md = MessageDigest.getInstance("SHA-256");
-			hash = md.digest(plain);// ÇØ½¬¾ÏÈ£ »ı¼º
+			hash = md.digest(plain);// í•´ì‰¬ì•”í˜¸ ìƒì„±
 			for (byte b : hash) {
-				result += String.format("%02X", b); // ÇÙ»ç°ªÀ¸·Î Ãâ·Â(16Áø¼ö)
+				result += String.format("%02X", b); // í•µì‚¬ê°’ìœ¼ë¡œ ì¶œë ¥(16ì§„ìˆ˜)
 			}
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -440,3 +440,4 @@ public class JejuService {
 		return userdao.countPoint(userid);
 	}
 }
+
