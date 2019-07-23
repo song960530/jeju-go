@@ -352,4 +352,8 @@ public class JejuService {
 	public void DeleteRequest(User user) {
 		userdao.deleterequest(user);
 	}
+
+	public void admindelete(User user) {
+		userdao.admindelete(user);
+	}
 }

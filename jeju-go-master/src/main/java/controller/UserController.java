@@ -56,11 +56,6 @@ public class UserController {
 	@PostMapping("login")
 	public ModelAndView login(@Valid User user, BindingResult bindResult, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-//		if (bindResult.hasErrors()) {
-//			bindResult.reject("error.input.user");
-//			mav.getModel().putAll(bindResult.getModel());
-//			return mav;
-//		}
 		try {
 			User dbUser = service.userSelect(user.getUserid());
 			if (dbUser == null) {
@@ -190,11 +185,15 @@ public class UserController {
 	   public ModelAndView delete(User user, HttpSession session) {
 	      ModelAndView mav = new ModelAndView();
 	      User dbUser = (User)session.getAttribute("login");
-	      System.out.println(dbUser);
 		  String password = service.MessageDigest(user.getPassword());
-		  System.out.println(password);
 	      if(!dbUser.getPassword().equals(password)) {
-	         throw new LogInException("비밀번호가 틀립니다.","withdrawal.jeju?id=" + user.getUserid());
+//	    	  mav.addObject("msg","비밀번호가 틀립니다.");
+//	    	  mav.addObject("url","withdrawal.jeju");
+	          throw new LogInException("비밀번호가 틀립니다.","withdrawal.jeju");
+//	    	  mav.addObject("msg", "비밀번호가 틀립니다.");
+//	          mav.addObject("url", "withdrawal.jeju");
+//	          mav.setViewName("alert");
+//	          return mav;
 	      }
 	      try {
 	         service.DeleteRequest(user);

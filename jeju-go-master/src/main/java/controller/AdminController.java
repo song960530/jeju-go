@@ -3,14 +3,19 @@ package controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import logic.JejuService;
 import logic.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import exception.LogInException;
 
 @Controller
 @RequestMapping("admin")
@@ -38,10 +43,9 @@ public class AdminController {
 		return mav;
 	}
 
-	@PostMapping("delete")
+	@RequestMapping("delete")
 	public ModelAndView delete(String[] idchks) {
 		ModelAndView mav = new ModelAndView();
-
 		for (String id : idchks) {
 			service.Delete(id);
 		}
@@ -50,5 +54,24 @@ public class AdminController {
 		mav.setViewName("alert");
 		return mav;
 	}
-
+	
+	@RequestMapping("admindelete")
+	public ModelAndView admindelete(User user, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+	      User dbUser = (User)session.getAttribute("login");
+		  String password = service.MessageDigest(user.getPassword());
+	      if(!dbUser.getPassword().equals(password)) {
+	         throw new LogInException("비밀번호가 틀립니다.","list.jeju");
+	      }
+	      try {
+	         service.admindelete(user);
+	         if (dbUser.getUserid().equals("admin")) {
+	            mav.setViewName("redirect:../admin/list.jeju");
+	         } 
+	      } catch(Exception e) {
+	         e.printStackTrace();
+	         throw new LogInException("탈퇴실패", "list.jeju");
+	      }
+	      return mav;
+	}
 }

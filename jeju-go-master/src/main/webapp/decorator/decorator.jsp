@@ -105,7 +105,7 @@ body, h1, h2, h3, h4, h5, h6 {
 		<a href="#" class="w3-bar-item w3-button"></a>
 		<c:if test="${empty sessionScope.login}">
 			<button class="w3-button fa fa-home">
-				&nbsp;<b>로그인을 해주세요</b>
+				&nbsp;<a href="javascript:void(0)" onclick="document.getElementById('login').style.display='block'"><b>로그인을 해주세요</b></a>
 			</button>
 		</c:if>
 		<c:if test="${!empty sessionScope.login}">

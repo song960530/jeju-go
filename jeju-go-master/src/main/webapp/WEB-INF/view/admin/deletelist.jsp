@@ -20,6 +20,20 @@ div.right {
    float: right;
    box-sizing: border-box;
 }
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+tr:nth-child(even){background-color: #f2f2f2}
+tr:nth-child(odd){background-color: white;}
+th {
+  background-color: #56A9E8;
+  color: white;
+}
 </style>
 <title>È¸¿ø Å»Åð ½ÅÃ» ¸ñ·Ï</title>
 <script type="text/javascript">
@@ -32,9 +46,9 @@ div.right {
 </script>
 </head>
 <body>
-<div class="container"
-		style="margin-left: 5%; margin-right: 5%; width: 90%;">
-		<div class="right">
+<div class="container">
+		<div>
+		<!-- <div style="margin-left: 5%; margin-right: 5%; width: 90%;"> -->
 			<button class="btn-primarys">
 				<h2 class="widgetheading" style="text-align: center;">Å»Åð ½ÅÃ» È¸¿ø ¸ñ·Ï</h2>
 			</button>
@@ -44,7 +58,6 @@ div.right {
 					<th>¾ÆÀÌµð</th>
 					<th>ÀÌ¸§</th>
 					<th>ÀüÈ­</th>
-					<th>&nbsp;</th>
 					<th><input type="checkbox" name="allchk"
 						onchange="allchkbox(this)"></th>
 				</tr>
@@ -54,15 +67,14 @@ div.right {
 						<td>${user.userid}</td>
 						<td>${user.username}</td>
 						<td>${user.phone}</td>
-						<th>&nbsp;</th>
-						<td><input type="checkbox" name="idchks"
-							value="${user.userid}"></td>
+						<td><input type="checkbox" name="idchks" value="${user.userid}"></td>
 					</tr>
 				</c:if>	
 				</c:forEach>
 			</table>
 <%-- 				<input type="hidden" name="userId" value="${user.userid}"> --%>
-				<p><input type="button" onclick="document.getElementById('delete').submit();" value="Å»Åð½ÂÀÎ"></p>
+				<p style="float: right;"><input type="submit" class="btn btn-primary" value="Å»Åð½ÂÀÎ"></p>
+				<!-- <input type="button" class="btn btn-primary" onclick="location.href='../user/main.jeju'" value="°­Á¦Å»Åð"> -->
 			</form>
 		</div>
 	</div>

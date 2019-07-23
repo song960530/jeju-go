@@ -32,14 +32,16 @@
          </div>
          <div>
             <br />
-            <form id= "wdForm" action="withdrawal.jeju" method="post">
+            <form action="withdrawal.jeju" method="post" name="deleteform">
                <input type="hidden" name="userid" readonly value ="${login.userid}">
                <p>
                   <label>Password</label>
                   <input class="w3-input" type="password" name="password" required>
                </p>
                <p class="w3-center">
+               
                   <button type="submit" id="joinBtn" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">È¸¿ø Å»Åð</button>
+<!--                   <a href="javascript:deleteform.submit()">[È¸¿øÅ»Åð]</a> -->
                </p>
             </form>
          </div>
