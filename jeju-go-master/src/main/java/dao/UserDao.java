@@ -2,6 +2,8 @@ package dao;
 
 import dao.mapper.UserMapper;
 import java.util.*;
+
+import logic.Point;
 import logic.User;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +64,13 @@ public class UserDao {
 
 	public void updatepw(User user) {
 		sqlSession.getMapper(UserMapper.class).updatepw(user);
+	}
+
+	public Point getPoint(String userid) {
+		return sqlSession.getMapper(UserMapper.class).getPoint(userid);
+	}
+
+	public int countPoint(String userid) {
+		return sqlSession.getMapper(UserMapper.class).countPoint(userid);
 	}
 }

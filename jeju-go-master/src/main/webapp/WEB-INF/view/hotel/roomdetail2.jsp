@@ -104,7 +104,8 @@ function showDivs(n) {
 			<br>
 			<div class="">
 				<c:if test="${count!=0 }">
-				<input type="button" class="w3-button w3-block w3-blue"style="height:54px;" value="예약하기">
+				<input type="button" class="w3-button w3-block w3-blue"style="height:54px;" 
+				onclick="location.href='reservationForm.jeju?userid=${login.userid}&hno=${room.hno}&name=${room.name}&pnum=${people}&start=${startday}&end=${endday}'"value="예약하기">
 				</c:if>
 				<c:if test="${count==0 }">
 				<input type="button" class="w3-button w3-block w3-red"style="height:54px;opacity: 0.7;cursor: not-allowed;" value="예약 불가">

@@ -2,6 +2,7 @@ package controller;
 
 import com.opencsv.CSVReader;
 
+import logic.Final;
 import logic.Hotel;
 import logic.Hreserve;
 import logic.JejuService;
@@ -201,7 +202,7 @@ public class HotelController {
 
 		Hotel hotel = service.searchselectOne(no, start, end, people);
 
-		int count=0;
+		int count = 0;
 		for (Room r2 : hotel.getRoom()) {
 			if (r2.getName().equals(name))
 				count = r2.getRoomcount();
@@ -215,6 +216,18 @@ public class HotelController {
 		mav.addObject("name", name);
 		mav.addObject("count", count);
 		mav.setViewName("hotel/roomdetail2");
+		return mav;
+	}
+
+	@GetMapping("reservationForm")
+	public ModelAndView reservationForm(Final f1) {
+		ModelAndView mav = new ModelAndView();
+		Final f = service.reservation(f1);
+		System.out.println(f.getUserid());
+		int countpoint = service.countPoint(f1.getUserid());
+		System.out.println(countpoint);
+		mav.addObject("countpoint", countpoint);
+		mav.addObject("f", f);
 		return mav;
 	}
 
