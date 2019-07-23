@@ -184,9 +184,14 @@ public class UserController {
 	public ModelAndView updatemypage(User user, BindingResult bindResult, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		User loginUser = (User) session.getAttribute("loginUser");
+		User dbUser = (User) session.getAttribute("login");
 		service.update(user);
 		mav.addObject("msg", "정보 수정 완료");
 		mav.addObject("url", "mypage.jeju?userid=" + user.getUserid());
+		if (dbUser.getUserid().equals("admin")) {
+			mav.addObject("msg", "정보 수정 완료");
+			mav.addObject("url", "../admin/list.jeju");
+		}
 		mav.setViewName("alert");
 		return mav;
 	}

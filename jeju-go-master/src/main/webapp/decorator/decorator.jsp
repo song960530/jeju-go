@@ -299,7 +299,7 @@ body, h1, h2, h3, h4, h5, h6 {
 					<div class="col-lg-6">
 						<div class="copyright">
 							<p>
-								<span>&copy; Designed by <a>한희</a></span>
+								<span>&copy; Designed by <a></a></span>
 							</p>
 							<div class="credits">
 								<!--
@@ -363,13 +363,13 @@ body, h1, h2, h3, h4, h5, h6 {
 							name="password" placeholder="비밀번호">
 					</p>
 					<p>
-						<a class="w3-button w3-padding-large w3-green w3-margin-bottom"
+						<a class="btn btn-primary"
 							href="javascript:void(0)"
 							onclick="document.getElementById('searchid').style.display='block'">아이디/비밀번호
 							찾기</a>
 					</p>
 					<button type="submit"
-						class="w3-button w3-padding-large w3-green w3-margin-bottom">로그인</button>
+						class="btn btn-primary">로그인</button>
 				</form:form>
 			</div>
 		</div>
@@ -381,72 +381,94 @@ body, h1, h2, h3, h4, h5, h6 {
 			<div class="w3-container w3-white w3-center">
 				<i
 					onclick="document.getElementById('searchid').style.display='none'"
-					class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent">x</i>
+					class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent"></i>
 				<h2 class="w3-wide">아이디/비밀번호 찾기</h2>
 				<p>인증된 이메일만 정보 찾기가 가능합니다 .</p>
+				</div>
+				
 				<div style="margin-bottom: 10px;"
 					class="custom-control custom-radio custom-control-inline">
 					<input type="radio" class="custom-control-input" id="search_1"
 						name="search_total" onclick="search_check(1)" checked="checked">
 					<label class="custom-control-label font-weight-bold text-white"
-						for="search_1"></label>
-					<p>아이디 찾기</p>
-				</div>
-				<div class="custom-control custom-radio custom-control-inline">
+						for="search_1">아이디찾기</label>
 					<input type="radio" class="custom-control-input" id="search_2"
 						name="search_total" onclick="search_check(2)"> <label
 						class="custom-control-label font-weight-bold text-white"
-						for="search_2"></label>
-					<p>비밀번호 찾기</p>
+						for="search_2">비밀번호찾기</label>
 				</div>
 				<div id="searchI">
-					<form name="sf" action="${path }/user/userSearch.jeju"
-						method="post">
+					<form name="sf" action="userSearch.jeju" method="post">
 						<div class="form-group">
-							<label class="font-weight-bold text-white" for="inputName_1"></label>
-							<p>이름</p>
+							<label class="font-weight-bold text-white" for="inputName_1">이름</label>
 							<div>
 								<input type="text" class="form-control" id="username"
 									name="username" placeholder="ex) 송문준">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="font-weight-bold text-white" for="inputPhone_1"></label>
-							<p>휴대폰번호</p>
+							<label class="font-weight-bold text-white" for="inputPhone_1">휴대폰번호</label>
 							<div>
 								<input type="text" class="form-control" id="Phone" name="Phone"
 									placeholder="ex) 01077779999">
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group w3-center">
 							<button id="searchBtn2" type="submit"
-								class="btn btn-primary btn-block">확인</button>
-							<a class="btn btn-danger btn-block"
-								href="${pageContext.request.contextPath}">취소</a>
+								class="btn btn-primary">확인</button>
 						</div>
 					</form>
 				</div>
 				<div id="searchP" style="display: none;">
-					<form name="pf" action="${path }/user/passSearch.jeju"
-						method="post">
+					<form name="pf" action="passSearch.jeju" method="post">
 						<div class="form-group">
-							<label class="font-weight-bold text-white" for="inputId"></label>
-							<p>아이디(이메일)</p>
+							<label class="font-weight-bold text-white" for="inputId">이메일</label>
 							<div>
 								<input type="text" class="form-control" id="userid"
 									style="text-transform: lowercase;" name="userid"
 									placeholder="ex)goodee@aaa.bbb">
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group w3-center">
 							<button id="searchBtn2" type="submit"
-								class="btn btn-primary btn-block">확인</button>
-							<a class="btn btn-danger btn-block"
-								href="${pageContext.request.contextPath}">취소</a>
+								class="btn btn-primary">확인</button>
 						</div>
 					</form>
 				</div>
 
+			</div>
+		</div>
+	<div id="signin" class="w3-modal" style="display: none;">
+		<div class="w3-modal-content w3-animate-zoom w3-padding-large">
+			<div class="w3-container w3-white w3-center">
+				<i onclick="document.getElementById('signin').style.display='none'"
+					class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent"></i>
+				<h2 class="w3-wide">Sign In</h2>
+				<p>회원가입에 필요한 정보를 입력하세요.</p>
+				<form:form modelattribute="user" name="f" action="userEntry.jeju"
+					method="post" onsubmit="return passchk(this)">
+					<p>
+						<input class="w3-input w3-border" type="text" name="username"
+							style="text-transform: lowercase;" placeholder="이름">
+					</p>
+					<p>
+						<input class="w3-input w3-border" type="text" name="userid"
+							style="text-transform: lowercase;" placeholder="아이디(이메일)">
+					</p>
+					<p>
+						<input class="w3-input w3-border" type="password" name="password"
+							style="text-transform: lowercase;" placeholder="비밀번호">
+					</p>
+					<p>
+						<input class="w3-input w3-border" type="password" name="checkpassword"
+							style="text-transform: lowercase;" placeholder="비밀번호 확인">
+					</p>
+					<p>
+						<input class="w3-input w3-border"type="text" name="phone" placeholder="전화번호">
+					</p>
+					<button type="submit"
+						class="btn btn-primary">회원가입</button>
+				</form:form>
 			</div>
 		</div>
 	</div>

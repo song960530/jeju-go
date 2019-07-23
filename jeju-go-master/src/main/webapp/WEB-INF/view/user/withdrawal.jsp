@@ -27,9 +27,9 @@
 <body>
 <div class="w3-content w3-container w3-margin-top">
 		<div class="w3-container w3-card-4">
-			<div class="w3-center w3-large w3-margin-top">
-				<h3>È¸¿ø Å»Åð</h3>
-			</div>
+			<div class="recent">
+         		 <h2 class="widgetheading" style="text-align: center;">È¸¿øÅ»Åð ½ÅÃ»</h2>
+        	</div>
 			<div>
 				<br />
 				<form id= "wdForm" action="withdrawal.jeju" method="post">
@@ -39,7 +39,7 @@
 						<input class="w3-input" type="password" name="password" required>
 					</p>
 					<p class="w3-center">
-						<button type="submit" id="joinBtn" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">È¸¿ø Å»Åð</button>
+						<button type="submit" id="joinBtn" class="btn btn-primary">È¸¿ø Å»Åð</button>
 					</p>
 				</form>
 			</div>

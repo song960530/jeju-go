@@ -56,8 +56,6 @@ th {
 			<button class="btn-primarys">
 				<h2 class="widgetheading" style="text-align: center;">회원 목록</h2>
 			</button>
-			<input type="button" class="btn btn-primary" value="afasdf">
-			<input type="button" class="btn btn-primary" onclick="location.href='../user/main.jeju'" value="탈퇴승인">
 			<table>
 				<tr style="color: black;">
 					<th>아이디</th>
@@ -73,9 +71,8 @@ th {
 						<td>${user.username}</td>
 						<td>${user.phone}</td>
 						<td>
-							<a href="../user/mypage.jeju?id=${user.userid}"><button type="button" class="btn btn-primary">수정</button></a>
 							<a href="javascript:void(0)"  onclick="document.getElementById('admindelete${user.userid}').style.display='block'"class="btn btn-primary">강제탈퇴</a>
-							<a href="../user/mypage.jeju?id=${user.userid}"><button type="button" class="btn btn-primary">회원정보</button></a>
+							<a href="../user/mypage.jeju?userid=${user.userid}"><button type="button" class="btn btn-primary">회원정보 수정</button></a>
 						</td>
 					</tr>
 					<!-- 강제탈퇴 비밀번호 확인 부분 -->

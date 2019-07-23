@@ -66,7 +66,10 @@ public class AdminController {
 	      try {
 	         service.admindelete(user);
 	         if (dbUser.getUserid().equals("admin")) {
-	            mav.setViewName("redirect:../admin/list.jeju");
+//	            mav.setViewName("redirect:../admin/list.jeju");
+	        	mav.addObject("msg", "Å»Åð Ã³¸® µÇ¾ú½À´Ï´Ù.");
+	     		mav.addObject("url", "list.jeju");
+	     		mav.setViewName("alert");
 	         } 
 	      } catch(Exception e) {
 	         e.printStackTrace();

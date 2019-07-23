@@ -15,25 +15,25 @@
 <body>
 <div class="w3-content w3-container w3-margin-top">
 		<div class="w3-container w3-card-4">
-			<div class="w3-center w3-large w3-margin-top">
-				<h3>My Page</h3>
-			</div>
+			<div class="recent">
+         		 <h2 class="widgetheading" style="text-align: center;">My Page</h2>
+        	</div>
 			<div>
 				<form id="myForm" action="updatemypage.jeju" method="post">
 					<p>
 						<label>아이디</label> 
-						<input class="w3-input" type="text" id="id" name="userid" readonly value="${ user.userid }"> 
+						<input class="w3-input" type="text" id="id" name="userid" readonly value="${user.userid}"> 
 					</p>
 					<p>
 						<label>이름</label> 
-						<input class="w3-input" type="text" id="name" name="username" readonly value="${ user.username }"> 
+						<input class="w3-input" type="text" id="name" name="username" readonly value="${user.username}"> 
 					</p>
 					<p>
 						<label>휴대폰번호</label> 
-						<input class="w3-input" type="text" id="phone" name="phone" value="${ user.phone }" required> 
+						<input class="w3-input" type="text" id="phone" name="phone" value="${user.phone}" required> 
 					</p>
 					<p class="w3-center">
-						<button type="submit" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">회원정보 변경</button>
+						<button type="submit" class="btn btn-primary">회원정보 변경</button>
 					</p>
 				</form>
 				<br />
