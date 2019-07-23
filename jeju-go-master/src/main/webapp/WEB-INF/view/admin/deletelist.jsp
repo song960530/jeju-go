@@ -19,19 +19,17 @@ div.right {
    width: 70%;
    float: right;
    box-sizing: border-box;
-}table {
+}
+table {
   border-collapse: collapse;
   width: 100%;
 }
-
 th, td {
   text-align: left;
   padding: 8px;
 }
-
 tr:nth-child(even){background-color: #f2f2f2}
 tr:nth-child(odd){background-color: white;}
-
 th {
   background-color: #56A9E8;
   color: white;
@@ -75,7 +73,8 @@ th {
 				</c:forEach>
 			</table>
 <%-- 				<input type="hidden" name="userId" value="${user.userid}"> --%>
-				<p style="float: right;"><input type="button" class="btn btn-primary" onclick="document.getElementById('delete').submit();" value="Ε»Επ½ΒΐΞ"></p>
+				<p style="float: right;"><input type="submit" class="btn btn-primary" value="Ε»Επ½ΒΐΞ"></p>
+				<!-- <input type="button" class="btn btn-primary" onclick="location.href='../user/main.jeju'" value="°­Α¦Ε»Επ"> -->
 			</form>
 		</div>
 	</div>

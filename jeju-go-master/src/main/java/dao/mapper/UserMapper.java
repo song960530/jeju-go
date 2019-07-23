@@ -32,4 +32,7 @@ public interface UserMapper {
 
 	@Update("update member set deleterequest='Y' where userid=#{userid}")
 	void deleterequest(User user);
+
+	@Delete("delete from member where userid=#{userid}")
+	void admindelete(User user);
 }

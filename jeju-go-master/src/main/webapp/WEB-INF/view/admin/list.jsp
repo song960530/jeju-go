@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-   pageEncoding="EUC-KR"%>
+    pageEncoding="EUC-KR"%>
 <%@ include file="/WEB-INF/view/jspHeader.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -20,6 +20,20 @@ div.right {
    float: right;
    box-sizing: border-box;
 }
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+tr:nth-child(even){background-color: #f2f2f2}
+tr:nth-child(odd){background-color: white;}
+th {
+  background-color: #56A9E8;
+  color: white;
+}
 </style>
 <title>회원 목록</title>
 <script type="text/javascript">
@@ -29,15 +43,21 @@ div.right {
          chks[i].checked = allchk.checked;
       }
    }
+   function passchk(id){
+	   alert("dz")
+	   return false;
+	   
+   }
 </script>
 </head>
 <body>
-	<div class="container"
-		style="margin-left: 5%; margin-right: 5%; width: 90%;">
-		<div class="right">
+	<div class="container">
+		<div>
 			<button class="btn-primarys">
 				<h2 class="widgetheading" style="text-align: center;">회원 목록</h2>
 			</button>
+			<input type="button" class="btn btn-primary" value="afasdf">
+			<input type="button" class="btn btn-primary" onclick="location.href='../user/main.jeju'" value="탈퇴승인">
 			<table>
 				<tr style="color: black;">
 					<th>아이디</th>
@@ -52,12 +72,36 @@ div.right {
 						<td>${user.userid}</td>
 						<td>${user.username}</td>
 						<td>${user.phone}</td>
-						<td><a href="../user/update.jeju?id=${user.userid}">수정</a> <a
-							href="../user/delete.jeju?id=${user.userid}">강제탈퇴</a> <a
-							href="../user/mypage.jeju?id=${user.userid}">회원정보</a></td>
-					<%-- 	<td><input type="checkbox" name="idchks"
-							value="${user.userid}"></td> --%>
+						<td>
+							<a href="../user/mypage.jeju?id=${user.userid}"><button type="button" class="btn btn-primary">수정</button></a>
+							<a href="javascript:void(0)"  onclick="document.getElementById('admindelete${user.userid}').style.display='block'"class="btn btn-primary">강제탈퇴</a>
+							<a href="../user/mypage.jeju?id=${user.userid}"><button type="button" class="btn btn-primary">회원정보</button></a>
+						</td>
 					</tr>
+					<!-- 강제탈퇴 비밀번호 확인 부분 -->
+						<div id="admindelete${user.userid}" class="w3-modal" style="display: none;">
+							<div class="w3-modal-content w3-animate-zoom w3-padding-large">
+								<div class="w3-container w3-white w3-center">
+									<i onclick="document.getElementById('admindelete${user.userid}').style.display='none'"
+										class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent"></i>
+									<h2 class="w3-wide">관리자 비밀번호 확인</h2>
+									<p>비밀번호를 입력하세요</p>
+									<form action="admindelete.jeju" method="post" id="admindelete">
+									<%-- <form:form modelattribute="user" action="admindelete.jeju?userid=${user.userid}"
+										name="lf" onsubmit="return loginchk(this)"> --%>
+										<input type="hidden" name="userid" value="${user.userid}">
+										<p>
+											<input class="w3-input w3-border"
+												style="text-transform: lowercase;" type="password"
+												name="password" placeholder="비밀번호">
+										</p>
+										<button type="submit"
+											class="w3-button w3-padding-large w3-green w3-margin-bottom">강제탈퇴</button>
+									</form>
+									<%-- </form:form> --%>
+			</div>
+		</div>
+	</div>
 				</c:forEach>
 			</table>
 		</div>
