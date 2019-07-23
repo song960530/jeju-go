@@ -35,7 +35,7 @@
 			<tr><td>${boardno}</td>
 				<c:set var="boardno" value="${boardno - 1}"/>
 				
-				<c:if test="${param.type2 == ''}">
+				<c:if test="${empty param.type2}">
 				<td style="text-align:left">
 					<a href="${path}/board/csdetail.jeju?no=${board.no}&type=${board.type}&type2=${board.type2}">${board.subject}</a></td>
 				</c:if>
