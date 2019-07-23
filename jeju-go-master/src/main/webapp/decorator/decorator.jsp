@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+   pageEncoding="EUC-KR"%>
 <%-- /webapp/decorator/decorator.jsp --%>
 <%@taglib prefix="decorator"
-	uri="http://www.opensymphony.com/sitemesh/decorator"%>
+   uri="http://www.opensymphony.com/sitemesh/decorator"%>
 <%@ include file="/WEB-INF/view/jspHeader.jsp"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jeju Go</title>
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link href="../Arsha/css/bootstrap.min.css" rel="stylesheet">
 <link href="../Arsha/css/responsive-slider.css" rel="stylesheet">
 <!-- <link rel="stylesheet" href="../Arsha/css/animate.css">
@@ -23,310 +23,315 @@
 <link href="../Arsha/css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link
-	href="https://fonts.googleapis.com/css?family=Nanum+Brush+Script&display=swap"
-	rel="stylesheet">
+   href="https://fonts.googleapis.com/css?family=Nanum+Brush+Script&display=swap"
+   rel="stylesheet">
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 body, h1, h2, h3, h4, h5, h6 {
-	font-family: "Raleway", Arial, Helvetica, sans-serif;
-	color: black;
+   font-family: "Raleway", Arial, Helvetica, sans-serif;
+   color: black;
 }
 
 .mySlides {
-	display: none
+   display: none
 }
 </style>
 <script type="text/javascript">
-	function search_check(num) {
-		if (num == '1') {
-			document.getElementById("searchP").style.display = "none";
-			document.getElementById("searchI").style.display = "";
-		} else {
-			document.getElementById("searchI").style.display = "none";
-			document.getElementById("searchP").style.display = "";
-		}
-	}
-	
-	function getFormatDate(date) {
-		var year = date.getFullYear(); //yyyy 
-		var month = (1 + date.getMonth()); //M 
-		month = month >= 10 ? month : '0' + month; //month ë‘ìë¦¬ë¡œ ì €ì¥
-		var day = date.getDate(); //d 
-		day = day >= 10 ? day : '0' + day; //day ë‘ìë¦¬ë¡œ ì €ì¥ 
+   function search_check(num) {
+      if (num == '1') {
+         document.getElementById("searchP").style.display = "none";
+         document.getElementById("searchI").style.display = "";
+      } else {
+         document.getElementById("searchI").style.display = "none";
+         document.getElementById("searchP").style.display = "";
+      }
+   }
+   
+   function getFormatDate(date) {
+      var year = date.getFullYear(); //yyyy 
+      var month = (1 + date.getMonth()); //M 
+      month = month >= 10 ? month : '0' + month; //month µÎÀÚ¸®·Î ÀúÀå
+      var day = date.getDate(); //d 
+      day = day >= 10 ? day : '0' + day; //day µÎÀÚ¸®·Î ÀúÀå 
 
-		return year + '-' + month + '-' + day;
-	}
+      return year + '-' + month + '-' + day;
+   }
 
-	function chksearch(f) {
-		var date = new Date(); 
-		date = getFormatDate(date);
-		
-		var today = new Date(date)
-		var start = new Date(f.start.value)
-		var end = new Date(f.end.value)
-		
-		if(f.start.value=="" || f.end.value==""){
-			alert('ì²´í¬ì¸/ì²´í¬ì•„ì›ƒ ë‚ ì§œë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”');
-			return false;
-		}
-		if(today>start){
-			alert('ì²´í¬ì¸ ë‚ ì§œë¥¼ í™•ì¸í•´ì£¼ì„¸ìš”');
-			f.start.focus();
-			return false;
-		}
-		if(f.start.value==f.end.value || start>=end){
-			alert('ìµœì†Œ 1ë°•ì´ìƒ ì˜ˆì•½ì´ ê°€ëŠ¥í•©ë‹ˆë‹¤');
-			f.end.focus();
-			return false;
-		}
-		if(today>=end){
-			alert('ì²´í¬ì•„ì›ƒ ë‚ ì§œë¥¼ í™•ì¸í•´ì£¼ì„¸ìš”');
-			f.end.focus();
-			return false;
-		}
-		
-		if(f.people.value<=0){
-			alert('ì¸ì›ìˆ˜ë¥¼ í™•ì¸í•´ì£¼ì„¸ìš”')
-			f.people.focus();
-			return false;
-		}
-		return true;
-	}
+   function chksearch(f) {
+      var date = new Date(); 
+      date = getFormatDate(date);
+      
+      var today = new Date(date)
+      var start = new Date(f.start.value)
+      var end = new Date(f.end.value)
+      
+      if(f.start.value=="" || f.end.value==""){
+         alert('Ã¼Å©ÀÎ/Ã¼Å©¾Æ¿ô ³¯Â¥¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä');
+         return false;
+      }
+      if(today>start){
+         alert('Ã¼Å©ÀÎ ³¯Â¥¸¦ È®ÀÎÇØÁÖ¼¼¿ä');
+         f.start.focus();
+         return false;
+      }
+      if(f.start.value==f.end.value || start>=end){
+         alert('ÃÖ¼Ò 1¹ÚÀÌ»ó ¿¹¾àÀÌ °¡´ÉÇÕ´Ï´Ù');
+         f.end.focus();
+         return false;
+      }
+      if(today>=end){
+         alert('Ã¼Å©¾Æ¿ô ³¯Â¥¸¦ È®ÀÎÇØÁÖ¼¼¿ä');
+         f.end.focus();
+         return false;
+      }
+      
+      if(f.people.value<=0){
+         alert('ÀÎ¿ø¼ö¸¦ È®ÀÎÇØÁÖ¼¼¿ä')
+         f.people.focus();
+         return false;
+      }
+      return true;
+   }
 </script>
 </head>
 <decorator:head />
 <body>
-	<!-- Sidebar -->
-	<div class="w3-sidebar w3-bar-block w3-animate-left w3-light-grey"
-		style="display: none; z-index: 5;" id="mySidebar">
-		<button class="w3-bar-item w3-button w3-large" onclick="w3_close()">Close
-			&times;</button>
-		<a href="#" class="w3-bar-item w3-button"></a>
-		<c:if test="${empty sessionScope.login}">
-			<button class="w3-button fa fa-home">
-				&nbsp;<a href="javascript:void(0)" onclick="document.getElementById('login').style.display='block'"><b>ë¡œê·¸ì¸ì„ í•´ì£¼ì„¸ìš”</b></a>
-			</button>
-		</c:if>
-		<c:if test="${!empty sessionScope.login}">
-			<button class="w3-button fa fa-home">
-				&nbsp;<b>${sessionScope.login.username}ë‹˜ ë°˜ê°‘ìŠµë‹ˆë‹¤</b>
-			</button>
-			<a href="${path}/user/logout.jeju"
-				class="w3-bar-item w3-button fa fa-close">&nbsp;ë¡œê·¸ì•„ì›ƒ</a>
-			<a href="#" class="w3-bar-item w3-button"></a>
-		</c:if>
+   <!-- Sidebar -->
+   <div class="w3-sidebar w3-bar-block w3-animate-left w3-light-grey"
+      style="display: none; z-index: 5;" id="mySidebar">
+      <button class="w3-bar-item w3-button w3-large" onclick="w3_close()">Close
+         &times;</button>
+      <a href="#" class="w3-bar-item w3-button"></a>
+      <c:if test="${empty sessionScope.login}">
+         <button class="w3-button fa fa-home">
+            &nbsp;<a href="javascript:void(0)" onclick="document.getElementById('login').style.display='block'"><b>·Î±×ÀÎÀ» ÇØÁÖ¼¼¿ä</b></a>
+         </button>
+      </c:if>
+      <c:if test="${!empty sessionScope.login}">
+         <button class="w3-button fa fa-home">
+            &nbsp;<b>${sessionScope.login.username}´Ô ¹İ°©½À´Ï´Ù</b>
+         </button>
+         <a href="${path}/user/logout.jeju"
+            class="w3-bar-item w3-button fa fa-close">&nbsp;·Î±×¾Æ¿ô</a>
+         <a href="#" class="w3-bar-item w3-button"></a>
+      </c:if>
 
-		<c:if test="${!empty sessionScope.login}">
-			<div class="w3-dropdown-hover">
-				<button class="w3-button fa fa-male">
-					&nbsp;&nbsp;ë§ˆì´í˜ì´ì§€ <i class="fa fa-caret-down"></i>
-				</button>
-				<div class="w3-dropdown-content w3-bar-block">
-					<a href="${path}/user/mypage.jeju?userid=${login.userid}" class="w3-bar-item w3-button">ì •ë³´ ìˆ˜ì •</a> 
-          <a href="${path}/user/updatepw.jeju" class="w3-bar-item w3-button">ë¹„ë°€ë²ˆí˜¸ ë³€ê²½</a> 
-          <a href="#" class="w3-bar-item w3-button">í¬ì¸íŠ¸</a> 
-          <a href="#" class="w3-bar-item w3-button">ì˜ˆì•½ ë‚´ì—­</a> 
-          <a href="#"	class="w3-bar-item w3-button">ì°œ</a> 
-          <a href="${path}/user/inquiry.jeju" class="w3-bar-item w3-button">1:1 ë¬¸ì˜ ë‚´ì—­</a> 
-          <a href="${path}/user/withdrawal.jeju" class="w3-bar-item w3-button">íšŒì›íƒˆí‡´ ì‹ ì²­</a>
-				</div>
-			</div>
-		</c:if>
-		<c:if test="${sessionScope.login.userid=='admin'}">
-			<div class="w3-dropdown-hover">
-				<button class="w3-button fa fa-search">
-					&nbsp;&nbsp;íšŒì›ê´€ë¦¬ <i class="fa fa-caret-down"></i>
-				</button>
-				<div class="w3-dropdown-content w3-bar-block">
-					<a href="${path}/admin/list.jeju" class="w3-bar-item w3-button">íšŒì›ëª©ë¡</a>
-					<a href="${path}/admin/deletelist.jeju" class="w3-bar-item w3-button">íƒˆí‡´ ì‹ ì²­ ëª©ë¡</a>
-					<a href="#" class="w3-bar-item w3-button">ì˜ˆì•½ ì‹ ì²­ ëª©ë¡</a>
-					<a href="#" class="w3-bar-item w3-button">ì˜ˆì•½ ê´€ë¦¬ í˜ì´ì§€</a>
-					<a href="${path}/admin/qnalist.jeju" class="w3-bar-item w3-button">1:1ë¬¸ì˜ ëª©ë¡</a>
-				</div>
-			</div>
-			<div class="w3-dropdown-hover">
-				<button class="w3-button fa fa-home">
-					&nbsp;&nbsp;ìˆ™ì†Œ <i class="fa fa-caret-down"></i>
-				</button>
-				<div class="w3-dropdown-content w3-bar-block">
-					<a href="${path}/hotel/regist.jeju" class="w3-bar-item w3-button">ìˆ™ì†Œ ë“±ë¡</a>
-					<a href="${path}/hotel/adminhotellist.jeju" class="w3-bar-item w3-button">ìˆ™ì†Œ ë°© ë“±ë¡</a>
-					<a href="${path}/hotel/adminhotellist.jeju" class="w3-bar-item w3-button">ì˜ˆì•½ ê°€ëŠ¥ ë°© ë“±ë¡</a>
-					<a href="#" class="w3-bar-item w3-button">ìˆ™ì†Œ/íŒ¨í‚¤ì§€ë³„ ì´ìš© íšŸìˆ˜</a>
-				</div>
-			</div>
+      <c:if test="${!empty sessionScope.login}">
+         <div class="w3-dropdown-hover">
+            <button class="w3-button fa fa-male">
+               &nbsp;&nbsp;¸¶ÀÌÆäÀÌÁö <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="w3-dropdown-content w3-bar-block">
+               <a href="${path}/user/mypage.jeju?userid=${login.userid}"
+                  class="w3-bar-item w3-button">Á¤º¸ ¼öÁ¤</a> <a href="${path}/user/updatepw.jeju"
+                  class="w3-bar-item w3-button">ºñ¹Ğ¹øÈ£ º¯°æ</a> <a href="#"
+                  class="w3-bar-item w3-button">Æ÷ÀÎÆ®</a> <a href="#"
+                  class="w3-bar-item w3-button">¿¹¾à ³»¿ª</a> <a href="#"
+                  class="w3-bar-item w3-button">Âò</a> <a href="${path}/board/qnalist.jeju?userid=${login.userid}"
+                  class="w3-bar-item w3-button">1:1 ¹®ÀÇ ³»¿ª</a> <a href="${path}/user/withdrawal.jeju"
+                  class="w3-bar-item w3-button">È¸¿øÅ»Åğ ½ÅÃ»</a>
+            </div>
+         </div>
+      </c:if>
+      <c:if test="${sessionScope.login.userid=='admin'}">
+         <div class="w3-dropdown-hover">
+            <button class="w3-button fa fa-search">
+               &nbsp;&nbsp;È¸¿ø°ü¸® <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="w3-dropdown-content w3-bar-block">
+               <a href="${path}/admin/list.jeju" class="w3-bar-item w3-button">È¸¿ø
+                  ¸ñ·Ï</a> <a href="${path}/admin/deletelist.jeju"
+                  class="w3-bar-item w3-button">Å»Åğ ½ÅÃ» ¸ñ·Ï</a> <a href="#"
+                  class="w3-bar-item w3-button">¿¹¾à ½ÅÃ» ¸ñ·Ï</a> <a href="#"
+                  class="w3-bar-item w3-button">¿¹¾à °ü¸® ÆäÀÌÁö</a> <a href="../admin/qnalist.jeju"
+                  class="w3-bar-item w3-button">1:1¹®ÀÇ ¸ñ·Ï</a>
+            </div>
+         </div>
 
-			<div class="w3-dropdown-hover">
-				<button class="w3-button fa fa-plane">
-					&nbsp;&nbsp;íŒ¨í‚¤ì§€ <i class="fa fa-caret-down"></i>
-				</button>
-				<div class="w3-dropdown-content w3-bar-block">
-					<a href="#" class="w3-bar-item w3-button">íŒ¨í‚¤ì§€ ë“±ë¡</a>
-				</div>
-			</div>
-		</c:if>
-	</div>
+         <div class="w3-dropdown-hover">
+            <button class="w3-button fa fa-home">
+               &nbsp;&nbsp;¼÷¼Ò <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="w3-dropdown-content w3-bar-block">
+               <a href="${path}/hotel/regist.jeju" class="w3-bar-item w3-button">¼÷¼Ò
+                  µî·Ï</a> <a href="${path}/hotel/adminhotellist.jeju"
+                  class="w3-bar-item w3-button">¼÷¼Ò ¹æ µî·Ï</a> <a
+                  href="${path}/hotel/adminhotellist.jeju"
+                  class="w3-bar-item w3-button">¿¹¾à °¡´É ¹æ µî·Ï</a> <a href="#"
+                  class="w3-bar-item w3-button">¼÷¼Ò/ÆĞÅ°Áöº° ÀÌ¿ë È½¼ö</a>
+            </div>
+         </div>
 
-	<!-- Page Content -->
-	<div class="w3-overlay w3-animate-opacity" onclick="w3_close()"
-		style="cursor: pointer" id="myOverlay"></div>
+         <div class="w3-dropdown-hover">
+            <button class="w3-button fa fa-plane">
+               &nbsp;&nbsp;ÆĞÅ°Áö <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="w3-dropdown-content w3-bar-block">
+               <a href="#" class="w3-bar-item w3-button">ÆĞÅ°Áö µî·Ï</a>
+            </div>
+         </div>
+      </c:if>
+   </div>
 
-	<div>
-		<button class="w3-button w3-white w3-xxlarge" onclick="w3_open()">&#9776;</button>
-	</div>
+   <!-- Page Content -->
+   <div class="w3-overlay w3-animate-opacity" onclick="w3_close()"
+      style="cursor: pointer" id="myOverlay"></div>
 
-	<script>
-		function w3_open() {
-			document.getElementById("mySidebar").style.display = "block";
-			document.getElementById("myOverlay").style.display = "block";
-		}
+   <div>
+      <button class="w3-button w3-white w3-xxlarge" onclick="w3_open()">&#9776;</button>
+   </div>
 
-		function w3_close() {
-			document.getElementById("mySidebar").style.display = "none";
-			document.getElementById("myOverlay").style.display = "none";
-		}
-	</script>
-	<header>
-		<div class="container">
-			<div class="row">
-				<nav class="navbar navbar-default" role="navigation">
-					<div class="container-fluid">
-						<div class="navbar-header">
-							<div class="navbar-brand">
-								<a href="../user/main.jeju"><h1
-										style="font-family: 'Nanum Brush Script', cursive; font-size: 100px">JeJu
-										Go</h1></a>
-							</div>
-						</div>
-						<div class="menu">
-							<ul class="nav nav-tabs" role="tablist">
-								<c:if test="${empty sessionScope.login}">
-									<li role="presentation"><a href="javascript:void(0)"
-										onclick="document.getElementById('signin').style.display='block'"
-										class="w3-bar-item w3-button">íšŒì›ê°€ì…</a></li>
-									<li role="presentation"><a href="javascript:void(0)"
-										onclick="document.getElementById('login').style.display='block'"
-										class="w3-bar-item w3-button">ë¡œê·¸ì¸</a></li>
-								</c:if>
-								<li role="presentation"><a
-									href="${path }/hotel/hotellist.jeju">Hotel</a></li>
-								<li role="presentation"><a href="#">Packages</a></li>
-								<li role="presentation"><a
-									href="${path }/board/csboard.jeju">ê³ ê°ì„¼í„°</a></li>
-							</ul>
-						</div>
-					</div>
-				</nav>
-			</div>
-		</div>
-	</header>
-	<decorator:body />
-	<div class="container">
-		<div class="row">
-			<hr>
-		</div>
-	</div>
+   <script>
+      function w3_open() {
+         document.getElementById("mySidebar").style.display = "block";
+         document.getElementById("myOverlay").style.display = "block";
+      }
 
-	<!-- footer ì„¤ì • -->
-	<footer>
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3">
-					<div class="widget">
-						<h5 class="widgetheading">Get in touch with us</h5>
-						<address>
-							<strong>Jeju Go</strong><br> ì„œìš¸ì‹œ ê¸ˆì²œêµ¬ ê°€ì‚°ë””ì§€í„¸2ë¡œ<br>
-						</address>
-						<p>
-							<i class="icon-phone"></i> 02)1234-5678 <br> <i
-								class="icon-envelope-alt"></i> jejugo@jejugaja.com
-						</p>
-					</div>
-				</div>
-				<div class="col-lg-3">
-					<div class="widget">
-						<h5 class="widgetheading">Pages</h5>
-						<ul class="link-list">
-							<li><a href="#">Hotel</a></li>
-							<li><a href="#">Packages</a></li>
-							<li><a href="#">My Page</a></li>
-							<li><a href="#">Customer Service</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-3">
-					<div class="widget">
-						<h5 class="widgetheading">Latest posts</h5>
-						<ul class="link-list">
-							<li><a href="#">Lorem ipsum dolor sit amet, consectetur
-									adipiscing elit.</a></li>
-							<li><a href="#">Pellentesque et pulvinar enim. Quisque
-									at tempor ligula</a></li>
-							<li><a href="#">Natus error sit voluptatem accusantium
-									doloremque</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-3">
-					<div class="widget">
-						<h5 class="widgetheading">Packages Photostream</h5>
-						<div class="flickr_badge">
-							<script type="text/javascript"
-								src="https://www.flickr.com/badge_code_v2.gne?count=8&amp;display=random&amp;size=s&amp;layout=x&amp;source=user&amp;user=34178660@N03"></script>
-						</div>
-						<div class="clear"></div>
-					</div>
-				</div>
-			</div>
-		</div>
+      function w3_close() {
+         document.getElementById("mySidebar").style.display = "none";
+         document.getElementById("myOverlay").style.display = "none";
+      }
+   </script>
+   <header>
+      <div class="container">
+         <div class="row">
+            <nav class="navbar navbar-default" role="navigation">
+               <div class="container-fluid">
+                  <div class="navbar-header">
+                     <div class="navbar-brand">
+                        <a href="../user/main.jeju"><h1
+                              style="font-family: 'Nanum Brush Script', cursive; font-size: 100px">JeJu
+                              Go</h1></a>
+                     </div>
+                  </div>
+                  <div class="menu">
+                     <ul class="nav nav-tabs" role="tablist">
+                        <c:if test="${empty sessionScope.login}">
+                           <li role="presentation"><a href="javascript:void(0)"
+                              onclick="document.getElementById('signin').style.display='block'"
+                              class="w3-bar-item w3-button">È¸¿ø°¡ÀÔ</a></li>
+                           <li role="presentation"><a href="javascript:void(0)"
+                              onclick="document.getElementById('login').style.display='block'"
+                              class="w3-bar-item w3-button">·Î±×ÀÎ</a></li>
+                        </c:if>
+                        <li role="presentation"><a
+                           href="${path }/hotel/hotellist.jeju">Hotel</a></li>
+                        <li role="presentation"><a href="#">Packages</a></li>
+                        <li role="presentation"><a
+                           href="${path }/board/csboard.jeju">°í°´¼¾ÅÍ</a></li>
+                     </ul>
+                  </div>
+               </div>
+            </nav>
+         </div>
+      </div>
+   </header>
+   <decorator:body />
+   <div class="container">
+      <div class="row">
+         <hr>
+      </div>
+   </div>
 
-		<div class="container">
-			<div class="row">
-				<hr>
-			</div>
-		</div>
+   <!-- footer ¼³Á¤ -->
+   <footer>
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-3">
+               <div class="widget">
+                  <h5 class="widgetheading">Get in touch with us</h5>
+                  <address>
+                     <strong>Jeju Go</strong><br> ¼­¿ï½Ã ±İÃµ±¸ °¡»êµğÁöÅĞ2·Î<br>
+                  </address>
+                  <p>
+                     <i class="icon-phone"></i> 02)1234-5678 <br> <i
+                        class="icon-envelope-alt"></i> jejugo@jejugaja.com
+                  </p>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="widget">
+                  <h5 class="widgetheading">Pages</h5>
+                  <ul class="link-list">
+                     <li><a href="#">Hotel</a></li>
+                     <li><a href="#">Packages</a></li>
+                     <li><a href="#">My Page</a></li>
+                     <li><a href="#">Customer Service</a></li>
+                  </ul>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="widget">
+                  <h5 class="widgetheading">Latest posts</h5>
+                  <ul class="link-list">
+                     <li><a href="#">Lorem ipsum dolor sit amet, consectetur
+                           adipiscing elit.</a></li>
+                     <li><a href="#">Pellentesque et pulvinar enim. Quisque
+                           at tempor ligula</a></li>
+                     <li><a href="#">Natus error sit voluptatem accusantium
+                           doloremque</a></li>
+                  </ul>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="widget">
+                  <h5 class="widgetheading">Packages Photostream</h5>
+                  <div class="flickr_badge">
+                     <script type="text/javascript"
+                        src="https://www.flickr.com/badge_code_v2.gne?count=8&amp;display=random&amp;size=s&amp;layout=x&amp;source=user&amp;user=34178660@N03"></script>
+                  </div>
+                  <div class="clear"></div>
+               </div>
+            </div>
+         </div>
+      </div>
 
-		<div id="sub-footer">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-6">
-						<div class="copyright">
-							<p>
-								<span>&copy; Designed by <a>í•œí¬</a></span>
-							</p>
-							<div class="credits">
-								<!--
+      <div class="container">
+         <div class="row">
+            <hr>
+         </div>
+      </div>
+
+      <div id="sub-footer">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-6">
+                  <div class="copyright">
+                     <p>
+                        <span>&copy; Designed by <a>ÇÑÈñ</a></span>
+                     </p>
+                     <div class="credits">
+                        <!--
                   All the links in the footer should remain intact.
                   You can delete the links only if you purchased the pro version.
                   Licensing information: https://bootstrapmade.com/license/
                   Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Arsha
                 -->
 
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-6">
-						<ul class="social-network">
-							<li><a href="#" data-placement="top" title="Facebook"><i
-									class="fa fa-facebook fa-1x"></i></a></li>
-							<li><a href="#" data-placement="top" title="Twitter"><i
-									class="fa fa-twitter fa-1x"></i></a></li>
-							<li><a href="#" data-placement="top" title="Linkedin"><i
-									class="fa fa-linkedin fa-1x"></i></a></li>
-							<li><a href="#" data-placement="top" title="Pinterest"><i
-									class="fa fa-pinterest fa-1x"></i></a></li>
-							<li><a href="#" data-placement="top" title="Google plus"><i
-									class="fa fa-google-plus fa-1x"></i></a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-6">
+                  <ul class="social-network">
+                     <li><a href="#" data-placement="top" title="Facebook"><i
+                           class="fa fa-facebook fa-1x"></i></a></li>
+                     <li><a href="#" data-placement="top" title="Twitter"><i
+                           class="fa fa-twitter fa-1x"></i></a></li>
+                     <li><a href="#" data-placement="top" title="Linkedin"><i
+                           class="fa fa-linkedin fa-1x"></i></a></li>
+                     <li><a href="#" data-placement="top" title="Pinterest"><i
+                           class="fa fa-pinterest fa-1x"></i></a></li>
+                     <li><a href="#" data-placement="top" title="Google plus"><i
+                           class="fa fa-google-plus fa-1x"></i></a></li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+   </footer>
 
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins)
+   <!-- jQuery (necessary for Bootstrap's JavaScript plugins)
   <script src="js/jquery.js"></script>
   Include all compiled plugins (below), or include individual files as needed
   <script src="js/bootstrap.min.js"></script>
@@ -338,112 +343,112 @@ body, h1, h2, h3, h4, h5, h6 {
   <script>
     wow = new WOW({}).init();
   </script> -->
-	<div id="login" class="w3-modal" style="display: none;">
-		<div class="w3-modal-content w3-animate-zoom w3-padding-large">
-			<div class="w3-container w3-white w3-center">
-				<i onclick="document.getElementById('login').style.display='none'"
-					class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent"></i>
-				<h2 class="w3-wide">LogIn</h2>
-				<p>ë¡œê·¸ì¸ ì •ë³´ë¥¼ ì…ë ¥í•˜ì„¸ìš”.</p>
-				<form:form modelattribute="user" action="${path }/user/login.jeju"
-					name="lf" onsubmit="return loginchk(this)">
-					<p>
-						<input class="w3-input w3-border"
-							style="text-transform: lowercase;" type="text" name="userid"
-							placeholder="ì•„ì´ë””(ì´ë©”ì¼)">
-					</p>
-					<p>
-						<input class="w3-input w3-border"
-							style="text-transform: lowercase;" type="password"
-							name="password" placeholder="ë¹„ë°€ë²ˆí˜¸">
-					</p>
-					<p>
-						<a class="w3-button w3-padding-large w3-green w3-margin-bottom"
-							href="javascript:void(0)"
-							onclick="document.getElementById('searchid').style.display='block'">ì•„ì´ë””/ë¹„ë°€ë²ˆí˜¸
-							ì°¾ê¸°</a>
-					</p>
-					<button type="submit"
-						class="w3-button w3-padding-large w3-green w3-margin-bottom">ë¡œê·¸ì¸</button>
-				</form:form>
-			</div>
-		</div>
-	</div>
+   <div id="login" class="w3-modal" style="display: none;">
+      <div class="w3-modal-content w3-animate-zoom w3-padding-large">
+         <div class="w3-container w3-white w3-center">
+            <i onclick="document.getElementById('login').style.display='none'"
+               class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent"></i>
+            <h2 class="w3-wide">LogIn</h2>
+            <p>·Î±×ÀÎ Á¤º¸¸¦ ÀÔ·ÂÇÏ¼¼¿ä.</p>
+            <form:form modelattribute="user" action="${path }/user/login.jeju"
+               name="lf" onsubmit="return loginchk(this)">
+               <p>
+                  <input class="w3-input w3-border"
+                     style="text-transform: lowercase;" type="text" name="userid"
+                     placeholder="¾ÆÀÌµğ(ÀÌ¸ŞÀÏ)">
+               </p>
+               <p>
+                  <input class="w3-input w3-border"
+                     style="text-transform: lowercase;" type="password"
+                     name="password" placeholder="ºñ¹Ğ¹øÈ£">
+               </p>
+               <p>
+                  <a class="w3-button w3-padding-large w3-green w3-margin-bottom"
+                     href="javascript:void(0)"
+                     onclick="document.getElementById('searchid').style.display='block'">¾ÆÀÌµğ/ºñ¹Ğ¹øÈ£
+                     Ã£±â</a>
+               </p>
+               <button type="submit"
+                  class="w3-button w3-padding-large w3-green w3-margin-bottom">·Î±×ÀÎ</button>
+            </form:form>
+         </div>
+      </div>
+   </div>
 
-	<!-- ì•„ì´ë””/ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° ë¶€ë¶„ -->
-	<div id=searchid class="w3-modal" style="display: none;">
-		<div class="w3-modal-content w3-animate-zoom w3-padding-large">
-			<div class="w3-container w3-white w3-center">
-				<i
-					onclick="document.getElementById('searchid').style.display='none'"
-					class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent">x</i>
-				<h2 class="w3-wide">ì•„ì´ë””/ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸°</h2>
-				<p>ì¸ì¦ëœ ì´ë©”ì¼ë§Œ ì •ë³´ ì°¾ê¸°ê°€ ê°€ëŠ¥í•©ë‹ˆë‹¤ .</p>
-				<div style="margin-bottom: 10px;"
-					class="custom-control custom-radio custom-control-inline">
-					<input type="radio" class="custom-control-input" id="search_1"
-						name="search_total" onclick="search_check(1)" checked="checked">
-					<label class="custom-control-label font-weight-bold text-white"
-						for="search_1"></label>
-					<p>ì•„ì´ë”” ì°¾ê¸°</p>
-				</div>
-				<div class="custom-control custom-radio custom-control-inline">
-					<input type="radio" class="custom-control-input" id="search_2"
-						name="search_total" onclick="search_check(2)"> <label
-						class="custom-control-label font-weight-bold text-white"
-						for="search_2"></label>
-					<p>ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸°</p>
-				</div>
-				<div id="searchI">
-					<form name="sf" action="${path }/user/userSearch.jeju"
-						method="post">
-						<div class="form-group">
-							<label class="font-weight-bold text-white" for="inputName_1"></label>
-							<p>ì´ë¦„</p>
-							<div>
-								<input type="text" class="form-control" id="username"
-									name="username" placeholder="ex) ì†¡ë¬¸ì¤€">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="font-weight-bold text-white" for="inputPhone_1"></label>
-							<p>íœ´ëŒ€í°ë²ˆí˜¸</p>
-							<div>
-								<input type="text" class="form-control" id="Phone" name="Phone"
-									placeholder="ex) 01077779999">
-							</div>
-						</div>
-						<div class="form-group">
-							<button id="searchBtn2" type="submit"
-								class="btn btn-primary btn-block">í™•ì¸</button>
-							<a class="btn btn-danger btn-block"
-								href="${pageContext.request.contextPath}">ì·¨ì†Œ</a>
-						</div>
-					</form>
-				</div>
-				<div id="searchP" style="display: none;">
-					<form name="pf" action="${path }/user/passSearch.jeju"
-						method="post">
-						<div class="form-group">
-							<label class="font-weight-bold text-white" for="inputId"></label>
-							<p>ì•„ì´ë””(ì´ë©”ì¼)</p>
-							<div>
-								<input type="text" class="form-control" id="userid"
-									style="text-transform: lowercase;" name="userid"
-									placeholder="ex)goodee@aaa.bbb">
-							</div>
-						</div>
-						<div class="form-group">
-							<button id="searchBtn2" type="submit"
-								class="btn btn-primary btn-block">í™•ì¸</button>
-							<a class="btn btn-danger btn-block"
-								href="${pageContext.request.contextPath}">ì·¨ì†Œ</a>
-						</div>
-					</form>
-				</div>
+   <!-- ¾ÆÀÌµğ/ºñ¹Ğ¹øÈ£ Ã£±â ºÎºĞ -->
+   <div id=searchid class="w3-modal" style="display: none;">
+      <div class="w3-modal-content w3-animate-zoom w3-padding-large">
+         <div class="w3-container w3-white w3-center">
+            <i
+               onclick="document.getElementById('searchid').style.display='none'"
+               class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent">x</i>
+            <h2 class="w3-wide">¾ÆÀÌµğ/ºñ¹Ğ¹øÈ£ Ã£±â</h2>
+            <p>ÀÎÁõµÈ ÀÌ¸ŞÀÏ¸¸ Á¤º¸ Ã£±â°¡ °¡´ÉÇÕ´Ï´Ù .</p>
+            <div style="margin-bottom: 10px;"
+               class="custom-control custom-radio custom-control-inline">
+               <input type="radio" class="custom-control-input" id="search_1"
+                  name="search_total" onclick="search_check(1)" checked="checked">
+               <label class="custom-control-label font-weight-bold text-white"
+                  for="search_1"></label>
+               <p>¾ÆÀÌµğ Ã£±â</p>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+               <input type="radio" class="custom-control-input" id="search_2"
+                  name="search_total" onclick="search_check(2)"> <label
+                  class="custom-control-label font-weight-bold text-white"
+                  for="search_2"></label>
+               <p>ºñ¹Ğ¹øÈ£ Ã£±â</p>
+            </div>
+            <div id="searchI">
+               <form name="sf" action="${path }/user/userSearch.jeju"
+                  method="post">
+                  <div class="form-group">
+                     <label class="font-weight-bold text-white" for="inputName_1"></label>
+                     <p>ÀÌ¸§</p>
+                     <div>
+                        <input type="text" class="form-control" id="username"
+                           name="username" placeholder="ex) ¼Û¹®ÁØ">
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label class="font-weight-bold text-white" for="inputPhone_1"></label>
+                     <p>ÈŞ´ëÆù¹øÈ£</p>
+                     <div>
+                        <input type="text" class="form-control" id="Phone" name="Phone"
+                           placeholder="ex) 01077779999">
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <button id="searchBtn2" type="submit"
+                        class="btn btn-primary btn-block">È®ÀÎ</button>
+                     <a class="btn btn-danger btn-block"
+                        href="${pageContext.request.contextPath}">Ãë¼Ò</a>
+                  </div>
+               </form>
+            </div>
+            <div id="searchP" style="display: none;">
+               <form name="pf" action="${path }/user/passSearch.jeju"
+                  method="post">
+                  <div class="form-group">
+                     <label class="font-weight-bold text-white" for="inputId"></label>
+                     <p>¾ÆÀÌµğ(ÀÌ¸ŞÀÏ)</p>
+                     <div>
+                        <input type="text" class="form-control" id="userid"
+                           style="text-transform: lowercase;" name="userid"
+                           placeholder="ex)goodee@aaa.bbb">
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <button id="searchBtn2" type="submit"
+                        class="btn btn-primary btn-block">È®ÀÎ</button>
+                     <a class="btn btn-danger btn-block"
+                        href="${pageContext.request.contextPath}">Ãë¼Ò</a>
+                  </div>
+               </form>
+            </div>
 
-			</div>
-		</div>
-	</div>
+         </div>
+      </div>
+   </div>
 </body>
 </html>
