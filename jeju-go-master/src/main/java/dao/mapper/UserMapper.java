@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import logic.Point;
 import logic.User;
 
 public interface UserMapper {
@@ -38,4 +39,10 @@ public interface UserMapper {
 
 	@Update("update member set password=#{password} where userid=#{userid}")
 	void updatepw(User user);
+
+	@Select("select * from point where userid=#{userid}")
+	Point getPoint(String userid);
+	
+	@Select("select ifnull(sum(point),0) from point where userid=#{userid}")
+	int countPoint(String userid);
 }

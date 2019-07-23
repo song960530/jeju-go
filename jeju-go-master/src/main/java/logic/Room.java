@@ -31,7 +31,6 @@ public class Room {
 		this.photourl = photourl;
 	}
 
-
 	public List<Photo> getPhoto() {
 		return photo;
 	}
@@ -103,4 +102,12 @@ public class Room {
 	public void setRoomnum(String roomnum) {
 		this.roomnum = roomnum;
 	}
+
+	@Override
+	public String toString() {
+		return "Room [hno=" + hno + ", roomnum=" + roomnum + ", name=" + name + ", price=" + price + ", convenient="
+				+ convenient + ", bed=" + bed + ", bedcount=" + bedcount + ", max=" + max + ", photo=" + photo
+				+ ", photourl=" + photourl + ", roomcount=" + roomcount + "]";
+	}
+
 }

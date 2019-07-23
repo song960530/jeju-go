@@ -383,7 +383,7 @@ public class JejuService {
 	public void noticedelete(Board board) {
 		boarddao.noticedelete(board);
 	}
-	
+
 	public String MessageDigest(String password) {
 		byte[] hash = null;
 		String result = "";
@@ -407,7 +407,36 @@ public class JejuService {
 	public void admindelete(User user) {
 		userdao.admindelete(user);
 	}
+
 	public void updatepw(User user) {
 		userdao.updatepw(user);
+	}
+
+	public Final reservation(Final f) {
+		Calendar calendar = Calendar.getInstance();
+		Room r = selectOne(f.getHno(), f.getName());
+		f.setRoom(r);
+		int stmon = Integer.parseInt(f.getStart().split("-")[1]);
+		int enmon = Integer.parseInt(f.getEnd().split("-")[1]);
+		int startday = Integer.parseInt(f.getStart().split("-")[2]);
+		int endday = Integer.parseInt(f.getEnd().split("-")[2]);
+		calendar.set(Integer.parseInt(f.getStart().split("-")[0]), stmon - 1, 1);
+		int lastday = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+		if (stmon == enmon) {
+			f.setDay(endday - startday + 1);
+		} else {
+			f.setDay(lastday - startday + endday + 1);
+		}
+		return f;
+	}
+
+	public Point getPoint(String userid) {
+		return userdao.getPoint(userid);
+
+	}
+
+	public int countPoint(String userid) {
+		return userdao.countPoint(userid);
 	}
 }
