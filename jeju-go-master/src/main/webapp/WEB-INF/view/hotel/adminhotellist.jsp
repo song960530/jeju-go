@@ -33,7 +33,6 @@ a {
 		</div>
 	</div>
 	<div class="container">
-
 		<div class="">
 			<div class="">
 				<div class="panel panel-default" style="width: 100%;">

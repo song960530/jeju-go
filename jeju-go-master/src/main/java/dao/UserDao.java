@@ -16,7 +16,7 @@ public class UserDao {
 
 	public void insert(User user) {
 		sqlSession.getMapper(UserMapper.class).insert(user);
-		
+
 	}
 
 	public User selectOne(String userId) {
@@ -26,7 +26,7 @@ public class UserDao {
 	public List<User> list(String d) {
 		param.clear();
 		param.put("delete", d);
-		return sqlSession.selectList(NS+"list",param);
+		return sqlSession.selectList(NS + "list", param);
 	}
 
 	public void delete(String id) {
@@ -41,7 +41,7 @@ public class UserDao {
 		return sqlSession.getMapper(UserMapper.class).useridcheck(user);
 	}
 
-	public void getNewPwd(String password,String userid) {
+	public void getNewPwd(String password, String userid) {
 		User user = new User();
 		user.setPassword(password);
 		user.setUserid(userid);
@@ -54,5 +54,13 @@ public class UserDao {
 
 	public void deleterequest(User user) {
 		sqlSession.getMapper(UserMapper.class).deleterequest(user);
+	}
+
+	public void admindelete(User user) {
+		sqlSession.getMapper(UserMapper.class).admindelete(user);
+	}
+
+	public void updatepw(User user) {
+		sqlSession.getMapper(UserMapper.class).updatepw(user);
 	}
 }
