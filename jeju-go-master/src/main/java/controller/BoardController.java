@@ -21,41 +21,49 @@ import logic.User;
 public class BoardController {
 	@Autowired
 	private JejuService service;
-	
+
 	@GetMapping("*")
 	public ModelAndView getBoard(Integer no, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		Board board = new Board();
-		if(no != null) {
+		if (no != null) {
 			board = service.getBoard(no, request);
 		}
 		mav.addObject("board", board);
 		return mav;
 	}
-	
+
 	@RequestMapping("csboard")
 	public ModelAndView notice(Integer notpageNum, Integer qnapageNum) {
 		ModelAndView mav = new ModelAndView();
-		
-		if(notpageNum == null || notpageNum.toString().equals("")) {notpageNum = 1;}
+
+		if (notpageNum == null || notpageNum.toString().equals("")) {
+			notpageNum = 1;
+		}
 		int limit = 10;
 		int noticecount = service.boardcount(1);
 		List<Board> noticelist = service.list(notpageNum, limit, 1);
-		int notmaxpage = (int)((double)noticecount/limit + 0.95);
-		int notstartpage = ((int)((notpageNum / 10.0 + 0.9) - 1) * 10 + 1);
+		int notmaxpage = (int) ((double) noticecount / limit + 0.95);
+		int notstartpage = ((int) ((notpageNum / 10.0 + 0.9) - 1) * 10 + 1);
 		int notendpage = notstartpage + 9;
-		if(notendpage > notmaxpage) {notendpage = notmaxpage;}
+		if (notendpage > notmaxpage) {
+			notendpage = notmaxpage;
+		}
 		int notboardno = noticecount - (notpageNum - 1) * limit;
-		
-		if(qnapageNum == null || qnapageNum.toString().equals("")) {qnapageNum = 1;}
+
+		if (qnapageNum == null || qnapageNum.toString().equals("")) {
+			qnapageNum = 1;
+		}
 		int qnacount = service.boardcount(2);
-		int qnamaxpage = (int)((double)qnacount/limit + 0.95);
-		int qnastartpage = ((int)((qnapageNum / 10.0 + 0.9) - 1) * 10 + 1);
+		int qnamaxpage = (int) ((double) qnacount / limit + 0.95);
+		int qnastartpage = ((int) ((qnapageNum / 10.0 + 0.9) - 1) * 10 + 1);
 		int qnaendpage = qnastartpage + 9;
-		if(qnaendpage > qnamaxpage) {qnaendpage = qnamaxpage;}
+		if (qnaendpage > qnamaxpage) {
+			qnaendpage = qnamaxpage;
+		}
 		List<Board> qnalist = service.list(qnapageNum, limit, 2);
 		int qnaboardno = qnacount - (qnapageNum - 1) * limit;
-		
+
 		mav.addObject("notpageNum", notpageNum);
 		mav.addObject("notmaxpage", notmaxpage);
 		mav.addObject("notstartpage", notstartpage);
@@ -73,30 +81,34 @@ public class BoardController {
 		mav.addObject("qnaboardno", qnaboardno);
 		return mav;
 	}
-	
+
 	@PostMapping("cswrite")
 	public ModelAndView noticewrite(Board board, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			service.noticewrite(board, request);
 			mav.setViewName("redirect:csboard.jeju");
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return mav;
 	}
-	
+
 	@RequestMapping("qnalist")
 	public ModelAndView qnalist(Integer pageNum, Integer type2, String userid) {
 		ModelAndView mav = new ModelAndView();
-		if(pageNum == null || pageNum.toString().equals("")) {pageNum = 1;}
+		if (pageNum == null || pageNum.toString().equals("")) {
+			pageNum = 1;
+		}
 		int limit = 10;
 		int count = service.count(3, userid, type2);
 		List<Board> list = service.qnalist(pageNum, limit, 3, userid, type2);
-		int maxpage = (int)((double)count/limit + 0.95);
-		int startpage = ((int)((pageNum / 10.0 + 0.9) - 1) * 10 + 1);
+		int maxpage = (int) ((double) count / limit + 0.95);
+		int startpage = ((int) ((pageNum / 10.0 + 0.9) - 1) * 10 + 1);
 		int endpage = startpage + 9;
-		if(endpage > maxpage) {endpage = maxpage;}
+		if (endpage > maxpage) {
+			endpage = maxpage;
+		}
 		int boardno = count - (pageNum - 1) * limit;
 		mav.addObject("pageNum", pageNum);
 		mav.addObject("maxpage", maxpage);
@@ -107,62 +119,62 @@ public class BoardController {
 		mav.addObject("boardno", boardno);
 		return mav;
 	}
-	
+
 	@PostMapping("qnawrite")
 	public ModelAndView qnawrite(Board board, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		String userid = service.getUser(request.getParameter("userid"));
 		try {
 			service.noticewrite(board, request);
-			mav.setViewName("redirect:qnalist.jeju?userid="+userid);
-		} catch(Exception e) {
+			mav.setViewName("redirect:qnalist.jeju?userid=" + userid);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return mav;
 	}
-	
+
 	@PostMapping("csupdate")
 	public ModelAndView csupdate(Board board) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			service.noticeupdate(board);
 			mav.setViewName("redirect:csdetail.jeju?no=" + board.getNo());
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return mav;
 	}
-	
+
 	@PostMapping("csdelete")
 	public ModelAndView csdelete(Board board, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		int count = Integer.parseInt(request.getParameter("count"));
 		try {
-			User user = (User)session.getAttribute("login");
-			if(user.getUserid().equals("admin")) {
+			User user = (User) session.getAttribute("login");
+			if (user.getUserid().equals("admin")) {
 				service.noticedelete(board);
 				System.out.println(board.getType());
-				if(board.getType().equals("3")) {
+				if (board.getType().equals("3")) {
 					mav.setViewName("redirect:../admin/qnalist.jeju");
-				}else {
+				} else {
 					mav.setViewName("redirect:../board/csboard.jeju");
 				}
 			} else {
-				if(count > 1) {
+				if (count > 1) {
 					mav.addObject("msg", "답글이 달린 글은 삭제가 불가능 합니다.");
 					mav.addObject("url", "../board/csdetail.jeju?no=" + (board.getNo() - 1));
 					mav.setViewName("alert");
 				} else {
 					service.noticedelete(board);
-					mav.setViewName("redirect:../board/qnalist.jeju?userid="+user.getUserid());
+					mav.setViewName("redirect:../board/qnalist.jeju?userid=" + user.getUserid());
 				}
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return mav;
 	}
-	
+
 	@PostMapping("qnareply")
 	public ModelAndView reply(Board board, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
@@ -171,20 +183,20 @@ public class BoardController {
 			mav.addObject("msg", "답글 작성완료");
 			mav.addObject("url", "../board/csdetail.jeju?no=" + (board.getNo() - 1));
 			mav.setViewName("alert");
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return mav;
 	}
-	
+
 	@RequestMapping("csdetail")
 	public ModelAndView csdetail(Integer no, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		int count = service.qnacount(no);
 		Board bdetail = service.qnablist(no);
 		Board rdetail = service.qnarlist(no, 1);
-		mav.addObject("bdetail",bdetail); // 원글 정보
-		mav.addObject("rdetail",rdetail); // 답글 정보
+		mav.addObject("bdetail", bdetail); // 원글 정보
+		mav.addObject("rdetail", rdetail); // 답글 정보
 		mav.addObject("count", count);
 		return mav;
 	}
