@@ -27,6 +27,8 @@ public class JejuService {
 	HreserveDao hresdao;
 	@Autowired
 	BoardDao boarddao;
+	@Autowired
+	PackageDao packagedao;
 
 	public int regist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
 		Hotel h = new Hotel();
@@ -69,6 +71,32 @@ public class JejuService {
 			try {
 				mf.transferTo(new File(safeFile));
 				photodao.insert(p);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+	
+	private void uploadPackPhoto(int no, String roomnum, String type, HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
+		List<MultipartFile> fileList = mtfRequest.getFiles("photoname");
+
+		for (MultipartFile mf : fileList) {
+			String originFileName = mf.getOriginalFilename(); 
+			String path = request.getServletContext().getRealPath("/") + "img/";
+			String safeFile = path + System.currentTimeMillis() + originFileName;
+
+			Package pack = new Package();
+			pack.setPhotourl(safeFile.substring(safeFile.lastIndexOf("img/")));
+			pack.setPhotoname(originFileName);
+
+			File fpath = new File(path);
+			if (!fpath.exists()) {
+				fpath.mkdirs();
+			}
+			try {
+				mf.transferTo(new File(safeFile));
+				packagedao.insert(pack);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -478,5 +506,14 @@ public class JejuService {
 	}
 	public int count(int type, Integer type2) {
 		return boarddao.count(type, type2);
+	}
+	
+	public int packregist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
+		Package pack = new Package();
+		pack.setNo(packagedao.maxno() + 1);
+		if (packagedao.insert(pack)) {
+			uploadPackPhoto(pack.getNo(), "0", "", request, mtfRequest);
+		}
+		return pack.getNo();
 	}
 }
