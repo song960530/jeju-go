@@ -29,13 +29,13 @@ div.ex3 {
 	overflow: auto;
 }
 div.left {
-	width: 48%;
+	width: 40%;
 	float: left;
 	box-sizing: border-box;
 }
 
 div.right {
-	width: 48%;
+	width: 59%;
 	float: right;
 	box-sizing: border-box;
 }
@@ -215,7 +215,12 @@ div.right {
 
 		var map = new naver.maps.Map('map', {
 			center : new naver.maps.LatLng(33.381355, 126.546380),
-			zoom : 6
+			zoom : 6,
+			zoomControl : true, // 줌 컨트롤 표시 (기본값 표시안함)
+			zoomControlOptions : { // 줌 컨트롤 오른쪽 위로 위치 설정
+				position : naver.maps.Position.TOP_RIGHT // 오른쪽 위로 설정값
+			},
+			mapTypeControl : true, // 일반ㆍ위성 지도보기 컨트롤 표시 (기본값 표시안함)
 		});
 
 		var markers = [], infoWindows = [];
