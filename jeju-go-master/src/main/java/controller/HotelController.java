@@ -40,9 +40,7 @@ public class HotelController {
 	public ModelAndView register(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
 		ModelAndView mav = new ModelAndView();
 		int hno = service.regist(request, mtfRequest);
-
 		mav.setViewName("redirect:hoteldetail.jeju?no=" + hno);
-
 		return mav;
 	}
 

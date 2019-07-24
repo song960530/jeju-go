@@ -161,11 +161,10 @@ body, h1, h2, h3, h4, h5, h6 {
 			</div>
 
 			<div class="w3-dropdown-hover">
-				<button class="w3-button fa fa-plane">
-					&nbsp;&nbsp;패키지 <i class="fa fa-caret-down"></i>
+				<button class="w3-button fa fa-plane"> &nbsp;&nbsp;패키지 <i class="fa fa-caret-down"></i>
 				</button>
 				<div class="w3-dropdown-content w3-bar-block">
-					<a href="#" class="w3-bar-item w3-button">패키지 등록</a>
+					<a href="../package/packregist.jeju" class="w3-bar-item w3-button">패키지 등록</a>
 				</div>
 			</div>
 		</c:if>
@@ -213,7 +212,7 @@ body, h1, h2, h3, h4, h5, h6 {
 								</c:if>
 								<li role="presentation"><a
 									href="${path }/hotel/hotellist.jeju">Hotel</a></li>
-								<li role="presentation"><a href="#">Packages</a></li>
+								<li role="presentation"><a href="../package/packagelist.jeju">Packages</a></li>
 								<li role="presentation"><a
 									href="${path }/board/csboard.jeju">고객센터</a></li>
 							</ul>
