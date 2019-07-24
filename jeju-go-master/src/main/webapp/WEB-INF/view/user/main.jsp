@@ -129,7 +129,7 @@ body, h1, h2, h3, h4, h5, h6 {
 		</form>
 		</div>
 	</div>
-	<div id="signin" class="w3-modal" style="display: none;">
+	<%-- <div id="signin" class="w3-modal" style="display: none;">
 		<div class="w3-modal-content w3-animate-zoom w3-padding-large">
 			<div class="w3-container w3-white w3-center">
 				<i onclick="document.getElementById('signin').style.display='none'"
@@ -158,12 +158,12 @@ body, h1, h2, h3, h4, h5, h6 {
 						<input class="w3-input w3-border"type="text" name="phone" placeholder="전화번호">
 					</p>
 					<button type="submit"
-						class="w3-button w3-padding-large w3-green w3-margin-bottom">회원가입</button>
+						class="btn btn-primary">회원가입</button>
 				</form:form>
 			</div>
 		</div>
-	</div>
-	<div id="login" class="w3-modal" style="display: none;">
+	</div> --%>
+	<%-- <div id="login" class="w3-modal" style="display: none;">
 		<div class="w3-modal-content w3-animate-zoom w3-padding-large">
 			<div class="w3-container w3-white w3-center">
 				<i onclick="document.getElementById('login').style.display='none'"
@@ -194,9 +194,9 @@ body, h1, h2, h3, h4, h5, h6 {
 			</div>
 		</div>
 
-	</div>
+	</div> --%>
 	<!-- 아이디/비밀번호 찾기 부분 -->
-	<div id=searchid class="w3-modal" style="display: none;">
+	<%-- <div id=searchid class="w3-modal" style="display: none;">
 		<div class="w3-modal-content w3-animate-zoom w3-padding-large">
 			<div class="w3-container w3-white w3-center">
 				<i
@@ -263,7 +263,7 @@ body, h1, h2, h3, h4, h5, h6 {
 				</div>
 
 			</div>
-		</div>
+		</div> --%>
 	</div>
 </body>
 </html>

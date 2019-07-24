@@ -38,9 +38,9 @@
 <body>
 <div class="w3-content w3-container w3-margin-top">
 		<div class="w3-container w3-card-4">
-			<div class="w3-center w3-large w3-margin-top">
-				<h3>비밀번호 변경</h3>
-			</div>
+			<div class="recent">
+         		 <h2 class="widgetheading" style="text-align: center;">비밀번호 변경</h2>
+        	</div>
 				<form id="pwForm" action="updatepw.jeju" method="post">	
 					<input type="hidden" name="userid" value="${ login.userid }">
 					<input type="hidden" name="username" value="${ login.username }">				      
@@ -57,7 +57,7 @@
 						<input class="w3-input"  id="pw2" name="newpassword2" type="password" required>
 					</p>
 					<p class="w3-center">
-						<button type="submit" id="joinBtn" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">비밀번호 변경</button>
+						<button type="submit" id="joinBtn" class="btn btn-primary">비밀번호 변경</button>
 					</p>
 				</form>
 			</div>
