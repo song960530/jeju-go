@@ -48,7 +48,7 @@ div.right {
 </head>
 <body>
 	<div class="container" style="margin-left: 5%; margin-right: 5%; width: 90%;">
-	<div class="right">
+	<div class="container">
         <div class="recent">
           <h2 class="widgetheading" style="text-align: center;">Hotel Regist</h2>
         </div>
