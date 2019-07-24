@@ -233,7 +233,10 @@ public class HotelController {
 	@PostMapping("reservation")
 	public ModelAndView reservation(Final f1) {
 		ModelAndView mav = new ModelAndView();
-		System.out.println(f1);
+		service.subFinally(f1);
+		mav.addObject("msg", "예약 신청이 완료되었습니다.");
+		mav.addObject("url", "../user/main.jeju");
+		mav.setViewName("alert");
 		return mav;
 	}
 

@@ -5,7 +5,9 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
+import logic.Final;
 import logic.Hreserve;
 import logic.Room;
 import logic.Room2;
@@ -27,5 +29,11 @@ public interface HreserveMapper {
 			"group by hno,name,roomnum having count(*)=#{countday2} order by hno" + 
 			"")
 	List<Hreserve> searchroom2(Map<String, Object> param);
+
+	@Select("select min(no) from hreserve where hno=#{hno} and name=#{name} and mon=#{mon} and day=#{day} and subscriber is null")
+	int minNo(Map<String, Object> param);
+
+	@Update("update hreserve set subscriber='½ÂÀÎ´ë±â' where no=#{rno}")
+	void insertdelayRoom(int rno);
 
 }

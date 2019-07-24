@@ -8,7 +8,7 @@ public class Final {
 	private String name;
 	private int pno;
 	private int pnum;
-	private String roomnum;
+	private int rno;
 	private int total;
 	private String userid;
 	private String start;
@@ -20,6 +20,16 @@ public class Final {
 	private int day;
 	private String username;
 	private String hname;
+	private String roomnum;
+
+	
+	public String getRoomnum() {
+		return roomnum;
+	}
+
+	public void setRoomnum(String roomnum) {
+		this.roomnum = roomnum;
+	}
 
 	public String getHname() {
 		return hname;
@@ -93,12 +103,12 @@ public class Final {
 		this.pnum = pnum;
 	}
 
-	public String getRoomnum() {
-		return roomnum;
+	public int getRno() {
+		return rno;
 	}
 
-	public void setRoomnum(String roomnum) {
-		this.roomnum = roomnum;
+	public void setRno(int rno) {
+		this.rno = rno;
 	}
 
 	public int getTotal() {
@@ -159,10 +169,11 @@ public class Final {
 
 	@Override
 	public String toString() {
-		return "Final [no=" + no + ", hno=" + hno + ", name=" + name + ", pno=" + pno + ", pnum=" + pnum + ", roomnum="
-				+ roomnum + ", total=" + total + ", userid=" + userid + ", start=" + start + ", end=" + end
-				+ ", checked=" + checked + ", regdate=" + regdate + ", point=" + point + ", room=" + room + ", day="
-				+ day + ", username=" + username + ", hname=" + hname + "]";
+		return "Final [no=" + no + ", hno=" + hno + ", name=" + name + ", pno=" + pno + ", pnum=" + pnum + ", rno="
+				+ rno + ", total=" + total + ", userid=" + userid + ", start=" + start + ", end=" + end + ", checked="
+				+ checked + ", regdate=" + regdate + ", point=" + point + ", room=" + room + ", day=" + day
+				+ ", username=" + username + ", hname=" + hname + ", roomnum=" + roomnum + "]";
 	}
+
 
 }

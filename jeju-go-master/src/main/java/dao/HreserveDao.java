@@ -1,6 +1,8 @@
 package dao;
 
+import dao.mapper.HotelMapper;
 import dao.mapper.HreserveMapper;
+import logic.Final;
 import logic.Hreserve;
 import logic.Room;
 import logic.Room2;
@@ -28,7 +30,7 @@ public class HreserveDao {
 		sqlSession.getMapper(HreserveMapper.class).insert(hreserve);
 	}
 
-	public List<Hreserve> searchroom(int mon, int startday, int endday, int countday,int people) {
+	public List<Hreserve> searchroom(int mon, int startday, int endday, int countday, int people) {
 		param.clear();
 		param.put("mon", mon);
 		param.put("startday", startday);
@@ -49,7 +51,21 @@ public class HreserveDao {
 		param.put("countday", countday);
 		param.put("countday2", countday2);
 		param.put("people", people);
-		
+
 		return sqlSession.getMapper(HreserveMapper.class).searchroom2(param);
+	}
+
+	public int delayRoomnum(Final f1) {
+		param.clear();
+		param.put("hno", f1.getHno());
+		param.put("name", f1.getName());
+		param.put("mon", f1.getStart().split("-")[1]);
+		param.put("day", f1.getStart().split("-")[2]);
+		return sqlSession.getMapper(HreserveMapper.class).minNo(param);
+	}
+
+	public void insertdelayRoom(int rno) {
+		sqlSession.getMapper(HreserveMapper.class).insertdelayRoom(rno);
+		
 	}
 }

@@ -2,6 +2,8 @@ package dao;
 
 import dao.mapper.HotelMapper;
 import java.util.*;
+
+import logic.Final;
 import logic.Hotel;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +36,4 @@ public class HotelDao {
 	public Hotel selectOne(Integer i) {
 		return sqlSession.getMapper(HotelMapper.class).selectOne(i);
 	}
-
 }

@@ -29,6 +29,8 @@ public class JejuService {
 	BoardDao boarddao;
 	@Autowired
 	PackageDao packagedao;
+	@Autowired
+	FinalDao finaldao;
 
 	public int regist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
 		Hotel h = new Hotel();
@@ -52,7 +54,7 @@ public class JejuService {
 		List<MultipartFile> fileList = mtfRequest.getFiles("photoname");
 
 		for (MultipartFile mf : fileList) {
-			String originFileName = mf.getOriginalFilename(); 
+			String originFileName = mf.getOriginalFilename();
 			String path = request.getServletContext().getRealPath("/") + "img/";
 			String safeFile = path + System.currentTimeMillis() + originFileName;
 
@@ -77,12 +79,13 @@ public class JejuService {
 		}
 
 	}
-	
-	private void uploadPackPhoto(int no, String roomnum, String type, HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
+
+	private void uploadPackPhoto(int no, String roomnum, String type, HttpServletRequest request,
+			MultipartHttpServletRequest mtfRequest) {
 		List<MultipartFile> fileList = mtfRequest.getFiles("photoname");
 
 		for (MultipartFile mf : fileList) {
-			String originFileName = mf.getOriginalFilename(); 
+			String originFileName = mf.getOriginalFilename();
 			String path = request.getServletContext().getRealPath("/") + "img/";
 			String safeFile = path + System.currentTimeMillis() + originFileName;
 
@@ -171,7 +174,7 @@ public class JejuService {
 			md = MessageDigest.getInstance("SHA-256");
 			hash = md.digest(plain);
 			for (byte b : hash) {
-				result += String.format("%02X", b); 
+				result += String.format("%02X", b);
 			}
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -209,7 +212,7 @@ public class JejuService {
 			md = MessageDigest.getInstance("SHA-256");
 			hash = md.digest(plain);
 			for (byte b : hash) {
-				result += String.format("%02X", b); 
+				result += String.format("%02X", b);
 			}
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -463,6 +466,7 @@ public class JejuService {
 	public int countPoint(String userid) {
 		return userdao.countPoint(userid);
 	}
+
 	public List<Board> boardlist(Integer pageNum, int limit, int type, int no) {
 		return boarddao.boardlist(pageNum, limit, type, no);
 	}
@@ -470,15 +474,15 @@ public class JejuService {
 	public Board qnablist(Integer no) {
 		return boarddao.qnablist(no);
 	}
-	
+
 	public List<Board> qnalist(Integer pageNum, int limit, int type, String userid, Integer type2) {
 		return boarddao.qnalist(pageNum, limit, type, userid, type2);
 	}
-	
+
 	public int count(int type, String userid, Integer type2) {
 		return boarddao.count(type, userid, type2);
 	}
-	
+
 	public int qnacount(Integer no) {
 		return boarddao.qnacount(no);
 	}
@@ -486,6 +490,7 @@ public class JejuService {
 	public Board qnarlist(Integer no, int reflevel) {
 		return boarddao.qnarlist(no, reflevel);
 	}
+
 	public void reply(Board board, HttpServletRequest request) {
 		boarddao.updaterefstep(board);
 		int num = boarddao.maxnum();
@@ -494,20 +499,23 @@ public class JejuService {
 		board.setRefstep(board.getRefstep() + 1);
 		boarddao.noticewrite(board);
 	}
+
 	public String getUser(String userid) {
 		return boarddao.getUser(userid);
 	}
+
 	public List<Board> list(Integer pageNum, int limit, int type) {
 		return boarddao.list(pageNum, limit, type);
 	}
-	
+
 	public List<Board> adqnalist(Integer pageNum, int limit, int type, Integer type2) {
 		return boarddao.adqnalist(pageNum, limit, type, type2);
 	}
+
 	public int count(int type, Integer type2) {
 		return boarddao.count(type, type2);
 	}
-	
+
 	public int packregist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
 		Package pack = new Package();
 		pack.setNo(packagedao.maxno() + 1);
@@ -515,5 +523,16 @@ public class JejuService {
 			uploadPackPhoto(pack.getNo(), "0", "", request, mtfRequest);
 		}
 		return pack.getNo();
+	}
+
+	public void subFinally(Final f1) {
+		f1.setNo(finaldao.maxno() + 1);
+		f1.setRno(hresdao.delayRoomnum(f1));
+		finaldao.insert(f1);
+		hresdao.insertdelayRoom(f1.getRno());
+		if (f1.getPoint() != 0) {
+			int no = userdao.pointmaxno() + 1;
+			userdao.point(no, f1.getUserid(), f1.getPoint(), "»ç¿ë");
+		}
 	}
 }
