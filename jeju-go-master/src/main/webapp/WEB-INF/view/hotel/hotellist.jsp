@@ -149,7 +149,7 @@ div.right {
 								</script>
 								<div
 									class="CardLayout_CardLayout__colRightRowBottomColRight__RWwIj">
-									<div class="HotelCard_HotelCard__price__pZRWW">½Ë°¡</div>
+									<div class="HotelCard_HotelCard__price__pZRWW"><br><br><!-- ½Ë°¡  --></div>
 									<div class="CardLayout_CardLayout__mediumLargeViewport__1r4P7">
 										<div class="HotelCard_HotelCard__cta__1n4MC">
 											<button type="button" class="BpkButton_bpk-button__2Jd0U">
@@ -169,6 +169,7 @@ div.right {
 							</div>
 						</div>
 						</a>
+						<br>
 						</c:forEach>
 				</div>
 				</div>
