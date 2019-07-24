@@ -223,12 +223,18 @@ public class HotelController {
 	public ModelAndView reservationForm(Final f1) {
 		ModelAndView mav = new ModelAndView();
 		Final f = service.reservation(f1);
-		System.out.println(f.getUserid());
 		int countpoint = service.countPoint(f1.getUserid());
-		System.out.println(countpoint);
 		mav.addObject("countpoint", countpoint);
 		mav.addObject("f", f);
 		return mav;
 	}
+	
+	@PostMapping("reservation")
+	public ModelAndView reservation(Final f1) {
+		ModelAndView mav = new ModelAndView();
+		System.out.println(f1);
+		return mav;
+	}
 
 }
+

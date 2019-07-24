@@ -13,12 +13,21 @@ public class Final {
 	private String userid;
 	private String start;
 	private String end;
-	private String ehecked;
+	private String checked;
 	private Date regdate;
 	private int point;
 	private Room room;
 	private int day;
 	private String username;
+	private String hname;
+
+	public String getHname() {
+		return hname;
+	}
+
+	public void setHname(String hname) {
+		this.hname = hname;
+	}
 
 	public String getUsername() {
 		return username;
@@ -124,12 +133,12 @@ public class Final {
 		this.end = end;
 	}
 
-	public String getEhecked() {
-		return ehecked;
+	public String getChecked() {
+		return checked;
 	}
 
-	public void setEhecked(String ehecked) {
-		this.ehecked = ehecked;
+	public void setChecked(String checked) {
+		this.checked = checked;
 	}
 
 	public Date getRegdate() {
@@ -150,9 +159,10 @@ public class Final {
 
 	@Override
 	public String toString() {
-		return "Finally [no=" + no + ", hno=" + hno + ", name=" + name + ", pno=" + pno + ", pnum=" + pnum
-				+ ", roomnum=" + roomnum + ", total=" + total + ", userid=" + userid + ", start=" + start + ", end="
-				+ end + ", ehecked=" + ehecked + ", regdate=" + regdate + ", point=" + point + "]";
+		return "Final [no=" + no + ", hno=" + hno + ", name=" + name + ", pno=" + pno + ", pnum=" + pnum + ", roomnum="
+				+ roomnum + ", total=" + total + ", userid=" + userid + ", start=" + start + ", end=" + end
+				+ ", checked=" + checked + ", regdate=" + regdate + ", point=" + point + ", room=" + room + ", day="
+				+ day + ", username=" + username + ", hname=" + hname + "]";
 	}
 
 }

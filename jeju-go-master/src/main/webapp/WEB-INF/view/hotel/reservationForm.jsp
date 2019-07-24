@@ -9,6 +9,32 @@
 <title>Insert title here</title>
 <link href="//www.thebanchan.co.kr/fo/css/odr.css" rel="stylesheet"
 	type="text/css">
+<script type="text/javascript">
+	function allPoint() {
+		var b="<fmt:formatNumber value="${countpoint}" pattern="###,###"/>"
+		var c="<b><fmt:formatNumber value="${(f.room.price * (f.day-1))-countpoint }" pattern="###,###"/></b>"
+		document.getElementById("usepoint").value=document.getElementById("userpoint").value
+		document.getElementById("halin").innerHTML=b
+		document.getElementById("totalprice1").innerHTML=c
+		document.getElementById("totalprice2").innerHTML=c
+	};
+		function cancle() {
+			var b="<fmt:formatNumber value="${countpoint}" pattern="###,###"/>"
+			var c="<b><fmt:formatNumber value="${(f.room.price * (f.day-1))}" pattern="###,###"/></b>"
+			document.getElementById("usepoint").value=0
+			document.getElementById("halin").innerHTML=0
+			document.getElementById("totalprice1").innerHTML=c
+			document.getElementById("totalprice2").innerHTML=c
+		};
+		
+	function confirm(){
+		if(confirm("예약 신청 하시겠습니까??")){
+			return true;
+		}else{
+			return false;
+		}
+	}
+</script>
 <style type="text/css">
 h3 {
 	display: block;
@@ -19,17 +45,20 @@ h3 {
 	color: #333;
 }
 </style>
-<script type="text/javascript">
-	function allPoint() {
-		document.getElementById("usepoint").value=document.getElementById("userpoint").value
-		document.getElementById("halin").innerHTML=document.getElementById("userpoint").value
-	}
-</script>
 </head>
 <body>
 	<div class="container">
-	<form>
+	<form action="reservation.jeju" method="post" name="rf" onsubmit="return confirm()">
 		<input type="hidden" id="userpoint" value="${countpoint}">
+		<input type="hidden" name="hno" value="${f.hno}">
+		<input type="hidden" name="name" value="${f.name}">
+		<input type="hidden" name="pnum" value="${f.pnum}">
+		<input type="hidden" name="total" value="${f.room.price * (f.day-1) }">
+		<input type="hidden" name="start" value="${f.start}">
+		<input type="hidden" name="end" value="${f.end}">
+		<input type="hidden" name="day" value="${f.day}">
+		<input type="hidden" name="hname" value="${f.hname}">
+		
 		<div class="odr_insTop">
 			<h3>
 				<span>1</span>. 결제 정보
@@ -45,33 +74,27 @@ h3 {
 				</colgroup>
 				<thead>
 					<tr class="w3-center">
-						<th scope="col">숙소이름</th>
-						<th scope="col">혜택</th>
-						<th scope="col">할인금액</th>
-						<th scope="col">1박당 금액</th>
-						<th scope="col">숙박일</th>
-						<th scope="col">결제금액</th>
+						<th scope="col" class="w3-center">숙소</th>
+						<th scope="col" class="w3-center">숙소이름</th>
+						<th scope="col" class="w3-center"></th>
+						<th scope="col" class="w3-center">1박당 금액</th>
+						<th scope="col" class="w3-center">숙박일</th>
+						<th scope="col" class="w3-center">결제금액</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td><span class="tx"> <strong>${f.room.name }</strong>
-								<em data-cart-seq="0"
-								style="display: none;">예정적립금 : <b 
-									data-cart-seq="0">0</b>원
-							</em> <em class="frz" data-cart-seq="0"
-								style="display: none;"></em>
-						</span> <span class="img"><a href="javascript:void(0);"> <img
-									src="${path}/${f.room.photourl}" width="80" height="80" alt="">
-							</a></span></td>
-						<td></td>
+					<tr style="height:200px;">
+						<td style="height:200px;" class="w3-center"> 
+						<img src="${path}/${f.room.photourl}" style="padding-left:10%;padding-right:10%;width:80%;height:190px;" align="middle">
+							</td>
+						<td><dt style="font-size: 20px; color:grey;">${f.hname} - ${f.name}</dt></td>
 						<td><span class="prc"><b
-								data-cart-seq="0">0</b>원</span></td>
-						<td><span class="ori"><b><fmt:formatNumber
-										value="${f.room.price}" pattern="###,###" /></b>원</span></td>
+								data-cart-seq="0"></b></span></td>
+						<td><span class="ori"><b style="font-size: 20px;"><fmt:formatNumber
+										value="${f.room.price}" pattern="###,###" />원</b></span></td>
 						<td><span class="nm">${f.day-1}박 ${f.day}일</span></td>
 						<td><span class="ori"><b
-								data-cart-seq="0"> <fmt:formatNumber
+								data-cart-seq="0" style="font-size: 20px;"> <fmt:formatNumber
 										value="${f.room.price * (f.day-1) }" pattern="###,###" /></b>원</span></td>
 					</tr>
 
@@ -148,9 +171,18 @@ h3 {
 											<b style="color:blue;"><fmt:formatNumber value="0" pattern="###,###"/></b>원
 										</c:if>
 									</span>
+									<c:if test="${countpoint>=10000 }">
 									<span class="dwCk">
-									<label for="sht_ck01"><input type="button" id="push" onclick="allPoint()" value="전액사용"></label></span>
-									<span class="prc"><input type="text" value="" id="usepoint" readonly>원</span>
+									<label for="sht_ck01"><input type="button" id="push" onclick="allPoint()" value="전액사용"></label>
+									<label for="sht_ck01"><input type="button" id="push" onclick="cancle()" value="사용취소"></label>
+									</span>
+									</c:if>
+									<c:if test="${countpoint<10000 }">
+										<span class="tx">
+									<b style="color:red;">10,000이상부터 사용 가능합니다.</b>
+									</span>
+									</c:if>
+									<span class="prc"><input type="text" name="point" id="usepoint" readonly>원</span>
 								</div>
 							</td>
 						</tr>
@@ -164,7 +196,7 @@ h3 {
 				<div class="contain" style="position: absolute; top: 33px;">
 					<div class="top">
 
-						<div class="dlv">결제창</div>
+						<div class="dlv" style="background-color:grey">결제창</div>
 						<dl class="total">
 							<dt>
 								<b>최종결제정보</b>
@@ -176,29 +208,25 @@ h3 {
 								</b>원</span>
 							</dd>
 							<dd class="tp">
-								<strong>할인 적용 금액</strong><span><b id="halin">0</b>원</span>
-								<p></p>
+								<strong>할인 금액</strong><span><b id="halin">0</b>원</span>
+								<p class="dv">
+									<em  style="color:red;">10,000이상 포인트 사용 가능</em>
+								</p>
 							</dd>
 							<dd class="tp">
-								<strong>배송비</strong><span><b>2,900</b>원</span>
-								<p class="dv">
-									<em>45,000원
-										이상 구매 시 무료</em>
-									
-									<em style="display: none;">배송비
-										쿠폰 사용</em>
-								</p>
+								<strong>포인트 적용 금액</strong><span><b id="totalprice1">0</b>원</span>
 							</dd>
 							
 						</dl>
-						<div class="total_prc">
-							<span class="prc"><strong>최종 결제금액</strong><span><b>15,100</b>원</span></span> <span class="save" style="display:none">예정적립금
-								: <b>0</b>원
-							</span>
+							<div class="total_prc">
+								<span class="prc"><strong style="color:#50c0e9;">최종 결제금액</strong><span>
+									<div id="totalprice2"><b style="color:#50c0e9;"><fmt:formatNumber value="${f.room.price * (f.day-1) }"
+										pattern="###,###"/>원</b></div>
+								</span></span>
+							</div>
 						</div>
-					</div>
-					<button type="button" class="odr_total_ok">
-						결제하기<em class="ir">주문확인레이어 열기</em>
+					<button type="submit" class="odr_total_ok" style="background-color:#2196F3">
+						결제하기
 					</button>
 				</div>
 			</div>
