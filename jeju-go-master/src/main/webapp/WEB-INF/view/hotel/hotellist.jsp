@@ -18,6 +18,8 @@
 <link
 	href="https://cdn.datahc.com/Styles/StyleSheet.ashx?key=Homepage&cdn=1.0.2019.204001-Cba67369227c2b38a3428f1d50a94ca8576c452d0"
 	rel="stylesheet" type="text/css" />
+<!-- ÆùÆ®¾î½æ -->	
+ <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">	
 <script type="text/javascript"
 	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zjlzvjn41f"></script>
 <style type="text/css">
@@ -79,7 +81,8 @@ div.right {
 									<div class="CardLayout_CardLayout__nameAndStarsContainer__1l7OY">
 										<div class="CardLayout_CardLayout__name__3PlSj">
 											<div class="HotelCard_HotelCard__name__2jTNm"
-												data-test-id="hotel-name">${hotel.hname}</div>
+												data-test-id="hotel-name">69${hotel.hname}
+											</div> 
 										</div>
 									</div>
 									<div>

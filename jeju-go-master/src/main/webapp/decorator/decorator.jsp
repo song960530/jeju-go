@@ -123,11 +123,11 @@ body, h1, h2, h3, h4, h5, h6 {
                <a href="${path}/user/mypage.jeju?userid=${login.userid}"
                   class="w3-bar-item w3-button">정보 수정</a> <a href="${path}/user/updatepw.jeju"
                   class="w3-bar-item w3-button">비밀번호 변경</a> <a href="../user/mypoint.jeju?userid=${login.userid}"
-                  class="w3-bar-item w3-button">포인트</a> <a href="#"
-                  class="w3-bar-item w3-button">예약 내역</a> <a href="#"
+                  class="w3-bar-item w3-button">포인트</a> <a href="${path}/user/history.jeju?userid=${login.userid}"
+                  class="w3-bar-item w3-button">예약 내역</a> <a href="${path}/user/wishList.jeju?userid=${login.userid}"
                   class="w3-bar-item w3-button">찜</a> <a href="${path}/board/qnalist.jeju?userid=${login.userid}"
                   class="w3-bar-item w3-button">1:1 문의 내역</a> <a href="${path}/user/withdrawal.jeju"
-                  class="w3-bar-item w3-button">회원탈퇴 신청</a>
+                  class="w3-bar-item w3-button">회원탈퇴 신청</a>  
             </div>
          </div>
       </c:if>
@@ -412,6 +412,8 @@ body, h1, h2, h3, h4, h5, h6 {
 						<div class="form-group w3-center">
 							<button id="searchBtn2" type="submit"
 								class="btn btn-primary">확인</button>
+							<button type="reset"
+								class="btn btn-primary">초기화</button>
 						</div>
 					</form>
 				</div>
@@ -428,6 +430,8 @@ body, h1, h2, h3, h4, h5, h6 {
 						<div class="form-group w3-center">
 							<button id="searchBtn2" type="submit"
 								class="btn btn-primary">확인</button>
+							<button type="reset"
+								class="btn btn-primary">초기화</button>
 						</div>
 					</form>
 				</div>
@@ -464,6 +468,8 @@ body, h1, h2, h3, h4, h5, h6 {
 					</p>
 					<button type="submit"
 						class="btn btn-primary">회원가입</button>
+					<button type="reset"
+						class="btn btn-primary">초기화</button>
 				</form:form>
 			</div>
 		</div>
