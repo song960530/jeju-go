@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +50,7 @@ public class JejuService {
 		List<MultipartFile> fileList = mtfRequest.getFiles("photoname");
 
 		for (MultipartFile mf : fileList) {
-			String originFileName = mf.getOriginalFilename(); // 원본 파일 명
+			String originFileName = mf.getOriginalFilename(); 
 			String path = request.getServletContext().getRealPath("/") + "img/";
 			String safeFile = path + System.currentTimeMillis() + originFileName;
 
@@ -142,9 +141,9 @@ public class JejuService {
 		MessageDigest md;
 		try {
 			md = MessageDigest.getInstance("SHA-256");
-			hash = md.digest(plain);// 해쉬암호 생성
+			hash = md.digest(plain);
 			for (byte b : hash) {
-				result += String.format("%02X", b); // 핵사값으로 출력(16진수)
+				result += String.format("%02X", b); 
 			}
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -180,9 +179,9 @@ public class JejuService {
 		MessageDigest md;
 		try {
 			md = MessageDigest.getInstance("SHA-256");
-			hash = md.digest(plain);// 해쉬암호 생성
+			hash = md.digest(plain);
 			for (byte b : hash) {
-				result += String.format("%02X", b); // 핵사값으로 출력(16진수)
+				result += String.format("%02X", b); 
 			}
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -361,10 +360,6 @@ public class JejuService {
 		return boarddao.boardcount(type);
 	}
 
-	public List<Board> boardlist(Integer pageNum, int limit, int type) {
-		return boarddao.boardlist(pageNum, limit, type);
-	}
-
 	public Board getBoard(Integer No, HttpServletRequest request) {
 		return boarddao.selectone(No);
 	}
@@ -415,7 +410,6 @@ public class JejuService {
 	public Final reservation(Final f) {
 		Calendar calendar = Calendar.getInstance();
 		Room r = selectOne(f.getHno(), f.getName());
-		f.setHname(selectOne(f.getHno()).getHname());
 		f.setRoom(r);
 		int stmon = Integer.parseInt(f.getStart().split("-")[1]);
 		int enmon = Integer.parseInt(f.getEnd().split("-")[1]);
@@ -439,5 +433,49 @@ public class JejuService {
 
 	public int countPoint(String userid) {
 		return userdao.countPoint(userid);
+	}
+	public List<Board> boardlist(Integer pageNum, int limit, int type, int no) {
+		return boarddao.boardlist(pageNum, limit, type, no);
+	}
+
+	public Board qnablist(Integer no) {
+		return boarddao.qnablist(no);
+	}
+	
+	public List<Board> qnalist(Integer pageNum, int limit, int type, String userid, Integer type2) {
+		return boarddao.qnalist(pageNum, limit, type, userid, type2);
+	}
+	
+	public int count(int type, String userid, Integer type2) {
+		return boarddao.count(type, userid, type2);
+	}
+	
+	public int qnacount(Integer no) {
+		return boarddao.qnacount(no);
+	}
+
+	public Board qnarlist(Integer no, int reflevel) {
+		return boarddao.qnarlist(no, reflevel);
+	}
+	public void reply(Board board, HttpServletRequest request) {
+		boarddao.updaterefstep(board);
+		int num = boarddao.maxnum();
+		board.setNo(++num);
+		board.setReflevel(board.getReflevel() + 1);
+		board.setRefstep(board.getRefstep() + 1);
+		boarddao.noticewrite(board);
+	}
+	public String getUser(String userid) {
+		return boarddao.getUser(userid);
+	}
+	public List<Board> list(Integer pageNum, int limit, int type) {
+		return boarddao.list(pageNum, limit, type);
+	}
+	
+	public List<Board> adqnalist(Integer pageNum, int limit, int type, Integer type2) {
+		return boarddao.adqnalist(pageNum, limit, type, type2);
+	}
+	public int count(int type, Integer type2) {
+		return boarddao.count(type, type2);
 	}
 }
