@@ -140,6 +140,9 @@ public class HotelController {
 	public ModelAndView yesroom(Hreserve hreserve, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		service.yesroom(hreserve, request);
+		mav.addObject("msg","등록이 완료되었습니다.");
+		mav.addObject("url","hreserveform.jeju?hno="+hreserve.getHno());
+		mav.setViewName("alert");
 		return mav;
 	}
 
