@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import logic.Board;
 import logic.JejuService;
 import logic.User;
 
@@ -49,7 +50,7 @@ public class AdminController {
 		for (String id : idchks) {
 			service.Delete(id);
 		}
-		mav.addObject("msg", "íƒˆí‡´ ìŠ¹ì¸ ë˜ì—ˆìŠµë‹ˆë‹¤.");
+		mav.addObject("msg", "Å»Åğ ½ÂÀÎ µÇ¾ú½À´Ï´Ù.");
 		mav.addObject("url", "deletelist.jeju");
 		mav.setViewName("alert");
 		return mav;
@@ -73,30 +74,30 @@ public class AdminController {
 		mav.addObject("startpage", startpage);
 		mav.addObject("endpage", endpage);
 		mav.addObject("count", count);
-		mav.addObject("list", list);
+		mav.addObject("list", list); 
 		mav.addObject("boardno", boardno);
-		return mav;
+		return mav; // Å×½ºÆ®ÁÖ¼®
 	}
 	
-	@RequestMapping("admindelete")
-	public ModelAndView admindelete(User user, HttpSession session) {
+  	@RequestMapping("admindelete")
+	public ModelAndView admindelete(User user, HttpSession session) { // Å×½ºÆ®ÁÖ¼®
 		ModelAndView mav = new ModelAndView();
 	      User dbUser = (User)session.getAttribute("login");
 		  String password = service.MessageDigest(user.getPassword());
 	      if(!dbUser.getPassword().equals(password)) {
-	         throw new LogInException("ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë¦½ë‹ˆë‹¤.","list.jeju");
+	         throw new LogInException("ºñ¹Ğ¹øÈ£°¡ Æ²¸³´Ï´Ù.","list.jeju");
 	      }
 	      try {
 	         service.admindelete(user);
 	         if (dbUser.getUserid().equals("admin")) {
 //	            mav.setViewName("redirect:../admin/list.jeju");
-	        	mav.addObject("msg", "íƒˆí‡´ ì²˜ë¦¬ ë˜ì—ˆìŠµë‹ˆë‹¤.");
+	        	mav.addObject("msg", "Å»Åğ Ã³¸® µÇ¾ú½À´Ï´Ù.");
 	     		mav.addObject("url", "list.jeju");
 	     		mav.setViewName("alert");
 	         } 
 	      } catch(Exception e) {
 	         e.printStackTrace();
-	         throw new LogInException("íƒˆí‡´ì‹¤íŒ¨", "list.jeju");
+	         throw new LogInException("Å»Åğ½ÇÆĞ", "list.jeju");
 	      }
 	      return mav;
 	}
