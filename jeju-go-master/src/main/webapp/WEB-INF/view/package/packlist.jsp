@@ -28,12 +28,12 @@
 	</div>
 	<div class="container" style="margin-left: 5%; margin-right: 5%; width: 90%;">
 		<div class="SearchResultsDisplay_SearchResultsDisplay__card__2-jVd">
-			<c:forEach items="${list}" var="hotel">
-				<a href="hoteldetail.jeju?no=${hotel.no}" class="BpkCard_bpk-card__287qD CardLayout_CardLayout__x65BH">
+			<c:forEach items="${packlist}" var="pack">
+				<a href="packdetail.jeju?no=${pack.no}" class="BpkCard_bpk-card__287qD CardLayout_CardLayout__x65BH">
 					<div class="CardLayout_CardLayout__colLeft__1YR5c">
 						<div class="CardImage_CardImage__3uGof HotelCard_HotelCard__img__j5ZIV">
 							<picture>
-								<img src="${path}/${hotel.photourl}" style="width: 100%; height: 100%;" alt="">
+								<img src="${path }/imgs/${pack.photourl}" style="width: 100%; height: 100%;" alt="">
 							</picture>
 						</div>
 					</div>
@@ -42,7 +42,12 @@
 							<div class="CardLayout_CardLayout__colRightRowTopColLeft__1OwZD">
 								<div class="CardLayout_CardLayout__nameAndStarsContainer__1l7OY">
 									<div class="CardLayout_CardLayout__name__3PlSj">
-										<div class="HotelCard_HotelCard__name__2jTNm" data-test-id="hotel-name">${hotel.hname}</div>
+										<div class="HotelCard_HotelCard__name__2jTNm" data-test-id="hotel-name">패키지 명 : ${pack.name}</div>
+									</div>
+								</div>
+								<div class="CardLayout_CardLayout__nameAndStarsContainer__1l7OY">
+									<div class="CardLayout_CardLayout__name__3PlSj">
+										<div class="HotelCard_HotelCard__name__2jTNm" data-test-id="hotel-name">가격 : ${pack.price}</div>
 									</div>
 								</div>
 								<div>

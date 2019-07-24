@@ -212,7 +212,7 @@ body, h1, h2, h3, h4, h5, h6 {
 								</c:if>
 								<li role="presentation"><a
 									href="${path }/hotel/hotellist.jeju">Hotel</a></li>
-								<li role="presentation"><a href="../package/packagelist.jeju">Packages</a></li>
+								<li role="presentation"><a href="../package/packlist.jeju">Packages</a></li>
 								<li role="presentation"><a
 									href="${path }/board/csboard.jeju">∞Ì∞¥ºæ≈Õ</a></li>
 							</ul>

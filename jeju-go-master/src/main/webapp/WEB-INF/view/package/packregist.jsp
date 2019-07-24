@@ -47,15 +47,14 @@
 							<option value="${i}">${i}월</option>
 						</c:forEach>
 					</select>
-					<select name="startday">
-						<c:forEach begin="1" end="31" var="i">
-							<option value="${i}">${i}일</option>
-						</c:forEach>
-					</select>
 	            	<div class="validation"></div>
           		</div>
           		<div class="form-group">
-            		<input type="text" class="form-control" name="travelday" placeholder="여행일수">
+            		<input type="text" class="form-control" name="startday" placeholder="시작일">
+            		<div class="validation"></div>
+          		</div>
+          		<div class="form-group">
+            		여행일수<input type="text" class="form-control" name="travelday" value="7" readonly>
             		<div class="validation"></div>
           		</div>
           		<div class="form-group">
@@ -67,7 +66,9 @@
             		<div class="validation"></div>
          		</div>
           		<div class="form-group">
-            		<textarea class="form-control" name="content" rows="5" placeholder="패키지 소개"></textarea><script>CKEDITOR.replace("contents")</script>
+            		<textarea class="form-control" name="content" rows="5" placeholder="패키지 소개"></textarea>
+            			<script>CKEDITOR.replace("content", {
+						filebrowserImageUploadUrl : "imgupload.jeju"})</script>
            			<div class="validation"></div>
           		</div>
           		<div class="form-group">

@@ -78,32 +78,6 @@ public class JejuService {
 
 	}
 	
-	private void uploadPackPhoto(int no, String roomnum, String type, HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
-		List<MultipartFile> fileList = mtfRequest.getFiles("photoname");
-
-		for (MultipartFile mf : fileList) {
-			String originFileName = mf.getOriginalFilename(); 
-			String path = request.getServletContext().getRealPath("/") + "img/";
-			String safeFile = path + System.currentTimeMillis() + originFileName;
-
-			Package pack = new Package();
-			pack.setPhotourl(safeFile.substring(safeFile.lastIndexOf("img/")));
-			pack.setPhotoname(originFileName);
-
-			File fpath = new File(path);
-			if (!fpath.exists()) {
-				fpath.mkdirs();
-			}
-			try {
-				mf.transferTo(new File(safeFile));
-				packagedao.insert(pack);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-	}
-
 	public List<Hotel> list() {
 		List<Hotel> hotel = new ArrayList<Hotel>();
 		List<Integer> no = hoteldao.nolist();
@@ -511,9 +485,47 @@ public class JejuService {
 	public int packregist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
 		Package pack = new Package();
 		pack.setNo(packagedao.maxno() + 1);
-		if (packagedao.insert(pack)) {
-			uploadPackPhoto(pack.getNo(), "0", "", request, mtfRequest);
+		pack.setName(request.getParameter("name"));
+		pack.setContent(request.getParameter("content"));
+		pack.setTravelday(request.getParameter("travelday"));
+		pack.setPrice(Integer.parseInt(request.getParameter("price")));
+		pack.setMon(Integer.parseInt(request.getParameter("mon")));
+		pack.setStartday(request.getParameter("startday"));
+		pack.setMax(Integer.parseInt(request.getParameter("max")));
+		List<MultipartFile> fileList = mtfRequest.getFiles("photoname");
+
+		for (MultipartFile mf : fileList) {
+			String originFileName = mf.getOriginalFilename(); 
+			String path = request.getServletContext().getRealPath("/") + "imgs/";
+			String safeFile = path + System.currentTimeMillis() + originFileName;
+			System.out.println(safeFile);
+
+			pack.setPhotourl(safeFile.substring(safeFile.lastIndexOf("imgs/")));
+			pack.setPhotoname(originFileName);
+
+			File fpath = new File(path);
+			if (!fpath.exists()) {
+				fpath.mkdirs();
+			}
+			try {
+				mf.transferTo(new File(safeFile));
+				packagedao.insert(pack);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return pack.getNo();
+	}
+	
+	public List<Package> packlist() {
+		return packagedao.packlist();
+	}
+
+	public Package getPack(Integer no) {
+		return packagedao.getPack(no);
+	}
+
+	public List<Package> packday(Integer no) {
+		return packagedao.packday(no);
 	}
 }
