@@ -411,6 +411,7 @@ public class JejuService {
 		Calendar calendar = Calendar.getInstance();
 		Room r = selectOne(f.getHno(), f.getName());
 		f.setRoom(r);
+		f.setHname(selectOne(f.getHno()).getHname());
 		int stmon = Integer.parseInt(f.getStart().split("-")[1]);
 		int enmon = Integer.parseInt(f.getEnd().split("-")[1]);
 		int startday = Integer.parseInt(f.getStart().split("-")[2]);
