@@ -84,7 +84,7 @@ color:black;}
 					내용<input type="text" name="content" class="form-control" value="${bdetail.content}" readonly/>
 		            <div class="validation"></div>
 		        </div>
-		        <c:if test="${param.type==3 }">
+		        <c:if test="${param.type == 3}">
 		        <c:if test="${login.userid == 'admin'}">
 		        <div style="text-align:center">
 		        	<a href="../admin/qnalist.jeju">[게시글 목록]</a>
