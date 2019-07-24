@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import logic.JejuService;
+import logic.Point;
 import logic.User;
 
 import org.springframework.beans.factory.annotation.Autowired;

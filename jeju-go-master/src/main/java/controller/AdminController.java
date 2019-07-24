@@ -49,9 +49,32 @@ public class AdminController {
 		for (String id : idchks) {
 			service.Delete(id);
 		}
-		mav.addObject("msg", "Å»Åğ ½ÂÀÎ µÇ¾ú½À´Ï´Ù.");
+		mav.addObject("msg", "íƒˆí‡´ ìŠ¹ì¸ ë˜ì—ˆìŠµë‹ˆë‹¤.");
 		mav.addObject("url", "deletelist.jeju");
 		mav.setViewName("alert");
+		return mav;
+	}
+  
+  	@RequestMapping("qnalist")
+	public ModelAndView qnalist(Integer pageNum, Integer type2, String userid) {
+		ModelAndView mav = new ModelAndView();
+		if(pageNum == null || pageNum.toString().equals("")) {pageNum = 1;}
+		int limit = 10;
+		if(type2 == null || type2.toString().equals("")) {type2 = null;}
+		int count = service.count(3, type2);
+		List<Board> list = service.adqnalist(pageNum, limit, 3, type2);
+		int maxpage = (int)((double)count/limit + 0.95);
+		int startpage = ((int)((pageNum / 10.0 + 0.9) - 1) * 10 + 1);
+		int endpage = startpage + 9;
+		if(endpage > maxpage) {endpage = maxpage;}
+		int boardno = count - (pageNum - 1) * limit;
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("maxpage", maxpage);
+		mav.addObject("startpage", startpage);
+		mav.addObject("endpage", endpage);
+		mav.addObject("count", count);
+		mav.addObject("list", list);
+		mav.addObject("boardno", boardno);
 		return mav;
 	}
 	
@@ -61,19 +84,19 @@ public class AdminController {
 	      User dbUser = (User)session.getAttribute("login");
 		  String password = service.MessageDigest(user.getPassword());
 	      if(!dbUser.getPassword().equals(password)) {
-	         throw new LogInException("ºñ¹Ğ¹øÈ£°¡ Æ²¸³´Ï´Ù.","list.jeju");
+	         throw new LogInException("ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë¦½ë‹ˆë‹¤.","list.jeju");
 	      }
 	      try {
 	         service.admindelete(user);
 	         if (dbUser.getUserid().equals("admin")) {
 //	            mav.setViewName("redirect:../admin/list.jeju");
-	        	mav.addObject("msg", "Å»Åğ Ã³¸® µÇ¾ú½À´Ï´Ù.");
+	        	mav.addObject("msg", "íƒˆí‡´ ì²˜ë¦¬ ë˜ì—ˆìŠµë‹ˆë‹¤.");
 	     		mav.addObject("url", "list.jeju");
 	     		mav.setViewName("alert");
 	         } 
 	      } catch(Exception e) {
 	         e.printStackTrace();
-	         throw new LogInException("Å»Åğ½ÇÆĞ", "list.jeju");
+	         throw new LogInException("íƒˆí‡´ì‹¤íŒ¨", "list.jeju");
 	      }
 	      return mav;
 	}
