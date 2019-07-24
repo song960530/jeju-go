@@ -81,7 +81,7 @@ color:black;}
 			<div class="ex3">
 				<div class="SearchResultsDisplay_SearchResultsDisplay__card__2-jVd">
 				<c:forEach items="${list}" var="hotel">
-					<a href="hoteldetail.jeju?no=${hotel.no}" class="BpkCard_bpk-card__287qD CardLayout_CardLayout__x65BH">
+					<a href="searchhoteldetail.jeju?no=${hotel.no}&start=${startday}&end=${endday}&people=${people}" class="BpkCard_bpk-card__287qD CardLayout_CardLayout__x65BH">
 					<div class="CardLayout_CardLayout__colLeft__1YR5c">
 							<div class="CardImage_CardImage__3uGof HotelCard_HotelCard__img__j5ZIV">
 								<picture>

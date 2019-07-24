@@ -77,24 +77,31 @@ th {
 		<div>
 			<!-- <div style="margin-left: 5%; margin-right: 5%; width: 90%;"> -->
 			<button class="btn-primarys">
-				<h2 class="widgetheading" style="text-align: center;">고객센터</h2>
+				<h2 class="widgetheading w3-center">고객센터</h2>
 			</button>
 			<table>
 				<!-- <tr>
 					<td id="tab1" class="tab"><a href="javascript:disp_div('minfo','tab1')">공지사항</a></td>
 					<td id="tab2" class="tab"><a href="javascript:disp_div('oinfo', 'tab2')">QnA</a></td>
 				</tr> -->
-				<div class="w3-bar w3-blue">
+				<ul class="nav nav-tabs">
+					<li class="nav-item"><a class="nav-link active"
+						data-toggle="tab" href="javascript:disp_div('minfo', 'tab2')">공지사항</a></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="tab"
+						href="javascript:disp_div('oinfo','tab1')">Q&A</a></li>
+				</ul>
+				<!-- <div class="w3-bar w3-blue">
 					<button class="w3-bar-item w3-button"
 						onclick="javascript:disp_div('minfo','tab1')">공지사항</button>
 					<button class="w3-bar-item w3-button"
 						onclick="javascript:disp_div('oinfo', 'tab2')">Q&A</button>
-				</div>
+				</div> -->
 			</table>
 			<form action="csboard.jeju" method="post" name="csboard">
 				<input type="hidden" name="notpageNum" value="1"> <input
 					type="hidden" name="qnapageNum" value="1">
 				<div id="minfo" class="info" style="width: 100%;">
+				<h2 class="widgetheading w3-center">공지사항</h2>
 					<table class="w3-center">
 						<c:if test="${noticecount > 0}">
 							<tr style="color: black;">
@@ -137,6 +144,7 @@ th {
 				</div>
 				<!-- Q&A 부분 -->
 				<div id="oinfo" class="info">
+				<h2 class="widgetheading w3-center">Q&A</h2>
 					<table class="w3-center">
 						<c:if test="${qnacount > 0}">
 							<tr>
