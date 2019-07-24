@@ -6,16 +6,51 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MyPage</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script type="text/javascript">
 	function listcall(page) {
 		document.qnalist.pageNum.value=page;
 		document.qnalist.submit();
 	}
 </script>
+<style type="text/css">
+.select {
+	padding: 3px;
+	background-color: #0000ff;
+}
+
+.select>a {
+	text-decoration: none;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+tr:nth-child(even) {
+	background-color: #f2f2f2
+}
+
+tr:nth-child(odd) {
+	background-color: white;
+}
+
+th {
+	background-color: #56A9E8;
+	color: white;
+}
+</style>
 </head>
 <body>
-<form action="qnalist.jeju" method="post" name="qnalist">
+<div class="container">
+		<form action="qnalist.jeju" method="post" name="qnalist">
 <input type="hidden" name="pageNum" value="1">
 <input type="hidden" name="userid" value="${param.userid}">
 <select name="type2">
@@ -26,9 +61,8 @@
 </select> 
 <input type="submit" name="search" value="이동">
 </form>
-	<table>
+	<table class="w3-center">
 	<c:if test="${count > 0}">
-		<tr><td>글개수 : ${count}</td></tr>
 		<tr><th>번호</th><th>제목</th><th>작성자</th><th>날짜</th></tr>
 		<c:forEach items="${list}" var="board">
 			<c:if test="${board.reflevel == 0}">
@@ -89,5 +123,6 @@
 		<tr><td colspan="5">등록된 문의글이 없습니다.</td></tr>
 	</c:if>
 	</table>
+</div>
 </body>
 </html>
