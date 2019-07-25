@@ -55,9 +55,9 @@ th {
 <input type="hidden" name="userid" value="${param.userid}">
 <select name="type2">
 	<option value="">ÀüÃ¼</option>
-	<option value="1">Å»Åğ</option>
-	<option value="2">°áÁ¦</option>
-	<option value="3">¿¹¾à</option>
+	<option value="1"<c:if test="${param.type2 == 1}">selected="selected"</c:if>>Å»Åğ</option>
+	<option value="2"<c:if test="${param.type2 == 2}">selected="selected"</c:if>>°áÁµ</option>
+	<option value="3"<c:if test="${param.type2 == 3}">selected="selected"</c:if>>¿¹¾à</option>
 </select> 
 <input type="submit" name="search" value="ÀÌµ¿">
 </form>

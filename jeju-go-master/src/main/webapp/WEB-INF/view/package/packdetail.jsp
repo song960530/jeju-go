@@ -2,11 +2,12 @@
    pageEncoding="EUC-KR"%>
 <%@ include file="/WEB-INF/view/jspHeader.jsp"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
+<fmt:formatNumber value="${pack.price}" var="price" pattern="#,###.###"/>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>숙소 상세 페이지</title>
+<title>패키지 상세 페이지</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
@@ -34,6 +35,13 @@ html, body, h1, h2, h3, h4 {
    padding: 0;
    margin-top: 6px
 }
+  table {
+    border: 1px solid #444444;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid #000000;
+  }
 </style>
 <script type="text/javascript">
 // Slideshow
@@ -65,46 +73,25 @@ function showDivs(n) {
 </script>
 </head>
 <body>
-   <div class="w3-content">
-      <c:set value="${pack}" var="p" />
-      <div class="w3-panel">
-         <h1 style="font-family: 'Shrikhand', cursive;">
-            <p>${p.name}</p>
-         </h1>
-      </div>
-      <c:forEach items="${pack1}" var="photo">
-         <div class="w3-display-container mySlides">
-            <img src="${path}/${photo.photourl}"
-               style="width: 100%; height: 100%; max-height: 500px;">
-            <div class="w3-display-topleft w3-container w3-padding-32"></div>
-         </div>
-         <div class="w3-panel">
-         	<h1 style="font-family: 'Shrikhand', cursive;">
-            	<p>${photo.startdays}</p>
-         	</h1>
-     	 </div>
-      </c:forEach>
-      <div class="w3-container w3-dark-grey w3-padding w3-xlarge">
-         <div class="w3-left" onclick="plusDivs(-1)">
-            <i class="fa fa-arrow-circle-left w3-hover-text-teal"></i>
-         </div>
-         <div class="w3-right" onclick="plusDivs(1)">
-            <i class="fa fa-arrow-circle-right w3-hover-text-teal"></i>
-         </div>
-         <div class="w3-center">
-            <c:forEach items="${p}" var="photo" varStatus="i">
-               <span
-                  class="w3-tag demodots w3-border w3-transparent w3-hover-white"
-                  onclick="currentDiv(${i.index+1})"></span>
-            </c:forEach>
-         </div>
-      </div>
-      <h2 style="font-family: 'Do Hyeon', sans-serif;">
-         <p>${p.content}</p>
-      </h2>
-      <br>
-      <hr>
-      <br>
-   </div>
+	<table style="margin:auto;">
+		<tr>
+			<td rowspan="2" width="60%" ><img alt="" src="${path}/${pack.photourl}" width="600px" height="400px"></td>
+			<td style="font-size:30px; height:50px" align="center" valign="top">상품이름 : ${pack.name}</td>
+		</tr>
+		<tr>
+			<td style="font-size:20px;" align="left" valign="top">
+				<font color="red" size="5">상품가격 : ${price}원</font><br><br>
+					${pack.mon}월 일정 <br>
+				<c:forEach items="${start}" var="start">
+					출발 : ${start}일 ~ 도착 : ${start + 7}일<br>
+				</c:forEach><br>
+				<font color="blue" size="5">!!총 여행기간 : ${pack.travelday}일</font><br><br>
+				<a href="../package/packreserve.jeju?no=${pack.no}">[예약하러가기]</a>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><font size="4">상품내용 ${pack.content}</font></td>
+		</tr>
+	</table>
 </body>
 </html>

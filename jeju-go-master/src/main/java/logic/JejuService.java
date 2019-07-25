@@ -431,12 +431,12 @@ public class JejuService {
 
 	public Point getPoint(String userid) {
 		return userdao.getPoint(userid);
-
 	}
-
+	
 	public int countPoint(String userid) {
 		return userdao.countPoint(userid);
 	}
+	
 	public List<Board> boardlist(Integer pageNum, int limit, int type, int no) {
 		return boarddao.boardlist(pageNum, limit, type, no);
 	}
@@ -492,15 +492,14 @@ public class JejuService {
 		pack.setMon(Integer.parseInt(request.getParameter("mon")));
 		pack.setStartday(request.getParameter("startday"));
 		pack.setMax(Integer.parseInt(request.getParameter("max")));
+		
 		List<MultipartFile> fileList = mtfRequest.getFiles("photoname");
-
 		for (MultipartFile mf : fileList) {
 			String originFileName = mf.getOriginalFilename(); 
-			String path = request.getServletContext().getRealPath("/") + "imgs/";
+			String path = request.getServletContext().getRealPath("/") + "img/";
 			String safeFile = path + System.currentTimeMillis() + originFileName;
-			System.out.println(safeFile);
 
-			pack.setPhotourl(safeFile.substring(safeFile.lastIndexOf("imgs/")));
+			pack.setPhotourl(safeFile.substring(safeFile.lastIndexOf("img/")));
 			pack.setPhotoname(originFileName);
 
 			File fpath = new File(path);
@@ -509,11 +508,11 @@ public class JejuService {
 			}
 			try {
 				mf.transferTo(new File(safeFile));
-				packagedao.insert(pack);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+		packagedao.insert(pack);
 		return pack.getNo();
 	}
 	
@@ -527,5 +526,9 @@ public class JejuService {
 
 	public List<Package> packday(Integer no) {
 		return packagedao.packday(no);
+	}
+
+	public void replydelete(Board board) {
+		boarddao.replydelete(board);
 	}
 }

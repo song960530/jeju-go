@@ -40,6 +40,4 @@ public class PackageDao {
 	public List<Package> packday(Integer no) {
 		return sqlSession.getMapper(PackageMapper.class).packday(no);
 	}
-
-
 }

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ include file="/WEB-INF/view/jspHeader.jsp" %>
+<c:set var="now" value="<%=new java.util.Date()%>" />
+<c:set var="sysYear"><fmt:formatDate value="${now}" pattern="yyyy" /></c:set>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,8 +43,12 @@
             		<input type="text" name="name" class="form-control" placeholder="패키지 명"/>
            			<div class="validation"></div>
          		</div>
+         		<div class="form-group">
+	          		<input type="text" class="form-control" value="${sysYear}년" readonly>
+	            	<div class="validation"></div>
+          		</div>
           		<div class="form-group">
-	          		<select name="mon">
+	          		<select name="mon" style="width:100%">
 						<c:forEach begin="1" end="12" var="i">
 							<option value="${i}">${i}월</option>
 						</c:forEach>
@@ -72,7 +78,7 @@
            			<div class="validation"></div>
           		</div>
           		<div class="form-group">
-        			<h5 class="widgetheading">사진</h5><input multiple="multiple" type="file" name="photoname">
+        			<h5 class="widgetheading">사진</h5><input type="file" name="photoname">
           			<div class="validation"></div>
           		</div>
           		<br>

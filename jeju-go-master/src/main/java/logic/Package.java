@@ -18,6 +18,7 @@ public class Package {
 	private String photourl;
 	private String photoname;
 	private List<String> startdays;
+	private List<String> enddays;
 	
 	public int getNo() {
 		return no;
@@ -91,6 +92,12 @@ public class Package {
 	}
 	public void setStartdays(List<String> startdays) {
 		this.startdays = startdays;
+	}
+	public List<String> getEnddays() {
+		return enddays;
+	}
+	public void setEnddays(List<String> enddays) {
+		this.enddays = enddays;
 	}
 	@Override
 	public String toString() {

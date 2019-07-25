@@ -181,7 +181,7 @@ public class BoardController {
 		try {
 			service.reply(board, request);
 			mav.addObject("msg", "답글 작성완료");
-			mav.addObject("url", "../board/csdetail.jeju?no=" + (board.getNo() - 1));
+			mav.addObject("url", "../board/csdetail.jeju?no=" + board.getRef() + "&type=" + board.getType() + "&type2=" + board.getType2());
 			mav.setViewName("alert");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -198,6 +198,19 @@ public class BoardController {
 		mav.addObject("bdetail", bdetail); // 원글 정보
 		mav.addObject("rdetail", rdetail); // 답글 정보
 		mav.addObject("count", count);
+		return mav;
+	}
+	@PostMapping("replydelete")
+	public ModelAndView replydelete(Board board, HttpServletRequest request, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		try {
+			service.replydelete(board);
+			mav.addObject("msg", "답글 삭제완료");
+			mav.addObject("url", "../board/csdetail.jeju?no=" + board.getRef() + "&type=" + board.getType() + "&type2=" + board.getType2());
+			mav.setViewName("alert");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		return mav;
 	}
 }
