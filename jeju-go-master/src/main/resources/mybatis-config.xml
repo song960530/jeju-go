@@ -8,6 +8,7 @@
 		<typeAlias type="logic.User" alias="User" />
 		<typeAlias type="logic.Board" alias="Board" />
 		<typeAlias type="logic.Package" alias="Package" />
+		<typeAlias type="logic.Final" alias="Final" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="dao/mapper/Hotel.xml"/>
@@ -16,5 +17,6 @@
 		<mapper resource="dao/mapper/User.xml"/>
 		<mapper resource="dao/mapper/Hreserve.xml"/>
 		<mapper resource="dao/mapper/Board.xml"/>
+		<mapper resource="dao/mapper/Final.xml"/>
 	</mappers>
 </configuration>
