@@ -598,7 +598,7 @@ public class JejuService {
 
 	      if (f1.getPoint() != 0) {
 	         int no = userdao.pointmaxno() + 1;
-	         userdao.point(no, f1.getUserid(), f1.getPoint(), "ì‚¬ìš©");
+	         userdao.point(no, f1.getUserid(), f1.getPoint(), "»ç¿ë");
 	      }
 	   }
 
@@ -633,7 +633,7 @@ public class JejuService {
 	      int stmon = Integer.parseInt(request.getParameter("start").split("-")[1]);
 	      int startday = Integer.parseInt(request.getParameter("start").split("-")[2]);
 	      String name=request.getParameter("name");
-	      String roomnum = request.getParameter("roomnum").split("í˜¸")[0];
+	      String roomnum = request.getParameter("roomnum").split("È£")[0];
 	      String username = request.getParameter("username");
 	      
 	      for (int i = rno; i <= rno + day; i++) {
