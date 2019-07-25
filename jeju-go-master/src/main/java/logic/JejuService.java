@@ -529,10 +529,85 @@ public class JejuService {
 		f1.setNo(finaldao.maxno() + 1);
 		f1.setRno(hresdao.delayRoomnum(f1));
 		finaldao.insert(f1);
-		hresdao.insertdelayRoom(f1.getRno());
+
+		Calendar calendar = Calendar.getInstance();
+		int stmon = Integer.parseInt(f1.getStart().split("-")[1]);
+		int enmon = Integer.parseInt(f1.getEnd().split("-")[1]);
+		int startday = Integer.parseInt(f1.getStart().split("-")[2]);
+		int endday = Integer.parseInt(f1.getEnd().split("-")[2]);
+		calendar.set(Integer.parseInt(f1.getStart().split("-")[0]), stmon - 1, 1);
+		int lastday = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+		int rno = f1.getRno();
+
+		if (stmon == enmon) {
+			for (int i = startday; i <= endday; i++)
+				hresdao.insertdelayRoom(rno++);
+		} else {
+			for (int i = stmon; i <= enmon; i++) {
+				if (i == stmon) {
+					for (int j = startday; j <= lastday; j++) {
+						hresdao.insertdelayRoom(rno++);
+					}
+				} else {
+					for (int j = 1; j <= endday; j++) {
+						hresdao.insertdelayRoom(rno++);
+					}
+				}
+			}
+		}
+
 		if (f1.getPoint() != 0) {
 			int no = userdao.pointmaxno() + 1;
 			userdao.point(no, f1.getUserid(), f1.getPoint(), "»ç¿ë");
 		}
+	}
+
+	public List<Final> acceptList() {
+		return finaldao.acceptList();
+	}
+
+	public List<String> roomnums(Final f) {
+		List<String> roomnums = new ArrayList<String>();
+		Calendar calendar = Calendar.getInstance();
+		int stmon = Integer.parseInt(f.getStart().split("-")[1]);
+		int enmon = Integer.parseInt(f.getEnd().split("-")[1]);
+		int startday = Integer.parseInt(f.getStart().split("-")[2]);
+		int endday = Integer.parseInt(f.getEnd().split("-")[2]);
+		calendar.set(Integer.parseInt(f.getStart().split("-")[0]), stmon - 1, 1);
+		int lastday = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+		if (stmon == enmon) {
+			roomnums = hresdao.selectRooms(f.getHno(), f.getName(), stmon, startday, endday);
+		} else {
+			roomnums = hresdao.selectRooms2(f.getHno(), f.getName(), stmon, startday, lastday, enmon, endday);
+		}
+		return roomnums;
+	}
+
+	public void allFinally(HttpServletRequest request) {
+		// hno, rno, day roomnum start end
+		int no = Integer.parseInt(request.getParameter("no"));
+		int hno = Integer.parseInt(request.getParameter("hno"));
+		int rno = Integer.parseInt(request.getParameter("rno"));
+		int day = Integer.parseInt(request.getParameter("day"));
+		int stmon = Integer.parseInt(request.getParameter("start").split("-")[1]);
+		int startday = Integer.parseInt(request.getParameter("start").split("-")[2]);
+		String name=request.getParameter("name");
+		String roomnum = request.getParameter("roomnum").split("È£")[0];
+		String username = request.getParameter("username");
+		
+		for (int i = rno; i <= rno + day; i++) {
+			hresdao.nullRoomnum(i);
+		}
+
+		int no2 = hresdao.selectno(hno,roomnum,stmon,startday,name);
+		
+		for(int i=no2;i<no2+day;i++) {
+			hresdao.insertfinish(i,username);
+		}
+		
+		finaldao.finish(no,roomnum);
+		
+		
 	}
 }

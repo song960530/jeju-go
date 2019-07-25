@@ -20,7 +20,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -138,8 +140,8 @@ public class HotelController {
 	public ModelAndView yesroom(Hreserve hreserve, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		service.yesroom(hreserve, request);
-		mav.addObject("msg","등록이 완료되었습니다.");
-		mav.addObject("url","hreserveform.jeju?hno="+hreserve.getHno());
+		mav.addObject("msg", "등록이 완료되었습니다.");
+		mav.addObject("url", "hreserveform.jeju?hno=" + hreserve.getHno());
 		mav.setViewName("alert");
 		return mav;
 	}
@@ -229,7 +231,7 @@ public class HotelController {
 		mav.addObject("f", f);
 		return mav;
 	}
-	
+
 	@PostMapping("reservation")
 	public ModelAndView reservation(Final f1) {
 		ModelAndView mav = new ModelAndView();
@@ -239,6 +241,12 @@ public class HotelController {
 		mav.setViewName("alert");
 		return mav;
 	}
-
+	
+	@PostMapping("allfinal")
+	public ModelAndView allfinal(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		service.allFinally(request);
+		mav.setViewName("redirect:../admin/acceptlist.jeju");
+		return mav;
+	}
 }
-

@@ -68,4 +68,51 @@ public class HreserveDao {
 		sqlSession.getMapper(HreserveMapper.class).insertdelayRoom(rno);
 		
 	}
+
+	public List<String> selectRooms(int hno, String name, int stmon, int startday, int endday) {
+		param.clear();
+		param.put("hno",hno);
+		param.put("name",name);
+		param.put("stmon",stmon);
+		param.put("startday",startday);
+		param.put("endday",endday);
+		return sqlSession.getMapper(HreserveMapper.class).selectRooms(param);
+	}
+
+	public List<String> selectRooms2(int hno, String name, int stmon, int startday, int lastday, int enmon,
+			int endday) {
+		param.clear();
+		param.put("hno",hno);
+		param.put("name",name);
+		param.put("stmon",stmon);
+		param.put("startday",startday);
+		param.put("lastday",lastday);
+		param.put("enmon",enmon);
+		param.put("endday",endday);
+		return sqlSession.getMapper(HreserveMapper.class).selectRooms2(param);
+	}
+
+	public void nullRoomnum(int rno) {
+		param.clear();
+		param.put("rno",rno);
+		sqlSession.getMapper(HreserveMapper.class).nullRoomnum(param);
+		
+	}
+
+	public int selectno(int hno, String roomnum, int stmon, int startday, String name) {
+		param.clear();
+		param.put("hno",hno);
+		param.put("roomnum",roomnum);
+		param.put("stmon",stmon);
+		param.put("startday",startday);
+		param.put("name",name);
+		return sqlSession.getMapper(HreserveMapper.class).selectno(param);
+	}
+
+	public void insertfinish(int i, String username) {
+		param.clear();
+		param.put("no",i);
+		param.put("username",username);
+		sqlSession.getMapper(HreserveMapper.class).insertfinish(param);
+	}
 }

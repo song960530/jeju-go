@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -24,6 +25,19 @@ public class FinalDao {
 
 	public void insert(Final f1) {
 		sqlSession.getMapper(FinalMapper.class).insert(f1);
+		
+	}
+
+	public List<Final> acceptList() {
+		return sqlSession.getMapper(FinalMapper.class).acceptList();
+
+	}
+
+	public void finish(int no, String roomnum) {
+		param.clear();
+		param.put("no", no);
+		param.put("roomnum", roomnum);
+		sqlSession.getMapper(FinalMapper.class).finish(param);
 		
 	}
 

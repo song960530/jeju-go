@@ -1,6 +1,7 @@
 package logic;
 
 import java.util.Date;
+import java.util.List;
 
 public class Final {
 	private int no;
@@ -21,8 +22,17 @@ public class Final {
 	private String username;
 	private String hname;
 	private String roomnum;
+	private List<String> roomnums;
 
 	
+	public List<String> getRoomnums() {
+		return roomnums;
+	}
+
+	public void setRoomnums(List<String> roomnums) {
+		this.roomnums = roomnums;
+	}
+
 	public String getRoomnum() {
 		return roomnum;
 	}

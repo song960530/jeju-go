@@ -139,7 +139,7 @@ body, h1, h2, h3, h4, h5, h6 {
             <div class="w3-dropdown-content w3-bar-block">
                <a href="${path}/admin/list.jeju" class="w3-bar-item w3-button">회원
                   목록</a> <a href="${path}/admin/deletelist.jeju"
-                  class="w3-bar-item w3-button">탈퇴 신청 목록</a> <a href="#"
+                  class="w3-bar-item w3-button">탈퇴 신청 목록</a> <a href="${path}/admin/acceptlist.jeju"
                   class="w3-bar-item w3-button">예약 신청 목록</a> <a href="#"
                   class="w3-bar-item w3-button">예약 관리 페이지</a> <a href="../admin/qnalist.jeju"
                   class="w3-bar-item w3-button">1:1문의 목록</a>
