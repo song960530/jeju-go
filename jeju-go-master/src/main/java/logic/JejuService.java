@@ -560,6 +560,10 @@ public class JejuService {
 	public List<Package> packday(Integer no) {
 		return packagedao.packday(no);
 	}
+	
+	public void wish(String userid, int no) {
+		userdao.insert(userid, no);
+	}
 
 	public void replydelete(Board board) {
 		boarddao.replydelete(board);

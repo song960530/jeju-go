@@ -27,6 +27,8 @@
 	rel="stylesheet">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
 <style>
 body, h1, h2, h3, h4, h5, h6 {
 	font-family: "Raleway", Arial, Helvetica, sans-serif;
@@ -120,6 +122,7 @@ body, h1, h2, h3, h4, h5, h6 {
                &nbsp;&nbsp;마이페이지 <i class="fa fa-caret-down"></i>
             </button>
             <div class="w3-dropdown-content w3-bar-block">
+             <c:if test="${sessionScope.login.userid!='admin'}">
                <a href="${path}/user/mypage.jeju?userid=${login.userid}"
                   class="w3-bar-item w3-button">정보 수정</a> <a href="${path}/user/updatepw.jeju"
                   class="w3-bar-item w3-button">비밀번호 변경</a> <a href="../user/mypoint.jeju?userid=${login.userid}"
@@ -128,6 +131,13 @@ body, h1, h2, h3, h4, h5, h6 {
                   class="w3-bar-item w3-button">찜</a> <a href="${path}/board/qnalist.jeju?userid=${login.userid}"
                   class="w3-bar-item w3-button">1:1 문의 내역</a> <a href="${path}/user/withdrawal.jeju"
                   class="w3-bar-item w3-button">회원탈퇴 신청</a>
+              </c:if>
+              <c:if test="${sessionScope.login.userid=='admin'}">
+              	<a href="${path}/user/mypage.jeju?userid=${login.userid}"
+                  class="w3-bar-item w3-button">정보 수정</a> <a href="${path}/user/updatepw.jeju"
+                  class="w3-bar-item w3-button">비밀번호 변경</a> <a href="../user/mypoint.jeju?userid=${login.userid}"
+                  class="w3-bar-item w3-button">포인트</a>
+              </c:if> 
             </div>
          </div>
       </c:if>
@@ -205,16 +215,17 @@ body, h1, h2, h3, h4, h5, h6 {
 								<c:if test="${empty sessionScope.login}">
 									<li role="presentation"><a href="javascript:void(0)"
 										onclick="document.getElementById('signin').style.display='block'"
-										class="w3-bar-item w3-button">회원가입</a></li>
+										class="w3-bar-item w3-button" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">회원가입</a></li>
 									<li role="presentation"><a href="javascript:void(0)"
 										onclick="document.getElementById('login').style.display='block'"
-										class="w3-bar-item w3-button">로그인</a></li>
+										class="w3-bar-item w3-button" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">로그인</a></li>
 								</c:if>
 								<li role="presentation"><a
-									href="${path }/hotel/hotellist.jeju">Hotel</a></li>
-								<li role="presentation"><a href="../package/packlist.jeju">Packages</a></li>
+									href="${path }/hotel/hotellist.jeju" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">Hotel</a></li>
+								<li role="presentation"><a href="../package/packagelist.jeju" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">Packages</a></li>
+
 								<li role="presentation"><a
-									href="${path }/board/csboard.jeju">고객센터</a></li>
+									href="${path }/board/csboard.jeju" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">고객센터</a></li>
 							</ul>
 						</div>
 					</div>

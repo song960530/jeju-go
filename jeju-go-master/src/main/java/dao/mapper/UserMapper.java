@@ -48,6 +48,9 @@ public interface UserMapper {
 	@Select("select ifnull(sum(point),0) from point where userid=#{userid}")
 	int countPoint(String userid);
 
+	@Insert("insert into wish(userid,no) values(#{userid},#{no})")
+	void wish(Map<String, Object> param);
+	
 	@Select("select ifnull(max(no),0) from point")
 	int pointmaxno();
 
