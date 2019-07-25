@@ -1,5 +1,7 @@
 package dao.mapper;
 
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -45,4 +47,7 @@ public interface UserMapper {
 	
 	@Select("select ifnull(sum(point),0) from point where userid=#{userid}")
 	int countPoint(String userid);
+
+	@Insert("insert into wish(userid,no) values(#{userid},#{no})")
+	void wish(Map<String, Object> param);
 }

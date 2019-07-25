@@ -52,7 +52,7 @@ public class JejuService {
 		List<MultipartFile> fileList = mtfRequest.getFiles("photoname");
 
 		for (MultipartFile mf : fileList) {
-			String originFileName = mf.getOriginalFilename(); 
+			String originFileName = mf.getOriginalFilename();
 			String path = request.getServletContext().getRealPath("/") + "img/";
 			String safeFile = path + System.currentTimeMillis() + originFileName;
 
@@ -77,12 +77,13 @@ public class JejuService {
 		}
 
 	}
-	
-	private void uploadPackPhoto(int no, String roomnum, String type, HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
+
+	private void uploadPackPhoto(int no, String roomnum, String type, HttpServletRequest request,
+			MultipartHttpServletRequest mtfRequest) {
 		List<MultipartFile> fileList = mtfRequest.getFiles("photoname");
 
 		for (MultipartFile mf : fileList) {
-			String originFileName = mf.getOriginalFilename(); 
+			String originFileName = mf.getOriginalFilename();
 			String path = request.getServletContext().getRealPath("/") + "img/";
 			String safeFile = path + System.currentTimeMillis() + originFileName;
 
@@ -171,7 +172,7 @@ public class JejuService {
 			md = MessageDigest.getInstance("SHA-256");
 			hash = md.digest(plain);
 			for (byte b : hash) {
-				result += String.format("%02X", b); 
+				result += String.format("%02X", b);
 			}
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -209,7 +210,7 @@ public class JejuService {
 			md = MessageDigest.getInstance("SHA-256");
 			hash = md.digest(plain);
 			for (byte b : hash) {
-				result += String.format("%02X", b); 
+				result += String.format("%02X", b);
 			}
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -463,6 +464,7 @@ public class JejuService {
 	public int countPoint(String userid) {
 		return userdao.countPoint(userid);
 	}
+
 	public List<Board> boardlist(Integer pageNum, int limit, int type, int no) {
 		return boarddao.boardlist(pageNum, limit, type, no);
 	}
@@ -470,15 +472,15 @@ public class JejuService {
 	public Board qnablist(Integer no) {
 		return boarddao.qnablist(no);
 	}
-	
+
 	public List<Board> qnalist(Integer pageNum, int limit, int type, String userid, Integer type2) {
 		return boarddao.qnalist(pageNum, limit, type, userid, type2);
 	}
-	
+
 	public int count(int type, String userid, Integer type2) {
 		return boarddao.count(type, userid, type2);
 	}
-	
+
 	public int qnacount(Integer no) {
 		return boarddao.qnacount(no);
 	}
@@ -486,6 +488,7 @@ public class JejuService {
 	public Board qnarlist(Integer no, int reflevel) {
 		return boarddao.qnarlist(no, reflevel);
 	}
+
 	public void reply(Board board, HttpServletRequest request) {
 		boarddao.updaterefstep(board);
 		int num = boarddao.maxnum();
@@ -494,26 +497,74 @@ public class JejuService {
 		board.setRefstep(board.getRefstep() + 1);
 		boarddao.noticewrite(board);
 	}
+
 	public String getUser(String userid) {
 		return boarddao.getUser(userid);
 	}
+
 	public List<Board> list(Integer pageNum, int limit, int type) {
 		return boarddao.list(pageNum, limit, type);
 	}
-	
+
 	public List<Board> adqnalist(Integer pageNum, int limit, int type, Integer type2) {
 		return boarddao.adqnalist(pageNum, limit, type, type2);
 	}
+
 	public int count(int type, Integer type2) {
 		return boarddao.count(type, type2);
 	}
-	
+
+	public void replydelete(Board board) {
+		boarddao.replydelete(board);
+	}
+
 	public int packregist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
 		Package pack = new Package();
 		pack.setNo(packagedao.maxno() + 1);
-		if (packagedao.insert(pack)) {
-			uploadPackPhoto(pack.getNo(), "0", "", request, mtfRequest);
+		pack.setName(request.getParameter("name"));
+		pack.setContent(request.getParameter("content"));
+		pack.setTravelday(request.getParameter("travelday"));
+		pack.setPrice(Integer.parseInt(request.getParameter("price")));
+		pack.setMon(Integer.parseInt(request.getParameter("mon")));
+		pack.setStartday(request.getParameter("startday"));
+		pack.setMax(Integer.parseInt(request.getParameter("max")));
+
+		List<MultipartFile> fileList = mtfRequest.getFiles("photoname");
+		for (MultipartFile mf : fileList) {
+			String originFileName = mf.getOriginalFilename();
+			String path = request.getServletContext().getRealPath("/") + "img/";
+			String safeFile = path + System.currentTimeMillis() + originFileName;
+
+			pack.setPhotourl(safeFile.substring(safeFile.lastIndexOf("img/")));
+			pack.setPhotoname(originFileName);
+
+			File fpath = new File(path);
+			if (!fpath.exists()) {
+				fpath.mkdirs();
+			}
+			try {
+				mf.transferTo(new File(safeFile));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+		packagedao.insert(pack);
 		return pack.getNo();
+	}
+
+	public List<Package> packlist() {
+		return packagedao.packlist();
+	}
+
+	public Package getPack(Integer no) {
+		return packagedao.getPack(no);
+	}
+
+	public List<Package> packday(Integer no) {
+		return packagedao.packday(no);
+	}
+
+	public void wish(String userid, int no) {
+		userdao.insert(userid, no);
 	}
 }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import logic.Hotel;
 import logic.JejuService;
 import logic.Point;
 import logic.User;
@@ -70,7 +71,10 @@ public class UserController {
 				return mav;
 			} else {
 				session.setAttribute("login", dbUser);
-				mav.setViewName("redirect:main.jeju");
+//				mav.setViewName("redirect:main.jeju");
+				mav.addObject("msg",dbUser.getUsername() + "님 환영합니다.");
+				mav.addObject("url", "main.jeju");
+				mav.setViewName("alert");
 			}
 		} catch (EmptyResultDataAccessException e) {
 			e.printStackTrace();
@@ -244,6 +248,18 @@ public class UserController {
 			e.printStackTrace();
 			bindResult.reject("error.user.update");
 		}
+		return mav;
+	}
+	
+	@RequestMapping("wish")
+	public ModelAndView wish(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		int no = Integer.parseInt(request.getParameter("no"));
+		String userid = request.getParameter("userid");
+		service.wish(userid,no);
+		mav.addObject("msg", "즐겨찾기 등록이 완료되었습니다.");
+		mav.addObject("url", "../hotel/hoteldetail.jeju?no=" + no);
+		mav.setViewName("alert");
 		return mav;
 	}
 }

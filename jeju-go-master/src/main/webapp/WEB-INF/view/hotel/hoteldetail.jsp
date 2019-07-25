@@ -77,6 +77,11 @@ function showDivs(n) {
       <div class="w3-panel">
          <h1 style="font-family: 'Shrikhand', cursive;">
             <p>${h.hname}</p>
+            <form method="post" action="../user/wish.jeju">
+            <input type="hidden" name="userid" value="${login.userid}">
+            <input type="hidden" name="no" value="${h.no}">
+            <button type="submit" class="btn btn-default">즐겨찾기 등록</button>
+            </form>
          </h1>
       </div>
       <c:forEach items="${h.photo}" var="photo">

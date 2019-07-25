@@ -120,6 +120,10 @@ public class BoardDao {
 		param.put("reflevel", reflevel);
 		return sqlSession.getMapper(BoardMapper.class).getRQnA(param);
 	}
+
+	public void replydelete(Board board) {
+		sqlSession.getMapper(BoardMapper.class).replydelete(board);
+	}
 }
 
 

@@ -9,7 +9,7 @@
 <title>MyPage</title>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#info").show();
@@ -69,6 +69,7 @@ tr:nth-child(odd) {
 th {
 	background-color: #56A9E8;
 	color: white;
+	text-align: center;
 }
 </style>
 </head>
@@ -77,9 +78,8 @@ th {
 		<div>
 			<!-- <div style="margin-left: 5%; margin-right: 5%; width: 90%;"> -->
 			<button class="btn-primarys">
-				<h2 class="widgetheading w3-center">고객센터</h2>
+				<h2 class="widgetheading w3-center" style="font-family: 'Sunflower', sans-serif;"><b>고객센터</b></h2>
 			</button>
-			<table>
 				<!-- <tr>
 					<td id="tab1" class="tab"><a href="javascript:disp_div('minfo','tab1')">공지사항</a></td>
 					<td id="tab2" class="tab"><a href="javascript:disp_div('oinfo', 'tab2')">QnA</a></td>
@@ -96,12 +96,11 @@ th {
 					<button class="w3-bar-item w3-button"
 						onclick="javascript:disp_div('oinfo', 'tab2')">Q&A</button>
 				</div> -->
-			</table>
 			<form action="csboard.jeju" method="post" name="csboard">
 				<input type="hidden" name="notpageNum" value="1"> <input
 					type="hidden" name="qnapageNum" value="1">
 				<div id="minfo" class="info" style="width: 100%;">
-				<h2 class="widgetheading w3-center">공지사항</h2>
+				<h2 class="widgetheading w3-center" style="font-family: 'Sunflower', sans-serif;">공지사항</h2>
 					<table class="w3-center">
 						<c:if test="${noticecount > 0}">
 							<tr style="color: black;">
@@ -144,7 +143,7 @@ th {
 				</div>
 				<!-- Q&A 부분 -->
 				<div id="oinfo" class="info">
-				<h2 class="widgetheading w3-center">Q&A</h2>
+				<h2 class="widgetheading w3-center" style="font-family: 'Sunflower', sans-serif;">Q&A</h2>
 					<table class="w3-center">
 						<c:if test="${qnacount > 0}">
 							<tr>
@@ -158,7 +157,7 @@ th {
 									<td>${qnaboardno}</td>
 									<c:set var="qnaboardno" value="${qnaboardno - 1}" />
 									<td style="text-align: left"><a
-										href="csdetail.jeju?no=${board.no}">${board.subject}</a></td>
+										href="../board/csdetail.jeju?no=${board.no}&type=${board.type}&type2=${board.type2}">${board.subject}</a></td>
 									<td>${board.userid}</td>
 									<td><fmt:formatDate var="rdate" value="${board.regdate}"
 											pattern="yyyyMMdd" /> <c:if test="${today == rdate}">

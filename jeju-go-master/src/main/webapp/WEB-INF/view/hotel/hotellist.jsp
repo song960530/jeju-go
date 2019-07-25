@@ -61,6 +61,7 @@ div.right {
 	<div class="container"
 		style="margin-left: 5%; margin-right: 5%; width: 90%;">
 		<div class="left">
+		<fieldset>
 			<div class="">
 			<div class="ex3">
 				<div class="SearchResultsDisplay_SearchResultsDisplay__card__2-jVd">
@@ -206,6 +207,7 @@ div.right {
 					</div>
 				</div> --%>
 			</div>
+			</fieldset>
 		</div>
 		<div class="right">
 			<div id="map" style="width: 100%; height: 1000px;"></div>

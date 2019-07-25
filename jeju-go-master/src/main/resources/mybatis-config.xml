@@ -16,5 +16,6 @@
 		<mapper resource="dao/mapper/User.xml"/>
 		<mapper resource="dao/mapper/Hreserve.xml"/>
 		<mapper resource="dao/mapper/Board.xml"/>
+		<mapper resource="dao/mapper/Package.xml"/>
 	</mappers>
 </configuration>

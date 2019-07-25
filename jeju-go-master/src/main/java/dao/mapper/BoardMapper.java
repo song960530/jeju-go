@@ -45,4 +45,7 @@ public interface BoardMapper {
 	@Select("select * from board where ref = #{no} and reflevel = #{reflevel}")
 	Board getRQnA(Map<String, Object> param);
 
+	@Delete("delete from board where reflevel = #{reflevel} and ref = #{ref}")
+	void replydelete(Board board);
+
 }
