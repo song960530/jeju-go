@@ -1,6 +1,9 @@
 package logic;
 
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class Package {
 	private int no;
@@ -14,6 +17,8 @@ public class Package {
 	private int max;
 	private String photourl;
 	private String photoname;
+	private List<String> startdays;
+	private List<String> enddays;
 	
 	public int getNo() {
 		return no;
@@ -81,10 +86,23 @@ public class Package {
 	public void setPhotoname(String photoname) {
 		this.photoname = photoname;
 	}
+	
+	public List<String> getStartdays() {
+		return startdays;
+	}
+	public void setStartdays(List<String> startdays) {
+		this.startdays = startdays;
+	}
+	public List<String> getEnddays() {
+		return enddays;
+	}
+	public void setEnddays(List<String> enddays) {
+		this.enddays = enddays;
+	}
 	@Override
 	public String toString() {
 		return "Package [no=" + no + ", name=" + name + ", content=" + content + ", travelday=" + travelday + ", price="
 				+ price + ", mon=" + mon + ", startday=" + startday + ", regdate=" + regdate + ", max=" + max
-				+ ", photourl=" + photourl + ", photoname=" + photoname + "]";
+				+ ", photourl=" + photourl + ", photoname=" + photoname + ", startdays=" + startdays + "]";
 	}
 }

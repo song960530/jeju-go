@@ -50,13 +50,13 @@ th {
 <body>
 	<div class="container">
 		<form action="qnalist.jeju" method="post" name="qnalist">
-			<input type="hidden" name="pageNum" value="1"> <input
-				type="hidden" name="userid" value="${param.userid}"> <select
-				name="type2">
+			<input type="hidden" name="pageNum" value="1"> 
+			<input type="hidden" name="userid" value="${param.userid}"> 
+				<select name="type2">
 				<option value="">ÀüÃ¼</option>
-				<option value="1">Å»Åð</option>
-				<option value="2">°áÁ¦</option>
-				<option value="3">¿¹¾à</option>
+				<option value="1"<c:if test="${param.type2 == 1}">selected="selected"</c:if>>Å»Åð</option>
+				<option value="2"<c:if test="${param.type2 == 2}">selected="selected"</c:if>>°áÁµ</option>
+				<option value="3"<c:if test="${param.type2 == 3}">selected="selected"</c:if>>¿¹¾à</option>
 			</select> <input type="submit" name="search" value="ÀÌµ¿">
 		</form>
 		<table class="w3-center">

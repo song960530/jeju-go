@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -16,7 +17,7 @@ import logic.Package;
 public class PackageDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	private final String NS = "dao.mapper.HotelMapper.";
+	private final String NS = "dao.mapper.PackageMapper.";
 	private Map<String, Object> param = new HashMap<String, Object>();
 	
 	public int maxno() {
@@ -27,5 +28,16 @@ public class PackageDao {
 		return sqlSession.getMapper(PackageMapper.class).insert(pack);
 	}
 
+	public List<Package> packlist() {
+		param.clear();
+		return sqlSession.selectList(NS + "list");
+	}
 
+	public Package getPack(Integer no) {
+		return sqlSession.getMapper(PackageMapper.class).getPack(no);
+	}
+
+	public List<Package> packday(Integer no) {
+		return sqlSession.getMapper(PackageMapper.class).packday(no);
+	}
 }

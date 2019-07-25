@@ -53,17 +53,29 @@ color:black;}
 				<hr/>
 				</c:if>
 			</form>
+			<form action="replydelete.jeju" method="post" id="f">
+			<input type="hidden" name="ref" value="${param.no}">
+			<input type="hidden" name="reflevel" value="1">
+			<input type="hidden" name="type" value="${param.type}">
+			<input type="hidden" name="type2" value="${param.type2}">
 			<div class="recent">
 		          <h2 class="widgetheading" style="text-align: center;">Reply</h2>
 	        </div>
 			<div class="form-group">
-				제목<input type="text" name="subject" class="form-control" value="${rdetail.subject}" readonly/>
+				제목<input type="text" name="subject" class="form-control" value="re - ${bdetail.subject}" readonly/>
 	            <div class="validation"></div>
 	        </div>
 	        <div class="form-group">
 				내용<input type="text" name="content" class="form-control" value="${rdetail.content}" readonly/>
 	            <div class="validation"></div>
 	        </div>
+	        <c:if test="${login.userid == 'admin'}">
+		        <div style="text-align:center">
+					<a href="#" onclick="document.getElementById('f').submit();">[답글삭제]</a>
+				</div>
+				<hr/>
+			</c:if>
+			</form>
 		</c:if>
 	</div>
 	
@@ -77,12 +89,8 @@ color:black;}
 	          		<h2 class="widgetheading" style="text-align: center;">Detail</h2>
 		        </div>
 		        <div class="form-group">
-					제목<input type="text" name="subject" class="form-control" value="${bdetail.subject}" readonly/>
-		            <div class="validation"></div>
-		        </div>
-		        <div class="form-group">
 					내용<input type="text" name="content" class="form-control" value="${bdetail.content}" readonly/>
-		            <div class="validation"></div>
+	            <div class="validation"></div>
 		        </div>
 		        <c:if test="${param.type == 3}">
 		        <c:if test="${login.userid == 'admin'}">
@@ -102,22 +110,23 @@ color:black;}
 				<hr/>
 				<c:if test="${param.type == 3}">
 					<c:if test="${login.userid == 'admin'}">
-					<form:form modelAttribute="board" action="qnareply.jeju" method="post" name="f">
+					<form:form modelAttribute="board" action="qnareply.jeju" method="post" id="rf">
 						<input type="hidden" name="userid" value="admin">
 						<input type="hidden" name="no" value="${param.no}">
 						<input type="hidden" name="ref" value="${param.no}">
 						<input type="hidden" name="type" value="${param.type}">
 						<input type="hidden" name="type2" value="${param.type2}">
-						<table>
-						<caption>게시판 답글 등록</caption>
-							<tr>
-								<td><input type="text" name="subject" placeholder="제목을 입력하세요"></td>
-							</tr>
-							<tr>
-								<td><input type="text" name="content" placeholder="내용을 입력하세요"></td>
-							</tr>
-							<tr><td colspan="2"><input type="submit" value="등록"></td></tr>
-						</table>
+						<div class="form-group">
+							<input type="text" name="subject" class="form-control" value="re - ${bdetail.subject}" readonly>
+						</div>
+						<div class="form-group">
+							<input type="text" name="content" class="form-control" placeholder="내용을 입력하세요">
+							<div class="validation"></div>
+						</div>
+						<div style="text-align:center">
+							<a href="#" onclick="document.getElementById('rf').submit();">[답글등록]</a>
+							<div class="validation"></div>
+						</div>
 					</form:form>
 					</c:if>
 				</c:if>

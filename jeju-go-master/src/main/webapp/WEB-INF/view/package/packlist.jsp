@@ -26,14 +26,15 @@
 			</div>
 		</div>
 	</div>
-	<div class="container" style="margin-left: 5%; margin-right: 5%; width: 90%;">
+	<div class="container" style="margin:auto; width: 50%;">
 		<div class="SearchResultsDisplay_SearchResultsDisplay__card__2-jVd">
-			<c:forEach items="${list}" var="hotel">
-				<a href="hoteldetail.jeju?no=${hotel.no}" class="BpkCard_bpk-card__287qD CardLayout_CardLayout__x65BH">
+			<c:forEach items="${packlist}" var="pack">
+			<fmt:formatNumber value="${pack.price}" var="price" pattern="#,###.###"/>
+				<a href="packdetail.jeju?no=${pack.no}" class="BpkCard_bpk-card__287qD CardLayout_CardLayout__x65BH">
 					<div class="CardLayout_CardLayout__colLeft__1YR5c">
 						<div class="CardImage_CardImage__3uGof HotelCard_HotelCard__img__j5ZIV">
 							<picture>
-								<img src="${path}/${hotel.photourl}" style="width: 100%; height: 100%;" alt="">
+								<img src="${path}/${pack.photourl}" style="width: 100%; height: 100%;" alt="">
 							</picture>
 						</div>
 					</div>
@@ -42,7 +43,12 @@
 							<div class="CardLayout_CardLayout__colRightRowTopColLeft__1OwZD">
 								<div class="CardLayout_CardLayout__nameAndStarsContainer__1l7OY">
 									<div class="CardLayout_CardLayout__name__3PlSj">
-										<div class="HotelCard_HotelCard__name__2jTNm" data-test-id="hotel-name">${hotel.hname}</div>
+										<div class="HotelCard_HotelCard__name__2jTNm" data-test-id="hotel-name">패키지 명 : ${pack.name}</div>
+									</div>
+								</div>
+								<div class="CardLayout_CardLayout__nameAndStarsContainer__1l7OY">
+									<div class="CardLayout_CardLayout__name__3PlSj">
+										<div class="HotelCard_HotelCard__name__2jTNm" data-test-id="hotel-name">최저가 : ${price}원</div>
 									</div>
 								</div>
 								<div>
@@ -53,17 +59,8 @@
 							</div>
 						</div>
 						<div class="CardLayout_CardLayout__colRightRowBottom__3eZwK">
-							<div class="CardLayout_CardLayout__colRightRowBottomColLeft__1_D_8">
-								<div class="CardLayout__colRightRowBottomColLeftRowTop CardLayout_CardLayout__smallTabletViewport__2eLXs">
-									<div class="HotelCard_HotelCard__amenities__pBAgr">
-										<div class="CardAmenity_CardAmenity__WJ2tj HotelCard_HotelCard__amenity__1qPk-">
-											<span class="BpkText_bpk-text__WdiWu BpkText_bpk-text--sm__1-aIF CardAmenity_CardAmenity__txt__ZbFB7">${hotel.room.convenient}</span>
-										</div>
-									</div>
-								</div>
-							</div>
 							<div class="CardLayout_CardLayout__colRightRowBottomColRight__RWwIj">
-								<div class="HotelCard_HotelCard__price__pZRWW">싯가</div>
+								<!-- <div class="HotelCard_HotelCard__price__pZRWW">싯가</div>
 								<div class="CardLayout_CardLayout__mediumLargeViewport__1r4P7">
 									<div class="HotelCard_HotelCard__cta__1n4MC">
 										<button type="button" class="BpkButton_bpk-button__2Jd0U">세부정보 보기&nbsp;
@@ -72,7 +69,7 @@
 											<path d="M14.4 19.5l5.7-5.3c.4-.4.7-.9.8-1.5.1-.3.1-.5.1-.7s0-.4-.1-.6c-.1-.6-.4-1.1-.8-1.5l-5.7-5.3c-.8-.8-2.1-.7-2.8.1-.8.8-.7 2.1.1 2.8l2.7 2.5H5c-1.1 0-2 .9-2 2s.9 2 2 2h9.4l-2.7 2.5c-.5.4-.7 1-.7 1.5s.2 1 .5 1.4c.8.8 2.1.8 2.9.1z"></path></svg></span>
 										</button>
 									</div>
-								</div>
+								</div> -->
 							</div>
 						</div>
 					</div>
