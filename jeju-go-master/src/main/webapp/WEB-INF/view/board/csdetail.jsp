@@ -84,7 +84,7 @@ color:black;}
                      <header class="w3-container w3-blue">
                         <h2 style="color: white;">${rdetail.subject}</h2>
                      </header>
-                     <p>"${rdetail.content}</p>
+                     <p>${rdetail.content}</p>
                   </div>
 
                   <c:if test="${login.userid == 'admin'}">
@@ -172,7 +172,7 @@ color:black;}
                         <form action="" method="post" role="form" class="contactForm">
                            <div class="form-group">
                               <input type="text" name="subject" class="form-control" id="name"
-                                 placeholder="제목을 입력하세요" data-rule="minlen:4"
+                                value="[답글] - ${bdetail.subject}" readonly data-rule="minlen:4"
                                  data-msg="Please enter at least 4 chars">
                               <div class="validation"></div>
                            </div>
