@@ -222,7 +222,7 @@ body, h1, h2, h3, h4, h5, h6 {
 								</c:if>
 								<li role="presentation"><a
 									href="${path }/hotel/hotellist.jeju" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">Hotel</a></li>
-								<li role="presentation"><a href="../package/packagelist.jeju" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">Packages</a></li>
+								<li role="presentation"><a href="../package/packlist.jeju" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">Packages</a></li>
 
 								<li role="presentation"><a
 									href="${path }/board/csboard.jeju" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">∞Ì∞¥ºæ≈Õ</a></li>

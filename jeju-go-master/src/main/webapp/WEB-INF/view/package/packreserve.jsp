@@ -21,6 +21,7 @@
               <form method="post" action="packreservechk.jeju" name="sf" onsubmit="return chksearch(this)">
               <input type="hidden" name="no" value="${pack.no}">
               <input type="hidden" name="name" value="${pack.name}">
+              <input type="hidden" name="userid" value="${param.userid}">
 			<div class="">
 				<label><i class="fa fa-calendar-o"></i>일정선택</label><br>
 				<font size="3">여행기간 : ${pack.travelday }일</font><br>
@@ -65,13 +66,13 @@
 			<td style="font-size:30px; height:50px" align="center" valign="top">상품이름 : ${pack.name}</td>
 		</tr>
 		<tr>
-			<td style="font-size:20px;" align="left" valign="top">
+			<td style="font-size:20px;" align="left" valign="top">&nbsp;&nbsp;
 				<font color="red" size="5">상품가격 : ${price}원</font><br><br>
-					${pack.mon}월 일정 <br>
+					&nbsp;&nbsp;${pack.mon}월 일정 <br>
 				<c:forEach items="${start}" var="start">
-					출발 : ${start}일 ~ 도착 : ${start + 7}일<br>
+					&nbsp;&nbsp;출발 : ${start}일 ~ 도착 : ${start + 7}일<br>
 				</c:forEach><br>
-				<font color="blue" size="5">!!총 여행기간 : ${pack.travelday}일</font><br><br>
+				<font color="blue" size="5">&nbsp;&nbsp;총 여행기간 : ${pack.travelday}일</font><br><br>
 			</td>
 		</tr>
 	</table>

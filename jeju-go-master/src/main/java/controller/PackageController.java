@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import logic.User;
 import logic.Final;
 import logic.Hotel;
 import logic.JejuService;
@@ -106,17 +108,18 @@ public class PackageController {
 		}
 		mav.addObject("pack", pack);
 		mav.addObject("start", startday);
-		System.out.println(startday);
 		mav.addObject("end", endday);
 		return mav;
 	}
 	@PostMapping("packreservechk")
-	public ModelAndView reservepack(Integer no, Final f1, HttpServletRequest request) {
+	public ModelAndView reservepack(Integer no, HttpSession session, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		Package pack = service.getPack(no);
+		String userid = request.getParameter("userid");
+		int countpoint = service.countPoint(userid);
 		int people = Integer.parseInt(request.getParameter("people"));
 		String startday = request.getParameter("startday");
-		System.out.println(startday);
+		mav.addObject("countpoint", countpoint);
 		mav.addObject("startday", startday);
 		mav.addObject("people", people);
 		mav.addObject("pack", pack);

@@ -49,15 +49,6 @@ h3 {
 <body>
 	<div class="container">
 	<form action="reservation.jeju" method="post" name="rf" onsubmit="return confirm()">
-		<input type="hidden" id="userpoint" value="${countpoint}">
-		<input type="hidden" name="hno" value="${f.hno}">
-		<input type="hidden" name="name" value="${f.name}">
-		<input type="hidden" name="pnum" value="${f.pnum}">
-		<input type="hidden" name="total" value="${f.room.price * (f.day-1) }">
-		<input type="hidden" name="start" value="${f.start}">
-		<input type="hidden" name="end" value="${f.end}">
-		<input type="hidden" name="day" value="${f.day}">
-		<input type="hidden" name="hname" value="${f.hname}">
 		
 		<div class="odr_insTop">
 			<h3>
@@ -66,10 +57,10 @@ h3 {
 			<table class="odr_insTbl">
 				<colgroup>
 					<col>
-					<col style="width: 260px;">
+					<col style="width: 200px;">
+					<col style="width: 70px;">
 					<col style="width: 110px;">
-					<col style="width: 110px;">
-					<col style="width: 80px;">
+					<col style="width: 180px;">
 					<col style="width: 110px;">
 				</colgroup>
 				<thead>
