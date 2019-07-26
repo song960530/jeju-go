@@ -37,10 +37,18 @@ public class PackageController {
 		return null;
 	}
 
-	@PostMapping("packregist")
-	public ModelAndView packregist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
+	@PostMapping("bigpackregist")
+	public ModelAndView bigpackregist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
 		ModelAndView mav = new ModelAndView();
-		int no = service.packregist(request, mtfRequest);
+		service.bigpackregist(request,mtfRequest);
+		mav.setViewName("redirect:packlist.jeju");
+		return mav;
+	}
+	
+	@PostMapping("packregist")
+	public ModelAndView packregist(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		int no = service.packregist(request);
 		mav.setViewName("redirect:packdetail.jeju?no=" + no);
 		return mav;
 	}
@@ -70,20 +78,22 @@ public class PackageController {
 	public ModelAndView packlist() {
 		ModelAndView mav = new ModelAndView();
 		List<Package> packlist = service.packlist();
-//		for(Package p : packlist) {
-//			String startdays[] = p.getStartday().split(",");
-//			List<String> startday2 = new ArrayList<String>();
-//			for(String s : startdays) {
-//				startday2.add(s);
-//			}
-//			p.setStartdays(startday2);
-//		}
 		mav.addObject("packlist", packlist);
 		return mav;
 	}
 
+	@RequestMapping("bigpackdetail")
+	public ModelAndView bigpackdetail(Integer no, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		Package pack = service.getPack(no);
+		List<Package> subpacklist = service.subpacklist(no);
+		mav.addObject("pack", pack);
+		mav.addObject("packlist", subpacklist);
+		return mav;
+	}
+	
 	@RequestMapping({"packdetail","packreserve"})
-	public ModelAndView packdetail(Integer no) {
+	public ModelAndView packdetail(Integer no, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		List<Package> packlist = service.packday(no);
 		List<String> startday = new ArrayList<String>();
@@ -106,6 +116,9 @@ public class PackageController {
 				endday.add(end);
 			}
 		}
+		int chk = 1;
+		if (service.chkset(pack, request) > 0) chk = 0;
+		mav.addObject("chk", chk);
 		mav.addObject("pack", pack);
 		mav.addObject("start", startday);
 		mav.addObject("end", endday);
@@ -123,6 +136,20 @@ public class PackageController {
 		mav.addObject("startday", startday);
 		mav.addObject("people", people);
 		mav.addObject("pack", pack);
+		return mav;
+	}
+	@PostMapping("packreservation")
+	public ModelAndView reservation(Package pack, Final f, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		Final fi = service.setFinal(f, request);
+		fi.setPnum(Integer.parseInt(request.getParameter("people")));
+		service.realFinal(fi);
+		int point = (fi.getTotal()/1000) * 50;
+		service.setPoint(point, fi.getUserid());
+		service.minermax(pack, request);
+		mav.addObject("msg","예약이 완료되었습니다.");
+		mav.addObject("url","../user/main.jeju");
+		mav.setViewName("alert");
 		return mav;
 	}
 }

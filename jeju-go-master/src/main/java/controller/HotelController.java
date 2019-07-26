@@ -167,7 +167,6 @@ public class HotelController {
 			CSVReader reader = new CSVReader(is);
 			List<String[]> list = reader.readAll();
 			arr = new ArrayList<Latlng>();
-
 			for (String[] str : list) {
 				Latlng entity = new Latlng();
 				entity.setLat(str[10]);

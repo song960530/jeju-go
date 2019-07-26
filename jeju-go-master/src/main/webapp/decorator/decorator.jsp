@@ -174,7 +174,7 @@ body, h1, h2, h3, h4, h5, h6 {
 				<button class="w3-button fa fa-plane"> &nbsp;&nbsp;패키지 <i class="fa fa-caret-down"></i>
 				</button>
 				<div class="w3-dropdown-content w3-bar-block">
-					<a href="../package/packregist.jeju" class="w3-bar-item w3-button">패키지 등록</a>
+					<a href="../package/bigpackregist.jeju" class="w3-bar-item w3-button">패키지 등록</a>
 				</div>
 			</div>
 		</c:if>

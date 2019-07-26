@@ -22,6 +22,8 @@
               <input type="hidden" name="no" value="${pack.no}">
               <input type="hidden" name="name" value="${pack.name}">
               <input type="hidden" name="userid" value="${param.userid}">
+              <input type="hidden" name="mon" value="${pack.mon}">
+              <input type="hidden" name="travelday" value="${pack.travelday}">
 			<div class="">
 				<label><i class="fa fa-calendar-o"></i>일정선택</label><br>
 				<font size="3">여행기간 : ${pack.travelday }일</font><br>
@@ -32,11 +34,16 @@
 			<br>
 			<div class="">
 				<label><i class="fa fa-male"></i> Adults</label>
+				<c:if test="${chk != 0}">
 				<select name="people">
 					<c:forEach begin="1" end="${pack.max}" var="i">
 						<option value="${i}">${i}명</option>
 					</c:forEach>
-				</select> 
+				</select>
+				</c:if>
+				<c:if test="${chk == 0}">
+					<font size="3" color="red">인원마감</font>
+				</c:if> 
 			</div>
 			<br>
 			<div class="">
@@ -44,10 +51,10 @@
 			</div>
 			<br>
 			<div class="">
-				<c:if test="${count!=0 }">
+				<c:if test="${chk!=0 }">
 					<input type="submit" class="w3-button w3-block w3-blue"style="height:54px;" value="예약하기">
 				</c:if>
-				<c:if test="${count==0 }">
+				<c:if test="${chk==0 }">
 					<input type="button" class="w3-button w3-block w3-red"style="height:54px;opacity: 0.7;cursor: not-allowed;" value="예약 불가">
 				</c:if>
 			</div>

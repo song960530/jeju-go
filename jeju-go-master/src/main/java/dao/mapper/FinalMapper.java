@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import logic.Final;
+import logic.Package;
 
 public interface FinalMapper {
 
@@ -25,4 +26,6 @@ public interface FinalMapper {
 	@Update("update finally set roomnum=#{roomnum},checked='승인완료' where no=#{no}")
 	void finish(Map<String, Object> param);
 
+	@Insert("insert into point(no, userid, point, regdate, type) values(#{no}, #{userid}, #{point}, now(), '적립')")
+	void setPoint(Map<String, Object> param);
 }
