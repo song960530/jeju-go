@@ -30,7 +30,7 @@
 		<div class="SearchResultsDisplay_SearchResultsDisplay__card__2-jVd">
 			<c:forEach items="${packlist}" var="pack">
 			<fmt:formatNumber value="${pack.price}" var="price" pattern="#,###.###"/>
-				<a href="packdetail.jeju?no=${pack.no}" class="BpkCard_bpk-card__287qD CardLayout_CardLayout__x65BH">
+				<a href="bigpackdetail.jeju?no=${pack.no}" class="BpkCard_bpk-card__287qD CardLayout_CardLayout__x65BH">
 					<div class="CardLayout_CardLayout__colLeft__1YR5c">
 						<div class="CardImage_CardImage__3uGof HotelCard_HotelCard__img__j5ZIV">
 							<picture>
@@ -48,7 +48,7 @@
 								</div>
 								<div class="CardLayout_CardLayout__nameAndStarsContainer__1l7OY">
 									<div class="CardLayout_CardLayout__name__3PlSj">
-										<div class="HotelCard_HotelCard__name__2jTNm" data-test-id="hotel-name">최저가 : ${price}원</div>
+										<div class="HotelCard_HotelCard__name__2jTNm" data-test-id="hotel-name">가격 : ${price}원</div>
 									</div>
 								</div>
 								<div>

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import logic.User;
 import logic.Final;
 import logic.Hotel;
 import logic.JejuService;
@@ -35,10 +37,18 @@ public class PackageController {
 		return null;
 	}
 
-	@PostMapping("packregist")
-	public ModelAndView packregist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
+	@PostMapping("bigpackregist")
+	public ModelAndView bigpackregist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
 		ModelAndView mav = new ModelAndView();
-		int no = service.packregist(request, mtfRequest);
+		service.bigpackregist(request,mtfRequest);
+		mav.setViewName("redirect:packlist.jeju");
+		return mav;
+	}
+	
+	@PostMapping("packregist")
+	public ModelAndView packregist(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		int no = service.packregist(request);
 		mav.setViewName("redirect:packdetail.jeju?no=" + no);
 		return mav;
 	}
@@ -68,20 +78,22 @@ public class PackageController {
 	public ModelAndView packlist() {
 		ModelAndView mav = new ModelAndView();
 		List<Package> packlist = service.packlist();
-//		for(Package p : packlist) {
-//			String startdays[] = p.getStartday().split(",");
-//			List<String> startday2 = new ArrayList<String>();
-//			for(String s : startdays) {
-//				startday2.add(s);
-//			}
-//			p.setStartdays(startday2);
-//		}
 		mav.addObject("packlist", packlist);
 		return mav;
 	}
 
+	@RequestMapping("bigpackdetail")
+	public ModelAndView bigpackdetail(Integer no, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		Package pack = service.getPack(no);
+		List<Package> subpacklist = service.subpacklist(no);
+		mav.addObject("pack", pack);
+		mav.addObject("packlist", subpacklist);
+		return mav;
+	}
+	
 	@RequestMapping({"packdetail","packreserve"})
-	public ModelAndView packdetail(Integer no) {
+	public ModelAndView packdetail(Integer no, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		List<Package> packlist = service.packday(no);
 		List<String> startday = new ArrayList<String>();
@@ -104,22 +116,40 @@ public class PackageController {
 				endday.add(end);
 			}
 		}
+		int chk = 1;
+		if (service.chkset(pack, request) > 0) chk = 0;
+		mav.addObject("chk", chk);
 		mav.addObject("pack", pack);
 		mav.addObject("start", startday);
-		System.out.println(startday);
 		mav.addObject("end", endday);
 		return mav;
 	}
 	@PostMapping("packreservechk")
-	public ModelAndView reservepack(Integer no, Final f1, HttpServletRequest request) {
+	public ModelAndView reservepack(Integer no, HttpSession session, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		Package pack = service.getPack(no);
+		String userid = request.getParameter("userid");
+		int countpoint = service.countPoint(userid);
 		int people = Integer.parseInt(request.getParameter("people"));
 		String startday = request.getParameter("startday");
-		System.out.println(startday);
+		mav.addObject("countpoint", countpoint);
 		mav.addObject("startday", startday);
 		mav.addObject("people", people);
 		mav.addObject("pack", pack);
+		return mav;
+	}
+	@PostMapping("packreservation")
+	public ModelAndView reservation(Package pack, Final f, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		Final fi = service.setFinal(f, request);
+		fi.setPnum(Integer.parseInt(request.getParameter("people")));
+		service.realFinal(fi);
+		int point = (fi.getTotal()/1000) * 50;
+		service.setPoint(point, fi.getUserid());
+		service.minermax(pack, request);
+		mav.addObject("msg","예약이 완료되었습니다.");
+		mav.addObject("url","../user/main.jeju");
+		mav.setViewName("alert");
 		return mav;
 	}
 }

@@ -38,32 +38,26 @@
 	        </div>
 	        <div id="sendmessage">Your message has been sent. Thank you!</div>
 	        <div id="errormessage"></div>
-			<form name="f" method="post" action="packregist.jeju" enctype="multipart/form-data" onsubmit="return inputchk(this)">
+			<form name="f" method="post" action="bigpackregist.jeju" enctype="multipart/form-data" onsubmit="return inputchk(this)">
 			<input type="hidden" name="check" value="1">
-         		<div class="form-group">
-	          		<input type="text" class="form-control" value="${sysYear}년" readonly>
-	            	<div class="validation"></div>
-          		</div>
           		<div class="form-group">
-	          		<select name="mon" style="width:100%">
-						<c:forEach begin="1" end="12" var="i">
-							<option value="${i}">${i}월</option>
-						</c:forEach>
-					</select>
-	            	<div class="validation"></div>
-          		</div>
-          		<div class="form-group">
-            		출발일<input type="text" class="form-control" name="startday" value="1,7,14,21" readonly>
-            		<div class="validation"></div>
-          		</div>
-          		<div class="form-group">
-            		여행일수<input type="text" class="form-control" name="travelday" value="7" readonly>
-            		<div class="validation"></div>
-          		</div>
-          		<div class="form-group">
-           			<input type="text" class="form-control" name="max" placeholder="최대 인원 수"/>
-            		<div class="validation"></div>
+            		<input type="text" name="name" class="form-control" placeholder="패키지 명"/>
+           			<div class="validation"></div>
          		</div>
+          		<div class="form-group">
+           			<input type="text" name="price" class="form-control" placeholder="가격"/>
+           			<div class="validation"></div>
+          		</div>
+          		<div class="form-group">
+            		<textarea class="form-control" name="content" rows="5" placeholder="패키지 소개"></textarea>
+            			<script>CKEDITOR.replace("content", {
+						filebrowserImageUploadUrl : "imgupload.jeju"})</script>
+           			<div class="validation"></div>
+          		</div>
+          		<div class="form-group">
+        			<h5 class="widgetheading">사진</h5><input type="file" name="photoname">
+          			<div class="validation"></div>
+          		</div>
           		<br>
 				<button type="submit" class="btn btn-default" value="패키지등록">패키지등록</button>
 			</form>

@@ -19,6 +19,9 @@ public class Package {
 	private String photoname;
 	private List<String> startdays;
 	private List<String> enddays;
+	private String check;
+	private int first;
+	private int sub;
 	
 	public int getNo() {
 		return no;
@@ -99,10 +102,29 @@ public class Package {
 	public void setEnddays(List<String> enddays) {
 		this.enddays = enddays;
 	}
+	public String getCheck() {
+		return check;
+	}
+	public void setCheck(String check) {
+		this.check = check;
+	}
+	public int getFirst() {
+		return first;
+	}
+	public void setFirst(int first) {
+		this.first = first;
+	}
+	public int getSub() {
+		return sub;
+	}
+	public void setSub(int sub) {
+		this.sub = sub;
+	}
 	@Override
 	public String toString() {
 		return "Package [no=" + no + ", name=" + name + ", content=" + content + ", travelday=" + travelday + ", price="
 				+ price + ", mon=" + mon + ", startday=" + startday + ", regdate=" + regdate + ", max=" + max
-				+ ", photourl=" + photourl + ", photoname=" + photoname + ", startdays=" + startdays + "]";
+				+ ", photourl=" + photourl + ", photoname=" + photoname + ", startdays=" + startdays + ", enddays="
+				+ enddays + ", check=" + check + "]";
 	}
 }

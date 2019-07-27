@@ -30,7 +30,7 @@ public class PackageDao {
 
 	public List<Package> packlist() {
 		param.clear();
-		return sqlSession.selectList(NS + "list");
+		return sqlSession.getMapper(PackageMapper.class).packlist();
 	}
 
 	public Package getPack(Integer no) {
@@ -39,5 +39,24 @@ public class PackageDao {
 
 	public List<Package> packday(Integer no) {
 		return sqlSession.getMapper(PackageMapper.class).packday(no);
+	}
+
+	public void minermax(Package pack, int pnum) {
+		param.clear();
+		param.put("pack", pack);
+		param.put("pnum", pnum);
+		sqlSession.getMapper(PackageMapper.class).minermax(param);
+	}
+
+	public int chkset(Package pack) {
+		return sqlSession.getMapper(PackageMapper.class).chkset(pack);
+	}
+
+	public void bigpackregist(Package pack) {
+		sqlSession.getMapper(PackageMapper.class).insert(pack);
+	}
+
+	public List<Package> subpacklist(Integer no) {
+		return sqlSession.getMapper(PackageMapper.class).subpacklist(no);
 	}
 }

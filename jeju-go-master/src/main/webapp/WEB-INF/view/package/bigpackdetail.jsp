@@ -70,17 +70,28 @@ function showDivs(n) {
 	<table style="margin:auto;">
 		<tr>
 			<td rowspan="2" width="60%" ><img alt="" src="${path}/${pack.photourl}" width="600px" height="400px"></td>
-			<td style="font-size:30px; height:50px" align="center" valign="top">상품이름 : ${pack.name}</td>
+			<td style="font-size:30px; height:50px" align="left" valign="top">&nbsp;&nbsp;상품이름 : ${pack.name}</td>
 		</tr>
 		<tr>
 			<td style="font-size:20px;" align="left" valign="top">&nbsp;&nbsp;
 				<font color="red" size="5">상품가격 : ${price}원</font><br><br>
-					&nbsp;&nbsp;${pack.mon}월 일정 <br>
-				<c:forEach items="${start}" var="start">
-					&nbsp;&nbsp;출발 : ${start}일 ~ 도착 : ${start + 7}일<br>
-				</c:forEach><br>
-				<font color="blue" size="5">&nbsp;&nbsp;총 여행기간 : ${pack.travelday}일</font><br><br>
-				&nbsp;&nbsp;<a href="../package/packreserve.jeju?no=${pack.no}&userid=${login.userid}">[예약하러가기]</a>
+				<c:if test="${login.userid == 'admin'}">
+				<a href="packregist.jeju">예약가능 패키지 등록</a>
+				</c:if>
+				<c:if test="${login.userid != 'admin'}">
+					&nbsp;
+				</c:if>
+				<br>
+				<br>
+				<br>
+				<form action="packdetail.jeju" method="post">
+				<font size="3">
+					<c:forEach items="${packlist}" var="pack">
+						${pack.startday}일 출발<input type="radio" name="startday" value="${pack.startday}">
+					</c:forEach><br>
+				</font>
+					<button type="submit" value="이동">[이동]</button>
+				</form>	
 			</td>
 		</tr>
 		<tr>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import dao.mapper.FinalMapper;
 import logic.Final;
+import logic.Package;
 
 @Repository
 public class FinalDao {
@@ -32,13 +33,23 @@ public class FinalDao {
 		return sqlSession.getMapper(FinalMapper.class).acceptList();
 
 	}
-
+	
 	public void finish(int no, String roomnum) {
 		param.clear();
 		param.put("no", no);
 		param.put("roomnum", roomnum);
 		sqlSession.getMapper(FinalMapper.class).finish(param);
-		
 	}
 
+	public void realFinal(Final fi) {
+		sqlSession.getMapper(FinalMapper.class).insert(fi);
+	}
+
+	public void setPoint(int point, String userid, int no) {
+		param.clear();
+		param.put("point", point);
+		param.put("userid", userid);
+		param.put("no", no);
+		sqlSession.getMapper(FinalMapper.class).setPoint(param);
+	}
 }

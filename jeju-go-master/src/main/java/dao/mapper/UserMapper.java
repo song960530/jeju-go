@@ -56,4 +56,7 @@ public interface UserMapper {
 
 	@Insert("insert into point(no,userid,point,regdate,type) values(#{no},#{userid},#{point},now(),#{type})")
 	void setPoint(Map<String, Object> param);
+
+	@Select("select * from Member")
+	User select();
 }

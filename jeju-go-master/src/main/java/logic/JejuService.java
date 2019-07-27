@@ -461,7 +461,7 @@ public class JejuService {
 	public Point getPoint(String userid) {
 		return userdao.getPoint(userid);
 	}
-	
+
 	public int countPoint(String userid) {
 		return userdao.countPoint(userid);
 	}
@@ -514,21 +514,17 @@ public class JejuService {
 	public int count(int type, Integer type2) {
 		return boarddao.count(type, type2);
 	}
-
-	public int packregist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
+	
+	public void bigpackregist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
 		Package pack = new Package();
 		pack.setNo(packagedao.maxno() + 1);
 		pack.setName(request.getParameter("name"));
 		pack.setContent(request.getParameter("content"));
-		pack.setTravelday(request.getParameter("travelday"));
 		pack.setPrice(Integer.parseInt(request.getParameter("price")));
-		pack.setMon(Integer.parseInt(request.getParameter("mon")));
-		pack.setStartday(request.getParameter("startday"));
-		pack.setMax(Integer.parseInt(request.getParameter("max")));
-		
+		pack.setFirst(pack.getNo());
 		List<MultipartFile> fileList = mtfRequest.getFiles("photoname");
 		for (MultipartFile mf : fileList) {
-			String originFileName = mf.getOriginalFilename(); 
+			String originFileName = mf.getOriginalFilename();
 			String path = request.getServletContext().getRealPath("/") + "img/";
 			String safeFile = path + System.currentTimeMillis() + originFileName;
 
@@ -545,10 +541,25 @@ public class JejuService {
 				e.printStackTrace();
 			}
 		}
-		packagedao.insert(pack);
-		return pack.getNo();
+		packagedao.bigpackregist(pack);
 	}
 	
+	public int packregist(HttpServletRequest request) {
+		Package pack = new Package();
+		pack.setTravelday(request.getParameter("travelday"));
+		pack.setMon(Integer.parseInt(request.getParameter("mon")));
+		pack.setMax(Integer.parseInt(request.getParameter("max")));
+		pack.setCheck(request.getParameter("check"));
+		pack.setFirst(packagedao.maxno());
+		for(int i = 0; i <= 3; i++) {
+			pack.setStartday(request.getParameter("startday").split(",")[i]);
+			pack.setNo(packagedao.maxno() + 1);
+			pack.setSub(pack.getFirst()+i+1);
+			packagedao.insert(pack);
+		}
+		return pack.getNo();
+	}
+
 	public List<Package> packlist() {
 		return packagedao.packlist();
 	}
@@ -560,7 +571,7 @@ public class JejuService {
 	public List<Package> packday(Integer no) {
 		return packagedao.packday(no);
 	}
-	
+
 	public void wish(String userid, int no) {
 		userdao.insert(userid, no);
 	}
@@ -568,88 +579,145 @@ public class JejuService {
 	public void replydelete(Board board) {
 		boarddao.replydelete(board);
 	}
-	
+
 	public void subFinally(Final f1) {
-	      f1.setNo(finaldao.maxno() + 1);
-	      f1.setRno(hresdao.delayRoomnum(f1));
-	      finaldao.insert(f1);
+		f1.setNo(finaldao.maxno() + 1);
+		f1.setRno(hresdao.delayRoomnum(f1));
+		finaldao.insert(f1);
 
-	      Calendar calendar = Calendar.getInstance();
-	      int stmon = Integer.parseInt(f1.getStart().split("-")[1]);
-	      int enmon = Integer.parseInt(f1.getEnd().split("-")[1]);
-	      int startday = Integer.parseInt(f1.getStart().split("-")[2]);
-	      int endday = Integer.parseInt(f1.getEnd().split("-")[2]);
-	      calendar.set(Integer.parseInt(f1.getStart().split("-")[0]), stmon - 1, 1);
-	      int lastday = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-	      int rno = f1.getRno();
+		Calendar calendar = Calendar.getInstance();
+		int stmon = Integer.parseInt(f1.getStart().split("-")[1]);
+		int enmon = Integer.parseInt(f1.getEnd().split("-")[1]);
+		int startday = Integer.parseInt(f1.getStart().split("-")[2]);
+		int endday = Integer.parseInt(f1.getEnd().split("-")[2]);
+		calendar.set(Integer.parseInt(f1.getStart().split("-")[0]), stmon - 1, 1);
+		int lastday = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+		int rno = f1.getRno();
 
-	      if (stmon == enmon) {
-	         for (int i = startday; i <= endday; i++)
-	            hresdao.insertdelayRoom(rno++);
-	      } else {
-	         for (int i = stmon; i <= enmon; i++) {
-	            if (i == stmon) {
-	               for (int j = startday; j <= lastday; j++) {
-	                  hresdao.insertdelayRoom(rno++);
-	               }
-	            } else {
-	               for (int j = 1; j <= endday; j++) {
-	                  hresdao.insertdelayRoom(rno++);
-	               }
-	            }
-	         }
-	      }
+		if (stmon == enmon) {
+			for (int i = startday; i <= endday; i++)
+				hresdao.insertdelayRoom(rno++);
+		} else {
+			for (int i = stmon; i <= enmon; i++) {
+				if (i == stmon) {
+					for (int j = startday; j <= lastday; j++) {
+						hresdao.insertdelayRoom(rno++);
+					}
+				} else {
+					for (int j = 1; j <= endday; j++) {
+						hresdao.insertdelayRoom(rno++);
+					}
+				}
+			}
+		}
 
-	      if (f1.getPoint() != 0) {
-	         int no = userdao.pointmaxno() + 1;
-	         userdao.point(no, f1.getUserid(), f1.getPoint(), "사용");
-	      }
-	   }
+		if (f1.getPoint() != 0) {
+			int no = userdao.pointmaxno() + 1;
+			userdao.point(no, f1.getUserid(), f1.getPoint(), "사용");
+		}
+	}
 
-	   public List<Final> acceptList() {
-	      return finaldao.acceptList();
-	   }
+	public List<Final> acceptList() {
+		return finaldao.acceptList();
+	}
 
-	   public List<String> roomnums(Final f) {
-	      List<String> roomnums = new ArrayList<String>();
-	      Calendar calendar = Calendar.getInstance();
-	      int stmon = Integer.parseInt(f.getStart().split("-")[1]);
-	      int enmon = Integer.parseInt(f.getEnd().split("-")[1]);
-	      int startday = Integer.parseInt(f.getStart().split("-")[2]);
-	      int endday = Integer.parseInt(f.getEnd().split("-")[2]);
-	      calendar.set(Integer.parseInt(f.getStart().split("-")[0]), stmon - 1, 1);
-	      int lastday = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+	public List<String> roomnums(Final f) {
+		List<String> roomnums = new ArrayList<String>();
+		Calendar calendar = Calendar.getInstance();
+		int stmon = Integer.parseInt(f.getStart().split("-")[1]);
+		int enmon = Integer.parseInt(f.getEnd().split("-")[1]);
+		int startday = Integer.parseInt(f.getStart().split("-")[2]);
+		int endday = Integer.parseInt(f.getEnd().split("-")[2]);
+		calendar.set(Integer.parseInt(f.getStart().split("-")[0]), stmon - 1, 1);
+		int lastday = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-	      if (stmon == enmon) {
-	         roomnums = hresdao.selectRooms(f.getHno(), f.getName(), stmon, startday, endday);
-	      } else {
-	         roomnums = hresdao.selectRooms2(f.getHno(), f.getName(), stmon, startday, lastday, enmon, endday);
-	      }
-	      return roomnums;
-	   }
+		if (stmon == enmon) {
+			roomnums = hresdao.selectRooms(f.getHno(), f.getName(), stmon, startday, endday);
+		} else {
+			roomnums = hresdao.selectRooms2(f.getHno(), f.getName(), stmon, startday, lastday, enmon, endday);
+		}
+		return roomnums;
+	}
 
-	   public void allFinally(HttpServletRequest request) {
-	      // hno, rno, day roomnum start end
-	      int no = Integer.parseInt(request.getParameter("no"));
-	      int hno = Integer.parseInt(request.getParameter("hno"));
-	      int rno = Integer.parseInt(request.getParameter("rno"));
-	      int day = Integer.parseInt(request.getParameter("day"));
-	      int stmon = Integer.parseInt(request.getParameter("start").split("-")[1]);
-	      int startday = Integer.parseInt(request.getParameter("start").split("-")[2]);
-	      String name=request.getParameter("name");
-	      String roomnum = request.getParameter("roomnum").split("호")[0];
-	      String username = request.getParameter("username");
-	      
-	      for (int i = rno; i <= rno + day; i++) {
-	         hresdao.nullRoomnum(i);
-	      }
+	public void allFinally(HttpServletRequest request) {
+		// hno, rno, day roomnum start end
+		int no = Integer.parseInt(request.getParameter("no"));
+		int hno = Integer.parseInt(request.getParameter("hno"));
+		int rno = Integer.parseInt(request.getParameter("rno"));
+		int day = Integer.parseInt(request.getParameter("day"));
+		int stmon = Integer.parseInt(request.getParameter("start").split("-")[1]);
+		int startday = Integer.parseInt(request.getParameter("start").split("-")[2]);
+		String name = request.getParameter("name");
+		String roomnum = request.getParameter("roomnum").split("호")[0];
+		String username = request.getParameter("username");
 
-	      int no2 = hresdao.selectno(hno,roomnum,stmon,startday,name);
-	      
-	      for(int i=no2;i<no2+day;i++) {
-	         hresdao.insertfinish(i,username);
-	      }
-	      
-	      finaldao.finish(no,roomnum);
-	   }
+		for (int i = rno; i <= rno + day; i++) {
+			hresdao.nullRoomnum(i);
+		}
+
+		int no2 = hresdao.selectno(hno, roomnum, stmon, startday, name);
+
+		for (int i = no2; i < no2 + day; i++) {
+			hresdao.insertfinish(i, username);
+		}
+
+		finaldao.finish(no, roomnum);
+	}
+
+	public Final setFinal(Final f, HttpServletRequest request) {
+		f.setNo(finaldao.maxno() + 1);
+		f.setPno(Integer.parseInt(request.getParameter("pno")));
+		f.setTotal(Integer.parseInt(request.getParameter("price")));
+		f.setPoint(Integer.parseInt(request.getParameter("point")));
+		f.setName(request.getParameter("name"));
+		f.setUserid(request.getParameter("userid"));
+		f.setUsername(request.getParameter("username"));
+		String year = request.getParameter("year");
+		String mon = request.getParameter("mon");
+		if(Integer.parseInt(request.getParameter("mon")) < 10) {
+			mon = 0 + request.getParameter("mon");
+		} else {
+			mon = request.getParameter("mon");
+		}
+		String start = null;
+		if(Integer.parseInt(request.getParameter("startday")) < 10) {
+			start = 0 + request.getParameter("startday");
+		} else {
+			start = request.getParameter("startday");
+		}
+		f.setStart(year + "-" + mon + "-" + start);
+		String end = null;
+		if(Integer.parseInt(request.getParameter("endday")) < 10) {
+			end = 0 + request.getParameter("endday");
+		} else {
+			end = request.getParameter("endday");
+		}
+		f.setEnd(year + "-" + mon + "-" + end);
+		f.setDay(Integer.parseInt(request.getParameter("travelday")));
+		f.setPnum(Integer.parseInt(request.getParameter("max")));
+		
+		return f;
+	}
+
+	public void realFinal(Final fi) {
+		finaldao.realFinal(fi);
+	}
+
+	public void setPoint(int point, String userid) {
+		int no = userdao.pointmaxno() + 1;
+		finaldao.setPoint(point, userid, no);
+	}
+
+	public void minermax(Package pack, HttpServletRequest request) {
+		int pnum = Integer.parseInt(request.getParameter("people"));
+		packagedao.minermax(pack, pnum);
+	}
+
+	public int chkset(Package pack, HttpServletRequest request) {
+		return packagedao.chkset(pack);
+	}
+
+	public List<Package> subpacklist(Integer no) {
+		return packagedao.subpacklist(no);
+	}
 }
