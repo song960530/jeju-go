@@ -62,6 +62,7 @@
 			<value>
 				<!-- exception.CartEmptyException=exception -->
 				exception.LogInException=exception
+				exception.HotelException=exception
 			</value>
 		</property>
 	</bean>

@@ -49,6 +49,8 @@ public class UserController {
 			mav.addObject("user", user);
 		} catch (DataIntegrityViolationException e) {
 			bindResult.reject("error.duplicate.user");
+		} catch (Exception e) {
+			throw new LogInException("회원가입 중 오류가 발생하였습니다.", "main.jeju");
 		}
 		return mav;
 	}
@@ -75,6 +77,8 @@ public class UserController {
 		} catch (EmptyResultDataAccessException e) {
 			e.printStackTrace();
 			bindResult.reject("error.login.id");
+		} catch (Exception e) {
+			throw new LogInException("로그인 중 오류가 발생하였습니다", "main.jeju");
 		}
 		return mav;
 	}
