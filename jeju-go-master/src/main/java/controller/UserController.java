@@ -84,7 +84,7 @@ public class UserController {
 	}
 
 	@RequestMapping("logout")
-	public ModelAndView logout(HttpSession session) {
+	public ModelAndView lchecklogout(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		session.invalidate();
 		mav.setViewName("redirect:main.jeju");
@@ -182,7 +182,7 @@ public class UserController {
 	}
 
 	@RequestMapping("mypage")
-	public ModelAndView mypage(String userid, HttpSession session) {
+	public ModelAndView lcheckmypage(String userid, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		User user = service.userSelect(userid);
 		mav.addObject("user", user);
@@ -190,7 +190,7 @@ public class UserController {
 	}
 
 	@RequestMapping("updatemypage")
-	public ModelAndView updatemypage(User user, BindingResult bindResult, HttpSession session) {
+	public ModelAndView lcheckupdatemypage(User user, BindingResult bindResult, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			User loginUser = (User) session.getAttribute("loginUser");
@@ -210,7 +210,7 @@ public class UserController {
 	}
 
 	@PostMapping("withdrawal")
-	public ModelAndView delete(User user, HttpSession session) {
+	public ModelAndView lcheckdelete(User user, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		User dbUser = (User) session.getAttribute("login");
 		String password = service.MessageDigest(user.getPassword());
@@ -235,7 +235,7 @@ public class UserController {
 	}
 
 	@PostMapping("updatepw")
-	public ModelAndView updatepw(User user, BindingResult bindResult, HttpServletRequest request) {
+	public ModelAndView lcheckupdatepw(User user, BindingResult bindResult, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		User dbUser = service.userSelect(user.getUserid());
 		String password = service.messageDigest(user.getPassword());
