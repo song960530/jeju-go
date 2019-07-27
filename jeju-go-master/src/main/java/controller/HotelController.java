@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,8 +50,20 @@ public class HotelController {
 		return mav;
 	}
 
-	@RequestMapping({ "hotellist", "adminhotellist" })
-	public ModelAndView list() {
+	@RequestMapping("hotellist")
+	public ModelAndView hotellist() {
+		ModelAndView mav = new ModelAndView();
+		try {
+			List<Hotel> list = service.list();
+			mav.addObject("list", list);
+		} catch (Exception e) {
+			throw new JejuException("리스트 불러오기를 실패하였습니다", "../user/main.jeju");
+		}
+		return mav;
+	}
+
+	@RequestMapping("adminhotellist")
+	public ModelAndView adminhotellist() {
 		ModelAndView mav = new ModelAndView();
 		try {
 			List<Hotel> list = service.list();
@@ -248,7 +261,7 @@ public class HotelController {
 	}
 
 	@GetMapping("reservationForm")
-	public ModelAndView reservationForm(Final f1) {
+	public ModelAndView lcheckreservationForm(Final f1, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			Final f = service.reservation(f1);
@@ -263,7 +276,7 @@ public class HotelController {
 	}
 
 	@PostMapping("reservation")
-	public ModelAndView reservation(Final f1) {
+	public ModelAndView lcheckreservation(Final f1,HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			service.subFinally(f1);

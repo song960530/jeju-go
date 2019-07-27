@@ -84,7 +84,7 @@ public class BoardController {
 	}
 
 	@PostMapping("cswrite")
-	public ModelAndView noticewrite(Board board, HttpServletRequest request) {
+	public ModelAndView lchecknoticewrite(Board board, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			service.noticewrite(board, request);
@@ -122,7 +122,7 @@ public class BoardController {
 	}
 
 	@PostMapping("qnawrite")
-	public ModelAndView qnawrite(Board board, HttpServletRequest request) {
+	public ModelAndView lcheckqnawrite(Board board, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		String userid = service.getUser(request.getParameter("userid"));
 		try {
@@ -135,7 +135,7 @@ public class BoardController {
 	}
 
 	@PostMapping("csupdate")
-	public ModelAndView csupdate(Board board) {
+	public ModelAndView lcheckcsupdate(Board board, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			service.noticeupdate(board);
@@ -147,7 +147,7 @@ public class BoardController {
 	}
 
 	@PostMapping("csdelete")
-	public ModelAndView csdelete(Board board, HttpServletRequest request, HttpSession session) {
+	public ModelAndView lcheckcsdelete(Board board, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		int count = Integer.parseInt(request.getParameter("count"));
 		try {
