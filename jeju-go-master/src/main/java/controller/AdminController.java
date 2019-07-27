@@ -1,6 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,10 +13,10 @@ import logic.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import exception.HotelException;
 import exception.LogInException;
 
 @Controller
@@ -113,13 +112,17 @@ public class AdminController {
 	@GetMapping("acceptlist")
 	public ModelAndView acceptlist() {
 		ModelAndView mav = new ModelAndView();
-		List<Final> list = service.acceptList();
-		
-		for(Final f : list) {
-			f.setRoomnums(service.roomnums(f));	
+		try {
+			List<Final> list = service.acceptList();
+			
+			for(Final f : list) {
+				f.setRoomnums(service.roomnums(f));	
+			}
+			
+			mav.addObject("list", list);
+		}catch(Exception e) {
+			throw new HotelException("페이지를 호출하던 중 오류가 발생하였습니다","../user/main.jeju");
 		}
-		
-		mav.addObject("list", list);
 		return mav;
 	}
 }
