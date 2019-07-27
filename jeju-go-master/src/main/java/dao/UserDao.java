@@ -73,4 +73,24 @@ public class UserDao {
 	public int countPoint(String userid) {
 		return sqlSession.getMapper(UserMapper.class).countPoint(userid);
 	}
+	
+	public void insert(String userid, int no) {
+		param.clear();
+		param.put("userid", userid);
+		param.put("no", no);
+		sqlSession.getMapper(UserMapper.class).wish(param);
+	}
+
+	public int pointmaxno() {
+		return sqlSession.getMapper(UserMapper.class).pointmaxno();
+	}
+
+	public void point(int no, String userid, int point, String type) {
+		param.clear();
+		param.put("no", no);
+		param.put("userid", userid);
+		param.put("point", -point);
+		param.put("type", type);
+		sqlSession.getMapper(UserMapper.class).setPoint(param);
+	}
 }

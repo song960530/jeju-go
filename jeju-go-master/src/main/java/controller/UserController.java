@@ -49,6 +49,8 @@ public class UserController {
 			mav.addObject("user", user);
 		} catch (DataIntegrityViolationException e) {
 			bindResult.reject("error.duplicate.user");
+		} catch (Exception e) {
+			throw new LogInException("회원가입 중 오류가 발생하였습니다.", "main.jeju");
 		}
 		return mav;
 	}
@@ -75,6 +77,8 @@ public class UserController {
 		} catch (EmptyResultDataAccessException e) {
 			e.printStackTrace();
 			bindResult.reject("error.login.id");
+		} catch (Exception e) {
+			throw new LogInException("로그인 중 오류가 발생하였습니다", "main.jeju");
 		}
 		return mav;
 	}
@@ -141,7 +145,7 @@ public class UserController {
 	public void mailSender(String ran, String email) throws AddressException, MessagingException {
 		String host = "smtp.naver.com";
 		final String username = "htn314@naver.com";
-		final String password = "!smc2007077!";
+		final String password = "!smc20070778!";
 		int port = 465;
 		String subject = "안녕하세요 제주Go 입니다(임시비밀번호).";
 		String body = "임시로 발급 드린 비밀번호는  " + ran + " 이며 로그인 후 마이페이지에서 비밀번호를 변경해주시면 됩니다.";

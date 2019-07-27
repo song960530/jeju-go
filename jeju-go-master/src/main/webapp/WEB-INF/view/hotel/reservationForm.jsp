@@ -182,7 +182,7 @@ h3 {
 									<b style="color:red;">10,000이상부터 사용 가능합니다.</b>
 									</span>
 									</c:if>
-									<span class="prc"><input type="text" name="point" id="usepoint" readonly>원</span>
+									<span class="prc"><input type="text" name="point" id="usepoint" value="0"readonly>원</span>
 								</div>
 							</td>
 						</tr>
