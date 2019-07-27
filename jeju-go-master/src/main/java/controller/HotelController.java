@@ -2,7 +2,7 @@ package controller;
 
 import com.opencsv.CSVReader;
 
-import exception.HotelException;
+import exception.JejuException;
 import logic.Final;
 import logic.Hotel;
 import logic.Hreserve;
@@ -44,7 +44,7 @@ public class HotelController {
 			int hno = service.regist(request, mtfRequest);
 			mav.setViewName("redirect:hoteldetail.jeju?no=" + hno);
 		} catch (Exception e) {
-			throw new HotelException("등록중 오류가 발생했습니다.", "regist.jeju");
+			throw new JejuException("등록중 오류가 발생했습니다.", "regist.jeju");
 		}
 		return mav;
 	}
@@ -56,7 +56,7 @@ public class HotelController {
 			List<Hotel> list = service.list();
 			mav.addObject("list", list);
 		} catch (Exception e) {
-			throw new HotelException("리스트 불러오기를 실패하였습니다", "../user/main.jeju");
+			throw new JejuException("리스트 불러오기를 실패하였습니다", "../user/main.jeju");
 		}
 		return mav;
 	}
@@ -86,7 +86,7 @@ public class HotelController {
 			mav.addObject("room", r);
 			mav.addObject("hotel", h);
 		} catch (Exception e) {
-			throw new HotelException("상세페이지를 불러오기에 실패하였습니다.", "../user/main.jeju");
+			throw new JejuException("상세페이지를 불러오기에 실패하였습니다.", "../user/main.jeju");
 		}
 		return mav;
 	}
@@ -106,7 +106,7 @@ public class HotelController {
 			service.regist2(room, request, mtfRequest);
 			mav.setViewName("redirect:hoteldetail.jeju?no=" + room.getHno());
 		} catch (Exception e) {
-			throw new HotelException("방 등록에 실패하였습니다.", "roomregist.jeju");
+			throw new JejuException("방 등록에 실패하였습니다.", "roomregist.jeju");
 		}
 		return mav;
 	}
@@ -127,7 +127,7 @@ public class HotelController {
 			mav.addObject("convenient", con);
 			mav.addObject("room", r);
 		} catch (Exception e) {
-			throw new HotelException("방 상세보기 페이지를 불러오는중 오류가 발생하였습니다.", "hoteldetail.jeju?no=" + hno);
+			throw new JejuException("방 상세보기 페이지를 불러오는중 오류가 발생하였습니다.", "hoteldetail.jeju?no=" + hno);
 		}
 		return mav;
 	}
@@ -158,7 +158,7 @@ public class HotelController {
 			mav.addObject("url", "hreserveform.jeju?hno=" + hreserve.getHno());
 			mav.setViewName("alert");
 		} catch (Exception e) {
-			throw new HotelException("예약가능방 등록중 오류가 발생하였습니다.", "hreserveform.jeju?hno=" + hreserve.getHno());
+			throw new JejuException("예약가능방 등록중 오류가 발생하였습니다.", "hreserveform.jeju?hno=" + hreserve.getHno());
 		}
 		return mav;
 	}
@@ -174,7 +174,7 @@ public class HotelController {
 			mav.addObject("people", request.getParameter("people"));
 			mav.setViewName("hotel/searchlist");
 		} catch (Exception e) {
-			throw new HotelException("검색 도중 오류가 발생하였습니다.", "../user/main.jeju");
+			throw new JejuException("검색 도중 오류가 발생하였습니다.", "../user/main.jeju");
 		}
 		return mav;
 	}
@@ -205,7 +205,7 @@ public class HotelController {
 
 			mav.setViewName("hotel/hoteldetail2");
 		} catch (Exception e) {
-			throw new HotelException("호텔 상세보기를 불러오는 중 오류가 발생하였습니다.", "../user/main.jeju");
+			throw new JejuException("호텔 상세보기를 불러오는 중 오류가 발생하였습니다.", "../user/main.jeju");
 		}
 		return mav;
 	}
@@ -241,7 +241,7 @@ public class HotelController {
 			mav.addObject("count", count);
 			mav.setViewName("hotel/roomdetail2");
 		} catch (Exception e) {
-			throw new HotelException("방 상세보기 페이지를 불러오는 중 오류가 발생하였습니다.",
+			throw new JejuException("방 상세보기 페이지를 불러오는 중 오류가 발생하였습니다.",
 					"searchhoteldetail.jeju?no=" + no + "&start=" + start + "&end=" + end + "&people=" + people);
 		}
 		return mav;
@@ -256,7 +256,7 @@ public class HotelController {
 			mav.addObject("countpoint", countpoint);
 			mav.addObject("f", f);
 		} catch (Exception e) {
-			throw new HotelException("결제페이지를 불러오는 중 오류가 발생하였습니다.", "searchroomdetail.jeju?no=" + f1.getHno() + "&start="
+			throw new JejuException("결제페이지를 불러오는 중 오류가 발생하였습니다.", "searchroomdetail.jeju?no=" + f1.getHno() + "&start="
 					+ f1.getStart() + "&end=" + f1.getEnd() + "&people=" + f1.getPnum() + "&name=" + f1.getName());
 		}
 		return mav;
@@ -271,7 +271,7 @@ public class HotelController {
 			mav.addObject("url", "../user/main.jeju");
 			mav.setViewName("alert");
 		} catch (Exception e) {
-			throw new HotelException("예약 신청중 오류가 발생하였습니다.", "searchroomdetail.jeju?no=" + f1.getHno() + "&start="
+			throw new JejuException("예약 신청중 오류가 발생하였습니다.", "searchroomdetail.jeju?no=" + f1.getHno() + "&start="
 					+ f1.getStart() + "&end=" + f1.getEnd() + "&people=" + f1.getPnum() + "&name=" + f1.getName());
 		}
 		return mav;
@@ -284,7 +284,7 @@ public class HotelController {
 			service.allFinally(request);
 			mav.setViewName("redirect:../admin/acceptlist.jeju");
 		} catch (Exception e) {
-			throw new HotelException("예약 승인중 오류가 발생하였습니다.", "../admin/acceptlist.jeju");
+			throw new JejuException("예약 승인중 오류가 발생하였습니다.", "../admin/acceptlist.jeju");
 		}
 		return mav;
 	}

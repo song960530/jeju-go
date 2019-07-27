@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>í˜¸í…” ë¦¬ìŠ¤íŠ¸</title>
+<title>È£ÅÚ ¸®½ºÆ®</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
    href="//css.skyscnr.com/sttc/hotels-website/hotels-website//static/css/main.e29e5cd7.css">
@@ -16,9 +16,6 @@
 <link rel="stylesheet"
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link
-
-<!-- í°íŠ¸ì–´ì¸ -->	
- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">	
    href="https://cdn.datahc.com/Styles/StyleSheet.ashx?key=Homepage&cdn=1.0.2019.204001-Cba67369227c2b38a3428f1d50a94ca8576c452d0"
    rel="stylesheet" type="text/css" />
 <script type="text/javascript"
@@ -36,7 +33,6 @@ div.left {
    float: left;
    box-sizing: border-box;
 }
-
 div.right {
    width: 59%;
    float: right;
@@ -91,10 +87,10 @@ div.right {
                                  <span
                                     class="BpkText_bpk-text__WdiWu BpkText_bpk-text--sm__1-aIF CardScore_CardScore__2Gv9K CardScore_CardScore--rating_very_good__3WgpZ">8.5</span>
                               </div>
-                              <!-- ë³„ì  ì²˜ë¦¬ ë¶€ë¶„ -->
+                              <!-- º°Á¡ Ã³¸® ºÎºĞ -->
                               <!-- <div class="CardLayout_CardLayout__starsAndRating__37sFL">
                                  <div class="CardLayout_CardLayout__starsAndRatingItem__1SbzL">
-                                    <div aria-label="4ì„±ê¸‰"
+                                    <div aria-label="4¼º±Ş"
                                        class="BpkStarRating_bpk-star-rating__2hyc2">
                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                           width="18" height="18"
@@ -153,11 +149,11 @@ div.right {
                         </script>
                         <div
                            class="CardLayout_CardLayout__colRightRowBottomColRight__RWwIj">
-                           <div class="HotelCard_HotelCard__price__pZRWW"><br><br><!-- ì‹¯ê°€  --></div>
+                           <div class="HotelCard_HotelCard__price__pZRWW"><br><br><!-- ½Ë°¡  --></div>
                            <div class="CardLayout_CardLayout__mediumLargeViewport__1r4P7">
                               <div class="HotelCard_HotelCard__cta__1n4MC">
                                  <button type="button" class="BpkButton_bpk-button__2Jd0U">
-                                    ì„¸ë¶€ì •ë³´ ë³´ê¸°&nbsp;
+                                    ¼¼ºÎÁ¤º¸ º¸±â&nbsp;
                                     <span
                                        style="line-height: 1.125rem; display: inline-block; margin-top: 0.1875rem; vertical-align: top;"><svg
                                           xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -193,7 +189,7 @@ div.right {
                               ${hotel.room.convenient}
                               <div class="ficon">
                                  <p>
-                                    <a href="hoteldetail.jeju?no=${hotel.no}" alt="">ë³´ëŸ¬ê°€ê¸°</a> <i
+                                    <a href="hoteldetail.jeju?no=${hotel.no}" alt="">º¸·¯°¡±â</a> <i
                                        class="fa fa-long-arrow-right"></i>
                                  </p>
                               <script>input(${hotel.lat}, ${hotel.lng})
@@ -218,22 +214,18 @@ div.right {
    </div>
    <script>
       var HOME_PATH = window.HOME_PATH || '.';
-
       var map = new naver.maps.Map('map', {
          center : new naver.maps.LatLng(33.381355, 126.546380),
          zoom : 6,
-         zoomControl : true, // ì¤Œ ì»¨íŠ¸ë¡¤ í‘œì‹œ (ê¸°ë³¸ê°’ í‘œì‹œì•ˆí•¨)
-         zoomControlOptions : { // ì¤Œ ì»¨íŠ¸ë¡¤ ì˜¤ë¥¸ìª½ ìœ„ë¡œ ìœ„ì¹˜ ì„¤ì •
-            position : naver.maps.Position.TOP_RIGHT // ì˜¤ë¥¸ìª½ ìœ„ë¡œ ì„¤ì •ê°’
+         zoomControl : true, // ÁÜ ÄÁÆ®·Ñ Ç¥½Ã (±âº»°ª Ç¥½Ã¾ÈÇÔ)
+         zoomControlOptions : { // ÁÜ ÄÁÆ®·Ñ ¿À¸¥ÂÊ À§·Î À§Ä¡ ¼³Á¤
+            position : naver.maps.Position.TOP_RIGHT // ¿À¸¥ÂÊ À§·Î ¼³Á¤°ª
          },
-         mapTypeControl : true, // ì¼ë°˜ã†ìœ„ì„± ì§€ë„ë³´ê¸° ì»¨íŠ¸ë¡¤ í‘œì‹œ (ê¸°ë³¸ê°’ í‘œì‹œì•ˆí•¨)
+         mapTypeControl : true, // ÀÏ¹İ¤ıÀ§¼º Áöµµº¸±â ÄÁÆ®·Ñ Ç¥½Ã (±âº»°ª Ç¥½Ã¾ÈÇÔ)
       });
-
       var markers = [], infoWindows = [];
-
       for (var i = 0; i < lat.length; i++) {
          var position = new naver.maps.LatLng(lat[i], lng[i]);
-
          var marker = new naver.maps.Marker({
             map : map,
             position : position,
@@ -245,30 +237,22 @@ div.right {
             },
             zIndex : 100
          });
-         var contents = 'í˜¸í…”ì†Œê°œ'
-
+         var contents = 'È£ÅÚ¼Ò°³'
          var infoWindow = new naver.maps.InfoWindow({
             content : contents
          });
-
          markers.push(marker);
          infoWindows.push(infoWindow);
       };
-
       naver.maps.Event.addListener(map, 'idle', function() {
          updateMarkers(map, markers);
       });
-
       function updateMarkers(map, markers) {
-
          var mapBounds = map.getBounds();
          var marker, position;
-
          for (var i = 0; i < markers.length; i++) {
-
             marker = markers[i]
             position = marker.getPosition();
-
             if (mapBounds.hasLatLng(position)) {
                showMarker(map, marker);
             } else {
@@ -276,26 +260,20 @@ div.right {
             }
          }
       }
-
       function showMarker(map, marker) {
-
          if (marker.setMap())
             return;
          marker.setMap(map);
       }
-
       function hideMarker(map, marker) {
-
          if (!marker.setMap())
             return;
          marker.setMap(null);
       }
-
-      // í•´ë‹¹ ë§ˆì»¤ì˜ ì¸ë±ìŠ¤ë¥¼ seqë¼ëŠ” í´ë¡œì € ë³€ìˆ˜ë¡œ ì €ì¥í•˜ëŠ” ì´ë²¤íŠ¸ í•¸ë“¤ëŸ¬ë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
+      // ÇØ´ç ¸¶Ä¿ÀÇ ÀÎµ¦½º¸¦ seq¶ó´Â Å¬·ÎÀú º¯¼ö·Î ÀúÀåÇÏ´Â ÀÌº¥Æ® ÇÚµé·¯¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
       function getClickHandler(seq) {
          return function(e) {
             var marker = markers[seq], infoWindow = infoWindows[seq];
-
             if (infoWindow.getMap()) {
                infoWindow.close();
             } else {
@@ -303,7 +281,6 @@ div.right {
             }
          }
       }
-
       for (var i = 0, ii = markers.length; i < ii; i++) {
          naver.maps.Event.addListener(markers[i], 'click',
                getClickHandler(i));

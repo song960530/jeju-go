@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import exception.HotelException;
+import exception.JejuException;
 import exception.LogInException;
 
 @Controller
@@ -48,12 +48,16 @@ public class AdminController {
 	@RequestMapping("delete")
 	public ModelAndView delete(String[] idchks) {
 		ModelAndView mav = new ModelAndView();
-		for (String id : idchks) {
-			service.Delete(id);
+		try {
+			for (String id : idchks) {
+				service.Delete(id);
+			}
+			mav.addObject("msg", "탈퇴 승인 되었습니다.");
+			mav.addObject("url", "deletelist.jeju");
+			mav.setViewName("alert");
+		} catch (Exception e) {
+			throw new LogInException("탈퇴 승인에 실패하였습니다.", "deletelist.jeju");
 		}
-		mav.addObject("msg", "탈퇴 승인 되었습니다.");
-		mav.addObject("url", "deletelist.jeju");
-		mav.setViewName("alert");
 		return mav;
 	}
 
@@ -83,11 +87,11 @@ public class AdminController {
 		mav.addObject("count", count);
 		mav.addObject("list", list);
 		mav.addObject("boardno", boardno);
-		return mav; // 테스트주석
+		return mav;
 	}
 
 	@RequestMapping("admindelete")
-	public ModelAndView admindelete(User user, HttpSession session) { // 테스트주석
+	public ModelAndView admindelete(User user, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		User dbUser = (User) session.getAttribute("login");
 		String password = service.MessageDigest(user.getPassword());
@@ -114,14 +118,14 @@ public class AdminController {
 		ModelAndView mav = new ModelAndView();
 		try {
 			List<Final> list = service.acceptList();
-			
-			for(Final f : list) {
-				f.setRoomnums(service.roomnums(f));	
+
+			for (Final f : list) {
+				f.setRoomnums(service.roomnums(f));
 			}
-			
+
 			mav.addObject("list", list);
-		}catch(Exception e) {
-			throw new HotelException("페이지를 호출하던 중 오류가 발생하였습니다","../user/main.jeju");
+		} catch (Exception e) {
+			throw new JejuException("페이지를 호출하던 중 오류가 발생하였습니다", "../user/main.jeju");
 		}
 		return mav;
 	}
