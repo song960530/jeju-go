@@ -119,25 +119,29 @@ public class UserController {
 	public ModelAndView passSearch(User user, BindingResult bindResult, HttpServletRequest request)
 			throws AddressException, MessagingException {
 		ModelAndView mav = new ModelAndView();
-		User dbUser = service.userSelect(user.getUserid());
-		if (user.getUserid() != null && user.getUserid().length() != 0) {
-			String ran = service.random();
-			dbUser = service.userSelect(user.getUserid());
-			request.setAttribute("random", ran);
-			if (dbUser != null) {
-				mailSender(ran, dbUser.getUserid());
-				mav.addObject("msg", "임시비밀번호가 발송 되었습니다.");
-				mav.addObject("url", "main.jeju");
-				mav.setViewName("alert");
+		try {
+			User dbUser = service.userSelect(user.getUserid());
+			if (user.getUserid() != null && user.getUserid().length() != 0) {
+				String ran = service.random();
+				dbUser = service.userSelect(user.getUserid());
+				request.setAttribute("random", ran);
+				if (dbUser != null) {
+					mailSender(ran, dbUser.getUserid());
+					mav.addObject("msg", "임시비밀번호가 발송 되었습니다.");
+					mav.addObject("url", "main.jeju");
+					mav.setViewName("alert");
+				} else {
+					mav.addObject("url", "main.jeju");
+					mav.addObject("msg", "해당 정보로 등록된 회원이 존재하지 않습니다.");
+					mav.setViewName("alert");
+				}
 			} else {
+				mav.addObject("msg", "아이디를 확인해 주세요");
 				mav.addObject("url", "main.jeju");
-				mav.addObject("msg", "해당 정보로 등록된 회원이 존재하지 않습니다.");
 				mav.setViewName("alert");
 			}
-		} else {
-			mav.addObject("msg", "아이디를 확인해 주세요");
-			mav.addObject("url", "main.jeju");
-			mav.setViewName("alert");
+		} catch (Exception e) {
+			throw new LogInException("비밀번호 찾기 중 오류가 발생하였습니다.", "main.jeju");
 		}
 		return mav;
 	}
@@ -188,16 +192,20 @@ public class UserController {
 	@RequestMapping("updatemypage")
 	public ModelAndView updatemypage(User user, BindingResult bindResult, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		User loginUser = (User) session.getAttribute("loginUser");
-		User dbUser = (User) session.getAttribute("login");
-		service.update(user);
-		mav.addObject("msg", "정보 수정 완료");
-		mav.addObject("url", "mypage.jeju?userid=" + user.getUserid());
-		if (dbUser.getUserid().equals("admin")) {
+		try {
+			User loginUser = (User) session.getAttribute("loginUser");
+			User dbUser = (User) session.getAttribute("login");
+			service.update(user);
 			mav.addObject("msg", "정보 수정 완료");
-			mav.addObject("url", "../admin/list.jeju");
+			mav.addObject("url", "mypage.jeju?userid=" + user.getUserid());
+			if (dbUser.getUserid().equals("admin")) {
+				mav.addObject("msg", "정보 수정 완료");
+				mav.addObject("url", "../admin/list.jeju");
+			}
+			mav.setViewName("alert");
+		} catch (Exception e) {
+			throw new LogInException("정보 수정중 오류가 발생하였습니다", "mypage.jeju?userid=" + user.getUserid());
 		}
-		mav.setViewName("alert");
 		return mav;
 	}
 

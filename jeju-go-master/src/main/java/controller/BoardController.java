@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import exception.JejuException;
 import logic.Board;
 import logic.JejuService;
 import logic.User;
@@ -89,7 +90,7 @@ public class BoardController {
 			service.noticewrite(board, request);
 			mav.setViewName("redirect:csboard.jeju");
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new JejuException("글등록에 실패하였습니다", "csboard.jeju");
 		}
 		return mav;
 	}
@@ -128,7 +129,7 @@ public class BoardController {
 			service.noticewrite(board, request);
 			mav.setViewName("redirect:qnalist.jeju?userid=" + userid);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new JejuException("문의글 등록을 실패하였습니다.", "csboard.jeju");
 		}
 		return mav;
 	}
@@ -140,7 +141,7 @@ public class BoardController {
 			service.noticeupdate(board);
 			mav.setViewName("redirect:csdetail.jeju?no=" + board.getNo());
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new JejuException("게시글 수정에 실패하였습니다.", "csdetail.jeju?no=" + board.getNo());
 		}
 		return mav;
 	}
@@ -169,7 +170,7 @@ public class BoardController {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new JejuException("게시글 삭제에 실패하였습니다", "csdetail.jeju?no=" + (board.getNo() - 1));
 		}
 		return mav;
 	}
@@ -185,7 +186,8 @@ public class BoardController {
 					+ board.getType2());
 			mav.setViewName("alert");
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new JejuException("답글 등록을 실패하였습니다",
+					"csdetail.jeju?no=" + board.getRef() + "&type=" + board.getType() + "&type2=" + board.getType2());
 		}
 		return mav;
 	}
@@ -193,12 +195,16 @@ public class BoardController {
 	@RequestMapping("csdetail")
 	public ModelAndView csdetail(Integer no, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		int count = service.qnacount(no);
-		Board bdetail = service.qnablist(no);
-		Board rdetail = service.qnarlist(no, 1);
-		mav.addObject("bdetail", bdetail); // 원글 정보
-		mav.addObject("rdetail", rdetail); // 답글 정보
-		mav.addObject("count", count);
+		try {
+			int count = service.qnacount(no);
+			Board bdetail = service.qnablist(no);
+			Board rdetail = service.qnarlist(no, 1);
+			mav.addObject("bdetail", bdetail); // 원글 정보
+			mav.addObject("rdetail", rdetail); // 답글 정보
+			mav.addObject("count", count);
+		} catch (Exception e) {
+			throw new JejuException("게시글을 불러오는데 실패하였습니다.", "csboard.jeju");
+		}
 		return mav;
 	}
 
@@ -212,7 +218,8 @@ public class BoardController {
 					+ board.getType2());
 			mav.setViewName("alert");
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new JejuException("답글 삭제를 실패하였습니다",
+					"csdetail.jeju?no=" + board.getRef() + "&type=" + board.getType() + "&type2=" + board.getType2());
 		}
 		return mav;
 	}

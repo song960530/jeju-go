@@ -1,8 +1,8 @@
 package exception;
 
-public class HotelException extends RuntimeException{
+public class JejuException extends RuntimeException{
 	private String url;
-	public HotelException(String msg, String url) {
+	public JejuException(String msg, String url) {
 		super(msg);
 		this.url = url;
 	}
