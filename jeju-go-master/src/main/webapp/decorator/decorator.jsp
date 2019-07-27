@@ -66,27 +66,27 @@ body, h1, h2, h3, h4, h5, h6 {
 		var end = new Date(f.end.value)
 		
 		if(f.start.value=="" || f.end.value==""){
-			alert('Ã¼Å©ÀÎ/Ã¼Å©¾Æ¿ô ³¯Â¥¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä');
+			alert('ì²´í¬ì¸/ì²´í¬ì•„ì›ƒ ë‚ ì§œë¥¼ ìž…ë ¥í•´ì£¼ì„¸ìš”');
 			return false;
 		}
 		if(today>start){
-			alert('Ã¼Å©ÀÎ ³¯Â¥¸¦ È®ÀÎÇØÁÖ¼¼¿ä');
+			alert('ì²´í¬ì¸ ë‚ ì§œë¥¼ í™•ì¸í•´ì£¼ì„¸ìš”');
 			f.start.focus();
 			return false;
 		}
 		if(f.start.value==f.end.value || start>=end){
-			alert('ÃÖ¼Ò 1¹ÚÀÌ»ó ¿¹¾àÀÌ °¡´ÉÇÕ´Ï´Ù');
+			alert('ìµœì†Œ 1ë°•ì´ìƒ ì˜ˆì•½ì´ ê°€ëŠ¥í•©ë‹ˆë‹¤');
 			f.end.focus();
 			return false;
 		}
 		if(today>=end){
-			alert('Ã¼Å©¾Æ¿ô ³¯Â¥¸¦ È®ÀÎÇØÁÖ¼¼¿ä');
+			alert('ì²´í¬ì•„ì›ƒ ë‚ ì§œë¥¼ í™•ì¸í•´ì£¼ì„¸ìš”');
 			f.end.focus();
 			return false;
 		}
 		
 		if(f.people.value<=0){
-			alert('ÀÎ¿ø¼ö¸¦ È®ÀÎÇØÁÖ¼¼¿ä')
+			alert('ì¸ì›ìˆ˜ë¥¼ í™•ì¸í•´ì£¼ì„¸ìš”')
 			f.people.focus();
 			return false;
 		}
@@ -104,39 +104,39 @@ body, h1, h2, h3, h4, h5, h6 {
 		<a href="#" class="w3-bar-item w3-button"></a>
 		<c:if test="${empty sessionScope.login}">
 			<button class="w3-button fa fa-home">
-				&nbsp;<a href="javascript:void(0)" onclick="document.getElementById('login').style.display='block'"><b>·Î±×ÀÎÀ» ÇØÁÖ¼¼¿ä</b></a>
+				&nbsp;<a href="javascript:void(0)" onclick="document.getElementById('login').style.display='block'"><b>ë¡œê·¸ì¸ì„ í•´ì£¼ì„¸ìš”</b></a>
 			</button>
 		</c:if>
 		<c:if test="${!empty sessionScope.login}">
 			<button class="w3-button fa fa-home">
-				&nbsp;<b>${sessionScope.login.username}´Ô ¹Ý°©½À´Ï´Ù</b>
+				&nbsp;<b>${sessionScope.login.username}ë‹˜ ë°˜ê°‘ìŠµë‹ˆë‹¤</b>
 			</button>
 			<a href="${path}/user/logout.jeju"
-				class="w3-bar-item w3-button fa fa-close">&nbsp;·Î±×¾Æ¿ô</a>
+				class="w3-bar-item w3-button fa fa-close">&nbsp;ë¡œê·¸ì•„ì›ƒ</a>
 			<a href="#" class="w3-bar-item w3-button"></a>
 		</c:if>
 
 		<c:if test="${!empty sessionScope.login}">
          <div class="w3-dropdown-hover">
             <button class="w3-button fa fa-male">
-               &nbsp;&nbsp;¸¶ÀÌÆäÀÌÁö <i class="fa fa-caret-down"></i>
+               &nbsp;&nbsp;ë§ˆì´íŽ˜ì´ì§€ <i class="fa fa-caret-down"></i>
             </button>
             <div class="w3-dropdown-content w3-bar-block">
              <c:if test="${sessionScope.login.userid!='admin'}">
                <a href="${path}/user/mypage.jeju?userid=${login.userid}"
-                  class="w3-bar-item w3-button">Á¤º¸ ¼öÁ¤</a> <a href="${path}/user/updatepw.jeju"
-                  class="w3-bar-item w3-button">ºñ¹Ð¹øÈ£ º¯°æ</a> <a href="../user/mypoint.jeju?userid=${login.userid}"
-                  class="w3-bar-item w3-button">Æ÷ÀÎÆ®</a> <a href="#"
-                  class="w3-bar-item w3-button">¿¹¾à ³»¿ª</a> <a href="#"
-                  class="w3-bar-item w3-button">Âò</a> <a href="${path}/board/qnalist.jeju?userid=${login.userid}"
-                  class="w3-bar-item w3-button">1:1 ¹®ÀÇ ³»¿ª</a> <a href="${path}/user/withdrawal.jeju"
-                  class="w3-bar-item w3-button">È¸¿øÅ»Åð ½ÅÃ»</a>
+                  class="w3-bar-item w3-button">ì •ë³´ ìˆ˜ì •</a> <a href="${path}/user/updatepw.jeju"
+                  class="w3-bar-item w3-button">ë¹„ë°€ë²ˆí˜¸ ë³€ê²½</a> <a href="../user/mypoint.jeju?userid=${login.userid}"
+                  class="w3-bar-item w3-button">í¬ì¸íŠ¸</a> <a href="${path}/user/history.jeju?userid=${login.userid}"
+                  class="w3-bar-item w3-button">ì˜ˆì•½ ë‚´ì—­</a> <a href="${path}/user/wishList.jeju?userid=${login.userid}"
+                  class="w3-bar-item w3-button">ì°œ</a> <a href="${path}/board/qnalist.jeju?userid=${login.userid}"
+                  class="w3-bar-item w3-button">1:1 ë¬¸ì˜ ë‚´ì—­</a> <a href="${path}/user/withdrawal.jeju"
+                  class="w3-bar-item w3-button">íšŒì›íƒˆí‡´ ì‹ ì²­</a>  
               </c:if>
               <c:if test="${sessionScope.login.userid=='admin'}">
               	<a href="${path}/user/mypage.jeju?userid=${login.userid}"
-                  class="w3-bar-item w3-button">Á¤º¸ ¼öÁ¤</a> <a href="${path}/user/updatepw.jeju"
-                  class="w3-bar-item w3-button">ºñ¹Ð¹øÈ£ º¯°æ</a> <a href="../user/mypoint.jeju?userid=${login.userid}"
-                  class="w3-bar-item w3-button">Æ÷ÀÎÆ®</a>
+                  class="w3-bar-item w3-button">ì •ë³´ ìˆ˜ì •</a> <a href="${path}/user/updatepw.jeju"
+                  class="w3-bar-item w3-button">ë¹„ë°€ë²ˆí˜¸ ë³€ê²½</a> <a href="../user/mypoint.jeju?userid=${login.userid}"
+                  class="w3-bar-item w3-button">í¬ì¸íŠ¸</a>
               </c:if> 
             </div>
          </div>
@@ -144,37 +144,37 @@ body, h1, h2, h3, h4, h5, h6 {
       <c:if test="${sessionScope.login.userid=='admin'}">
          <div class="w3-dropdown-hover">
             <button class="w3-button fa fa-search">
-               &nbsp;&nbsp;È¸¿ø°ü¸® <i class="fa fa-caret-down"></i>
+               &nbsp;&nbsp;íšŒì›ê´€ë¦¬ <i class="fa fa-caret-down"></i>
             </button>
             <div class="w3-dropdown-content w3-bar-block">
-               <a href="${path}/admin/list.jeju" class="w3-bar-item w3-button">È¸¿ø
-                  ¸ñ·Ï</a> <a href="${path}/admin/deletelist.jeju"
-                  class="w3-bar-item w3-button">Å»Åð ½ÅÃ» ¸ñ·Ï</a> <a href="${path}/admin/acceptlist.jeju"
-                  class="w3-bar-item w3-button">¿¹¾à ½ÅÃ» ¸ñ·Ï</a> <a href="#"
-                  class="w3-bar-item w3-button">¿¹¾à °ü¸® ÆäÀÌÁö</a> <a href="../admin/qnalist.jeju"
-                  class="w3-bar-item w3-button">1:1¹®ÀÇ ¸ñ·Ï</a>
+               <a href="${path}/admin/list.jeju" class="w3-bar-item w3-button">íšŒì›
+                  ëª©ë¡</a> <a href="${path}/admin/deletelist.jeju"
+                  class="w3-bar-item w3-button">íƒˆí‡´ ì‹ ì²­ ëª©ë¡</a> <a href="${path}/admin/acceptlist.jeju"
+                  class="w3-bar-item w3-button">ì˜ˆì•½ ì‹ ì²­ ëª©ë¡</a> <a href="#"
+                  class="w3-bar-item w3-button">ì˜ˆì•½ ê´€ë¦¬ íŽ˜ì´ì§€</a> <a href="../admin/qnalist.jeju"
+                  class="w3-bar-item w3-button">1:1ë¬¸ì˜ ëª©ë¡</a>
             </div>
          </div>
 
 			<div class="w3-dropdown-hover">
 				<button class="w3-button fa fa-home">
-					&nbsp;&nbsp;¼÷¼Ò <i class="fa fa-caret-down"></i>
+					&nbsp;&nbsp;ìˆ™ì†Œ <i class="fa fa-caret-down"></i>
 				</button>
 				<div class="w3-dropdown-content w3-bar-block">
-					<a href="${path}/hotel/regist.jeju" class="w3-bar-item w3-button">¼÷¼Ò
-						µî·Ï</a> <a href="${path}/hotel/adminhotellist.jeju"
-						class="w3-bar-item w3-button">¼÷¼Ò ¹æ µî·Ï</a> <a
+					<a href="${path}/hotel/regist.jeju" class="w3-bar-item w3-button">ìˆ™ì†Œ
+						ë“±ë¡</a> <a href="${path}/hotel/adminhotellist.jeju"
+						class="w3-bar-item w3-button">ìˆ™ì†Œ ë°© ë“±ë¡</a> <a
 						href="${path}/hotel/adminhotellist.jeju"
-						class="w3-bar-item w3-button">¿¹¾à °¡´É ¹æ µî·Ï</a> <a href="#"
-						class="w3-bar-item w3-button">¼÷¼Ò/ÆÐÅ°Áöº° ÀÌ¿ë È½¼ö</a>
+						class="w3-bar-item w3-button">ì˜ˆì•½ ê°€ëŠ¥ ë°© ë“±ë¡</a> <a href="#"
+						class="w3-bar-item w3-button">ìˆ™ì†Œ/íŒ¨í‚¤ì§€ë³„ ì´ìš© íšŸìˆ˜</a>
 				</div>
 			</div>
 
 			<div class="w3-dropdown-hover">
-				<button class="w3-button fa fa-plane"> &nbsp;&nbsp;ÆÐÅ°Áö <i class="fa fa-caret-down"></i>
+				<button class="w3-button fa fa-plane"> &nbsp;&nbsp;íŒ¨í‚¤ì§€ <i class="fa fa-caret-down"></i>
 				</button>
 				<div class="w3-dropdown-content w3-bar-block">
-					<a href="../package/bigpackregist.jeju" class="w3-bar-item w3-button">ÆÐÅ°Áö µî·Ï</a>
+					<a href="../package/bigpackregist.jeju" class="w3-bar-item w3-button">íŒ¨í‚¤ì§€ ë“±ë¡</a>
 				</div>
 			</div>
 		</c:if>
@@ -215,17 +215,17 @@ body, h1, h2, h3, h4, h5, h6 {
 								<c:if test="${empty sessionScope.login}">
 									<li role="presentation"><a href="javascript:void(0)"
 										onclick="document.getElementById('signin').style.display='block'"
-										class="w3-bar-item w3-button" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">È¸¿ø°¡ÀÔ</a></li>
+										class="w3-bar-item w3-button" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">íšŒì›ê°€ìž…</a></li>
 									<li role="presentation"><a href="javascript:void(0)"
 										onclick="document.getElementById('login').style.display='block'"
-										class="w3-bar-item w3-button" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">·Î±×ÀÎ</a></li>
+										class="w3-bar-item w3-button" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">ë¡œê·¸ì¸</a></li>
 								</c:if>
 								<li role="presentation"><a
 									href="${path }/hotel/hotellist.jeju" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">Hotel</a></li>
 								<li role="presentation"><a href="../package/packlist.jeju" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">Packages</a></li>
 
 								<li role="presentation"><a
-									href="${path }/board/csboard.jeju" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">°í°´¼¾ÅÍ</a></li>
+									href="${path }/board/csboard.jeju" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">ê³ ê°ì„¼í„°</a></li>
 							</ul>
 						</div>
 					</div>
@@ -240,7 +240,7 @@ body, h1, h2, h3, h4, h5, h6 {
 		</div>
 	</div>
 
-	<!-- footer ¼³Á¤ -->
+	<!-- footer ì„¤ì • -->
 	<footer>
 		<div class="container">
 			<div class="row">
@@ -248,7 +248,7 @@ body, h1, h2, h3, h4, h5, h6 {
 					<div class="widget">
 						<h5 class="widgetheading">Get in touch with us</h5>
 						<address>
-							<strong>Jeju Go</strong><br> ¼­¿ï½Ã ±ÝÃµ±¸ °¡»êµðÁöÅÐ2·Î<br>
+							<strong>Jeju Go</strong><br> ì„œìš¸ì‹œ ê¸ˆì²œêµ¬ ê°€ì‚°ë””ì§€í„¸2ë¡œ<br>
 						</address>
 						<p>
 							<i class="icon-phone"></i> 02)1234-5678 <br> <i
@@ -355,41 +355,41 @@ body, h1, h2, h3, h4, h5, h6 {
 				<i onclick="document.getElementById('login').style.display='none'"
 					class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent"></i>
 				<h2 class="w3-wide">LogIn</h2>
-				<p>·Î±×ÀÎ Á¤º¸¸¦ ÀÔ·ÂÇÏ¼¼¿ä.</p>
+				<p>ë¡œê·¸ì¸ ì •ë³´ë¥¼ ìž…ë ¥í•˜ì„¸ìš”.</p>
 				<form:form modelattribute="user" action="${path }/user/login.jeju"
 					name="lf" onsubmit="return loginchk(this)">
 					<p>
 						<input class="w3-input w3-border"
 							style="text-transform: lowercase;" type="text" name="userid"
-							placeholder="¾ÆÀÌµð(ÀÌ¸ÞÀÏ)">
+							placeholder="ì•„ì´ë””(ì´ë©”ì¼)">
 					</p>
 					<p>
 						<input class="w3-input w3-border"
 							style="text-transform: lowercase;" type="password"
-							name="password" placeholder="ºñ¹Ð¹øÈ£">
+							name="password" placeholder="ë¹„ë°€ë²ˆí˜¸">
 					</p>
 					<p>
 						<a class="btn btn-primary"
 							href="javascript:void(0)"
-							onclick="document.getElementById('searchid').style.display='block'">¾ÆÀÌµð/ºñ¹Ð¹øÈ£
-							Ã£±â</a>
+							onclick="document.getElementById('searchid').style.display='block'">ì•„ì´ë””/ë¹„ë°€ë²ˆí˜¸
+							ì°¾ê¸°</a>
 					</p>
 					<button type="submit"
-						class="btn btn-primary">·Î±×ÀÎ</button>
+						class="btn btn-primary">ë¡œê·¸ì¸</button>
 				</form:form>
 			</div>
 		</div>
 	</div>
 
-	<!-- ¾ÆÀÌµð/ºñ¹Ð¹øÈ£ Ã£±â ºÎºÐ -->
+	<!-- ì•„ì´ë””/ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° ë¶€ë¶„ -->
 	<div id=searchid class="w3-modal" style="display: none;">
 		<div class="w3-modal-content w3-animate-zoom w3-padding-large">
 			<div class="w3-container w3-white w3-center">
 				<i
 					onclick="document.getElementById('searchid').style.display='none'"
 					class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent"></i>
-				<h2 class="w3-wide">¾ÆÀÌµð/ºñ¹Ð¹øÈ£ Ã£±â</h2>
-				<p>ÀÎÁõµÈ ÀÌ¸ÞÀÏ¸¸ Á¤º¸ Ã£±â°¡ °¡´ÉÇÕ´Ï´Ù .</p>
+				<h2 class="w3-wide">ì•„ì´ë””/ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸°</h2>
+				<p>ì¸ì¦ëœ ì´ë©”ì¼ë§Œ ì •ë³´ ì°¾ê¸°ê°€ ê°€ëŠ¥í•©ë‹ˆë‹¤ .</p>
 				</div>
 				
 				<div style="margin-bottom: 10px;"
@@ -397,23 +397,23 @@ body, h1, h2, h3, h4, h5, h6 {
 					<input type="radio" class="custom-control-input" id="search_1"
 						name="search_total" onclick="search_check(1)" checked="checked">
 					<label class="custom-control-label font-weight-bold text-white"
-						for="search_1">¾ÆÀÌµðÃ£±â</label>
+						for="search_1">ì•„ì´ë””ì°¾ê¸°</label>
 					<input type="radio" class="custom-control-input" id="search_2"
 						name="search_total" onclick="search_check(2)"> <label
 						class="custom-control-label font-weight-bold text-white"
-						for="search_2">ºñ¹Ð¹øÈ£Ã£±â</label>
+						for="search_2">ë¹„ë°€ë²ˆí˜¸ì°¾ê¸°</label>
 				</div>
 				<div id="searchI">
 					<form name="sf" action="userSearch.jeju" method="post">
 						<div class="form-group">
-							<label class="font-weight-bold text-white" for="inputName_1">ÀÌ¸§</label>
+							<label class="font-weight-bold text-white" for="inputName_1">ì´ë¦„</label>
 							<div>
 								<input type="text" class="form-control" id="username"
-									name="username" placeholder="ex) ¼Û¹®ÁØ">
+									name="username" placeholder="ex) ì†¡ë¬¸ì¤€">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="font-weight-bold text-white" for="inputPhone_1">ÈÞ´ëÆù¹øÈ£</label>
+							<label class="font-weight-bold text-white" for="inputPhone_1">íœ´ëŒ€í°ë²ˆí˜¸</label>
 							<div>
 								<input type="text" class="form-control" id="Phone" name="Phone"
 									placeholder="ex) 01077779999">
@@ -421,14 +421,16 @@ body, h1, h2, h3, h4, h5, h6 {
 						</div>
 						<div class="form-group w3-center">
 							<button id="searchBtn2" type="submit"
-								class="btn btn-primary">È®ÀÎ</button>
+								class="btn btn-primary">í™•ì¸</button>
+							<button type="reset"
+								class="btn btn-primary">ì´ˆê¸°í™”</button>
 						</div>
 					</form>
 				</div>
 				<div id="searchP" style="display: none;">
 					<form name="pf" action="passSearch.jeju" method="post">
 						<div class="form-group">
-							<label class="font-weight-bold text-white" for="inputId">ÀÌ¸ÞÀÏ</label>
+							<label class="font-weight-bold text-white" for="inputId">ì´ë©”ì¼</label>
 							<div>
 								<input type="text" class="form-control" id="userid"
 									style="text-transform: lowercase;" name="userid"
@@ -437,7 +439,9 @@ body, h1, h2, h3, h4, h5, h6 {
 						</div>
 						<div class="form-group w3-center">
 							<button id="searchBtn2" type="submit"
-								class="btn btn-primary">È®ÀÎ</button>
+								class="btn btn-primary">í™•ì¸</button>
+							<button type="reset"
+								class="btn btn-primary">ì´ˆê¸°í™”</button>
 						</div>
 					</form>
 				</div>
@@ -450,30 +454,32 @@ body, h1, h2, h3, h4, h5, h6 {
 				<i onclick="document.getElementById('signin').style.display='none'"
 					class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent"></i>
 				<h2 class="w3-wide">Sign In</h2>
-				<p>È¸¿ø°¡ÀÔ¿¡ ÇÊ¿äÇÑ Á¤º¸¸¦ ÀÔ·ÂÇÏ¼¼¿ä.</p>
+				<p>íšŒì›ê°€ìž…ì— í•„ìš”í•œ ì •ë³´ë¥¼ ìž…ë ¥í•˜ì„¸ìš”.</p>
 				<form:form modelattribute="user" name="f" action="userEntry.jeju"
 					method="post" onsubmit="return passchk(this)">
 					<p>
 						<input class="w3-input w3-border" type="text" name="username"
-							style="text-transform: lowercase;" placeholder="ÀÌ¸§">
+							style="text-transform: lowercase;" placeholder="ì´ë¦„">
 					</p>
 					<p>
 						<input class="w3-input w3-border" type="text" name="userid"
-							style="text-transform: lowercase;" placeholder="¾ÆÀÌµð(ÀÌ¸ÞÀÏ)">
+							style="text-transform: lowercase;" placeholder="ì•„ì´ë””(ì´ë©”ì¼)">
 					</p>
 					<p>
 						<input class="w3-input w3-border" type="password" name="password"
-							style="text-transform: lowercase;" placeholder="ºñ¹Ð¹øÈ£">
+							style="text-transform: lowercase;" placeholder="ë¹„ë°€ë²ˆí˜¸">
 					</p>
 					<p>
 						<input class="w3-input w3-border" type="password" name="checkpassword"
-							style="text-transform: lowercase;" placeholder="ºñ¹Ð¹øÈ£ È®ÀÎ">
+							style="text-transform: lowercase;" placeholder="ë¹„ë°€ë²ˆí˜¸ í™•ì¸">
 					</p>
 					<p>
-						<input class="w3-input w3-border"type="text" name="phone" placeholder="ÀüÈ­¹øÈ£">
+						<input class="w3-input w3-border"type="text" name="phone" placeholder="ì „í™”ë²ˆí˜¸">
 					</p>
 					<button type="submit"
-						class="btn btn-primary">È¸¿ø°¡ÀÔ</button>
+						class="btn btn-primary">íšŒì›ê°€ìž…</button>
+					<button type="reset"
+						class="btn btn-primary">ì´ˆê¸°í™”</button>
 				</form:form>
 			</div>
 		</div>

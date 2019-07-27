@@ -76,8 +76,10 @@ function showDivs(n) {
       <c:set value="${hotel}" var="h" />
       <div class="w3-panel">
          <h1 style="font-family: 'Shrikhand', cursive;">
-            <p>${h.hname}</p>
-         </h1>
+            <p>${h.hname}<a class="w3-right" id="wishck" href="../user/wishList.jeju" style="color: red" ><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+            <a class="w3-right" id="wishck" href="../user/wishList.jeju" style="color: red" ><i class="fa fa-heart" aria-hidden="true"></i></a> 
+            </p>
+         </h1>  
       </div>
       <c:forEach items="${h.photo}" var="photo">
          <div class="w3-display-container mySlides">
