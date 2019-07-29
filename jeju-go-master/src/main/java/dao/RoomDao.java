@@ -38,4 +38,8 @@ public class RoomDao {
 	public List<Room2> selectRoom2(Integer hno) {
 		return sqlSession.getMapper(RoomMapper.class).selectRoom2(hno);
 	}
+
+	public void roomdelete(int hno) {
+		sqlSession.getMapper(RoomMapper.class).roomdelete(hno);
+	}
 }

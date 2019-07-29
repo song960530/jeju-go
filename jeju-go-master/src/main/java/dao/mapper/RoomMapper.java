@@ -3,6 +3,7 @@ package dao.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
@@ -24,4 +25,7 @@ public interface RoomMapper {
 
 	@Select("select h.no,h.hname,r.roomnum,r.name,r.max from hotel h,room r where h.no=#{hno} and r.hno=#{hno}")
 	List<Room2> selectRoom2(Integer hno);
+
+	@Delete("delete from room where hno=#{hno}")
+	void roomdelete(int hno);
 }

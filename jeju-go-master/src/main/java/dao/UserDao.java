@@ -93,4 +93,8 @@ public class UserDao {
 		param.put("type", type);
 		sqlSession.getMapper(UserMapper.class).setPoint(param);
 	}
+
+	public void givePoint(double point) {
+		sqlSession.getMapper(UserMapper.class).givePoint(point);
+	}
 }

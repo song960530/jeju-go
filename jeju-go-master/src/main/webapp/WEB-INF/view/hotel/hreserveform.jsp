@@ -40,8 +40,8 @@ body {
 									&nbsp;~&nbsp;
 									<input type="date" name="endday" style="color:black;">
 									<div class="ficon">
-										<a href="hreserveform.jeju?hno=${room.hno}" alt="">조회</a> <i class="fa fa-long-arrow-right"></i>
-										<button type="submit" class="btn btn-default" style="align-content: center;">등록</button>
+										&nbsp;&nbsp;<button type="submit" class="btn btn-default" style="align-content: center;">등록</button>
+										<i class="fa fa-long-arrow-right"></i>
 									</div>
 									</form>
 								</div>

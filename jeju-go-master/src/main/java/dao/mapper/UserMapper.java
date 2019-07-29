@@ -59,4 +59,7 @@ public interface UserMapper {
 
 	@Select("select * from Member")
 	User select();
+
+	@Update("update point")
+	void givePoint(double point);
 }

@@ -36,4 +36,9 @@ public class HotelDao {
 	public Hotel selectOne(Integer i) {
 		return sqlSession.getMapper(HotelMapper.class).selectOne(i);
 	}
+
+	public void hoteldelete(int hno) {
+		sqlSession.getMapper(HotelMapper.class).hoteldelete(hno);
+
+	}
 }

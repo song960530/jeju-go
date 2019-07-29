@@ -214,6 +214,7 @@ select#soflow-color {
 									<input type="hidden" name="name" value="${list.name}">
 									<input type="hidden" name="end" value="${list.end}">
 									<input type="hidden" name="username" value="${list.username}">
+									<input type="hidden" name="userid" value="${list.userid}">
 									<div class="w3-display-middle">
 									<div class="styled-select blue semi-square">
 									<select name="roomnum">

@@ -514,7 +514,7 @@ public class JejuService {
 	public int count(int type, Integer type2) {
 		return boarddao.count(type, type2);
 	}
-	
+
 	public void bigpackregist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
 		Package pack = new Package();
 		pack.setNo(packagedao.maxno() + 1);
@@ -543,7 +543,7 @@ public class JejuService {
 		}
 		packagedao.bigpackregist(pack);
 	}
-	
+
 	public int packregist(HttpServletRequest request) {
 		Package pack = new Package();
 		pack.setTravelday(request.getParameter("travelday"));
@@ -551,10 +551,10 @@ public class JejuService {
 		pack.setMax(Integer.parseInt(request.getParameter("max")));
 		pack.setCheck(request.getParameter("check"));
 		pack.setFirst(packagedao.maxno());
-		for(int i = 0; i <= 3; i++) {
+		for (int i = 0; i <= 3; i++) {
 			pack.setStartday(request.getParameter("startday").split(",")[i]);
 			pack.setNo(packagedao.maxno() + 1);
-			pack.setSub(pack.getFirst()+i+1);
+			pack.setSub(pack.getFirst() + i + 1);
 			packagedao.insert(pack);
 		}
 		return pack.getNo();
@@ -662,6 +662,10 @@ public class JejuService {
 		}
 
 		finaldao.finish(no, roomnum);
+		int point = (int) (finaldao.selectTotal(no) * 0.05);
+		String userid = request.getParameter("userid");
+		int pointno = userdao.pointmaxno() + 1;
+		finaldao.setPoint(point, userid, pointno);
 	}
 
 	public Final setFinal(Final f, HttpServletRequest request) {
@@ -674,20 +678,20 @@ public class JejuService {
 		f.setUsername(request.getParameter("username"));
 		String year = request.getParameter("year");
 		String mon = request.getParameter("mon");
-		if(Integer.parseInt(request.getParameter("mon")) < 10) {
+		if (Integer.parseInt(request.getParameter("mon")) < 10) {
 			mon = 0 + request.getParameter("mon");
 		} else {
 			mon = request.getParameter("mon");
 		}
 		String start = null;
-		if(Integer.parseInt(request.getParameter("startday")) < 10) {
+		if (Integer.parseInt(request.getParameter("startday")) < 10) {
 			start = 0 + request.getParameter("startday");
 		} else {
 			start = request.getParameter("startday");
 		}
 		f.setStart(year + "-" + mon + "-" + start);
 		String end = null;
-		if(Integer.parseInt(request.getParameter("endday")) < 10) {
+		if (Integer.parseInt(request.getParameter("endday")) < 10) {
 			end = 0 + request.getParameter("endday");
 		} else {
 			end = request.getParameter("endday");
@@ -695,7 +699,7 @@ public class JejuService {
 		f.setEnd(year + "-" + mon + "-" + end);
 		f.setDay(Integer.parseInt(request.getParameter("travelday")));
 		f.setPnum(Integer.parseInt(request.getParameter("max")));
-		
+
 		return f;
 	}
 
@@ -719,5 +723,21 @@ public class JejuService {
 
 	public List<Package> subpacklist(Integer no) {
 		return packagedao.subpacklist(no);
+	}
+
+	public int deleteForm(HttpServletRequest request) {
+		int hno = Integer.parseInt(request.getParameter("hno"));
+		int stmon = Integer.parseInt(request.getParameter("today").split("-")[1]);
+		int today = Integer.parseInt(request.getParameter("today").split("-")[2]);
+		return hresdao.deleteForm(hno, stmon, today);
+	}
+
+	public void hoteldelete(HttpServletRequest request) {
+		int hno = Integer.parseInt(request.getParameter("hno"));
+		hoteldao.hoteldelete(hno);
+		roomdao.roomdelete(hno);
+		photodao.photodelete(hno);
+		hresdao.hoteldelete(hno);
+
 	}
 }

@@ -52,4 +52,8 @@ public class FinalDao {
 		param.put("no", no);
 		sqlSession.getMapper(FinalMapper.class).setPoint(param);
 	}
+
+	public int selectTotal(int no) {
+		return sqlSession.getMapper(FinalMapper.class).selectTotal(no);
+	}
 }

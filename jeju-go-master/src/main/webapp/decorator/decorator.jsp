@@ -57,6 +57,7 @@ body, h1, h2, h3, h4, h5, h6 {
 		day = day >= 10 ? day : '0' + day; //day  
 		return year + '-' + month + '-' + day;
 	}
+	
 	function chksearch(f) {
 		var date = new Date(); 
 		date = getFormatDate(date);

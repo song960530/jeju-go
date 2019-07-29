@@ -28,4 +28,7 @@ public interface FinalMapper {
 
 	@Insert("insert into point(no, userid, point, regdate, type) values(#{no}, #{userid}, #{point}, now(), 'Àû¸³')")
 	void setPoint(Map<String, Object> param);
+
+	@Select("select total from finally where no=#{no}")
+	int selectTotal(int no);
 }

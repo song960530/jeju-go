@@ -5,7 +5,8 @@
 	</decorator>
 	<!-- layout 제외 설정 -->
 	<excludes>
-		<!-- <pattern>/board/imgupload*</pattern> -->
+		<pattern>/hotel/deleteForm*</pattern>
+		<pattern>/hotel/adminpasschk*</pattern>
 		<!-- <pattern>/user/main.*</pattern> -->
 	</excludes>
 </decorators>

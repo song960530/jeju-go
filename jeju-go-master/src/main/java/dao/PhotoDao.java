@@ -37,4 +37,9 @@ public class PhotoDao {
 	public int maxno() {
 		return sqlSession.getMapper(PhotoMapper.class).maxno();
 	}
+
+	public void photodelete(int hno) {
+		sqlSession.getMapper(PhotoMapper.class).photodelete(hno);
+		
+	}
 }
