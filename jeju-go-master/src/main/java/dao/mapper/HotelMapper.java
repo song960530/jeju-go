@@ -1,12 +1,12 @@
 package dao.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
-import logic.Final;
 import logic.Hotel;
 
 public interface HotelMapper {
@@ -25,4 +25,7 @@ public interface HotelMapper {
 
 	@Delete("delete from hotel where no=#{hno}")
 	void hoteldelete(int hno);
+
+	@Select("select count(*) from wish where userid=#{userid} and no=#{no}")
+	int selectwish(Map<String, Object> param);
 }

@@ -1,5 +1,6 @@
 package dao.mapper;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
@@ -44,13 +45,13 @@ public interface UserMapper {
 
 	@Select("select * from point where userid=#{userid}")
 	Point getPoint(String userid);
-	
+
 	@Select("select ifnull(sum(point),0) from point where userid=#{userid}")
 	int countPoint(String userid);
 
 	@Insert("insert into wish(userid,no) values(#{userid},#{no})")
 	void wish(Map<String, Object> param);
-	
+
 	@Select("select ifnull(max(no),0) from point")
 	int pointmaxno();
 
@@ -62,4 +63,10 @@ public interface UserMapper {
 
 	@Select("select * from member where userid = #{userid}")
 	User idchk(User user);
+
+	@Delete("delete from wish where userid=#{userid} and no=#{no}")
+	void deletewish(Map<String, Object> param);
+
+	@Select("select no from wish where userid=#{userid}")
+	List<Integer> selectNo(String userid);
 }

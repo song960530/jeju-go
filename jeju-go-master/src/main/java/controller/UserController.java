@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import logic.Final;
+import logic.Hotel;
 import logic.JejuService;
 import logic.Point;
 import logic.User;
@@ -265,26 +266,6 @@ public class UserController {
 		return mav;
 	}
 
-	@PostMapping("wishBtn")
-	public ModelAndView wishBtn(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
-		int no = Integer.parseInt(request.getParameter("no"));
-		String userid = request.getParameter("userid");
-		service.wishBtn(userid, no);
-		if (userid == null) {
-			mav.addObject("wish", 2);
-			mav.addObject("msg", "WishList에 추가되었습니다.");
-			mav.addObject("url", "../hoteldetail.jeju?no=" + no);
-			mav.setViewName("alert");
-		} else {
-			mav.addObject("wish", 0);
-			mav.addObject("msg", "WishList 삭제되었습니다.");
-			mav.addObject("url", "../hoteldetail.jeju?no=" + no);
-			mav.setViewName("alert");
-		}
-		return mav;
-	}
-
 	@RequestMapping(value = "idchk", method = RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView idchk(String userid) {
@@ -318,11 +299,50 @@ public class UserController {
 	public ModelAndView acceptlist(String userid) {
 		ModelAndView mav = new ModelAndView();
 		try {
-			List<Final> list = service.history(userid);		
+			List<Final> list = service.history(userid);
 			mav.addObject("list", list);
 		} catch (Exception e) {
 			throw new JejuException("페이지를 호출하던 중 오류가 발생하였습니다", "../user/main.jeju");
 		}
+		return mav;
+	}
+
+	@RequestMapping("wish")
+	public ModelAndView wishBtn(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		int no = Integer.parseInt(request.getParameter("no"));
+		String userid = request.getParameter("userid");
+		service.wish(userid, no);
+		mav.addObject("msg", "즐겨찾기 등록되었습니다.");
+		mav.addObject("url", "../hotel/hoteldetail.jeju?no=" + no);
+		mav.setViewName("alert");
+		return mav;
+	}
+
+	@RequestMapping("deletewish")
+	public ModelAndView deletewish(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		int no = Integer.parseInt(request.getParameter("no"));
+		String userid = request.getParameter("userid");
+		service.deletewish(userid, no);
+		mav.addObject("msg", "즐겨찾기 삭제되었습니다.");
+		mav.addObject("url", "../hotel/hoteldetail.jeju?no=" + no);
+		mav.setViewName("alert");
+		return mav;
+	}
+
+	@RequestMapping("wishlist")
+	public ModelAndView detail(String userid, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		User user = service.userSelect(userid);
+		System.out.println(userid);
+//		User dbUser = service.userSelect(user.getUserid());
+		List<Integer> no = service.noSelect(userid);
+		List<Hotel> list = service.wihslist(no);
+		System.out.println(no);
+		System.out.println(list);
+		mav.addObject("list", list);
+		mav.addObject("no", no);
 		return mav;
 	}
 }

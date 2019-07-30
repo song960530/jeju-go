@@ -87,42 +87,6 @@ div.right {
                                  <span
                                     class="BpkText_bpk-text__WdiWu BpkText_bpk-text--sm__1-aIF CardScore_CardScore__2Gv9K CardScore_CardScore--rating_very_good__3WgpZ">8.5</span>
                               </div>
-                              <!-- 별점 처리 부분 -->
-                              <!-- <div class="CardLayout_CardLayout__starsAndRating__37sFL">
-                                 <div class="CardLayout_CardLayout__starsAndRatingItem__1SbzL">
-                                    <div aria-label="4성급"
-                                       class="BpkStarRating_bpk-star-rating__2hyc2">
-                                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                          width="18" height="18"
-                                          class="BpkStar_bpk-star__25SLX BpkStar_bpk-star--filled__hAnAp BpkIcon_bpk-icon--rtl-support__2Qefw"
-                                          style="width: 1.125rem; height: 1.125rem;">
-                                          <path
-                                             d="M17.349 14.762l3.535-4.415a.528.528 0 0 0-.26-.838L15.35 8.131l-2.915-4.887a.484.484 0 0 0-.841 0l-2.881 4.83-5.337 1.394a.528.528 0 0 0-.26.839L6.61 14.67l-.383 5.748a.5.5 0 0 0 .68.518l5.04-3.172 5.1 3.198a.5.5 0 0 0 .68-.518z"></path></svg>
-                                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                          width="18" height="18"
-                                          class="BpkStar_bpk-star__25SLX BpkStar_bpk-star--filled__hAnAp BpkIcon_bpk-icon--rtl-support__2Qefw"
-                                          style="width: 1.125rem; height: 1.125rem;">
-                                          <path
-                                             d="M17.349 14.762l3.535-4.415a.528.528 0 0 0-.26-.838L15.35 8.131l-2.915-4.887a.484.484 0 0 0-.841 0l-2.881 4.83-5.337 1.394a.528.528 0 0 0-.26.839L6.61 14.67l-.383 5.748a.5.5 0 0 0 .68.518l5.04-3.172 5.1 3.198a.5.5 0 0 0 .68-.518z"></path></svg>
-                                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                          width="18" height="18"
-                                          class="BpkStar_bpk-star__25SLX BpkStar_bpk-star--filled__hAnAp BpkIcon_bpk-icon--rtl-support__2Qefw"
-                                          style="width: 1.125rem; height: 1.125rem;">
-                                          <path
-                                             d="M17.349 14.762l3.535-4.415a.528.528 0 0 0-.26-.838L15.35 8.131l-2.915-4.887a.484.484 0 0 0-.841 0l-2.881 4.83-5.337 1.394a.528.528 0 0 0-.26.839L6.61 14.67l-.383 5.748a.5.5 0 0 0 .68.518l5.04-3.172 5.1 3.198a.5.5 0 0 0 .68-.518z"></path></svg>
-                                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                          width="18" height="18"
-                                          class="BpkStar_bpk-star__25SLX BpkStar_bpk-star--filled__hAnAp BpkIcon_bpk-icon--rtl-support__2Qefw"
-                                          style="width: 1.125rem; height: 1.125rem;">
-                                          <path
-                                             d="M17.349 14.762l3.535-4.415a.528.528 0 0 0-.26-.838L15.35 8.131l-2.915-4.887a.484.484 0 0 0-.841 0l-2.881 4.83-5.337 1.394a.528.528 0 0 0-.26.839L6.61 14.67l-.383 5.748a.5.5 0 0 0 .68.518l5.04-3.172 5.1 3.198a.5.5 0 0 0 .68-.518z"></path></svg>
-                                    </div>
-                                 </div>
-                                 <div class="CardLayout_CardLayout__starsAndRatingItem__1SbzL">
-                                    <span
-                                       class="BpkText_bpk-text__WdiWu BpkText_bpk-text--sm__1-aIF CardScore_CardScore__2Gv9K CardScore_CardScore--rating_very_good__3WgpZ">8.5</span>
-                                 </div>
-                              </div> -->
                            </div>
                         </div>
                      </div>
@@ -173,38 +137,6 @@ div.right {
                   </c:forEach>
             </div>
             </div>
-            <%-- <div class="panel panel-default" style="width: 100%;">
-               <div class="ex3">
-                  <c:forEach items="${list}" var="hotel">
-                     <hr style="width: 99%; border: solid 1px black;">
-                     <div class="panel-body">
-                        <div class="media" style="max-height:200px;">
-                           <div class="media-left" style="width:30%; height:200px; box-sizing: border-box;">
-                             <img src="${path}/${hotel.photourl}" style="width: 100%; height: 100%;" alt="">
-                            </div>
-                           <div class="media-body" style="box-sizing: border-box; max-height:150px;">
-                              <h4 class="media-heading">
-                                 <a href="hoteldetail.jeju?no=${hotel.no}"><b>${hotel.hname}</b></a>
-                              </h4>
-                              ${hotel.room.convenient}
-                              <div class="ficon">
-                                 <p>
-                                    <a href="hoteldetail.jeju?no=${hotel.no}" alt="">보러가기</a> <i
-                                       class="fa fa-long-arrow-right"></i>
-                                 </p>
-                              <script>input(${hotel.lat}, ${hotel.lng})
-                              function input(location1, location2) {
-                                 lat.push(location1)
-                                 lng.push(location2)
-                              }</script>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </c:forEach>
-                      <hr style="width: 99%; border: solid 1px black;">
-               </div>
-            </div> --%>
          </div>
          </fieldset>
       </div>

@@ -41,4 +41,11 @@ public class HotelDao {
 		sqlSession.getMapper(HotelMapper.class).hoteldelete(hno);
 
 	}
+
+	public int selectwish(String userid, Integer no) {
+		param.clear();
+		param.put("userid", userid);
+		param.put("no", no);
+		return sqlSession.getMapper(HotelMapper.class).selectwish(param);
+	}
 }

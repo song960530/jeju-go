@@ -73,7 +73,7 @@ public class UserDao {
 	public int countPoint(String userid) {
 		return sqlSession.getMapper(UserMapper.class).countPoint(userid);
 	}
-	
+
 	public void insert(String userid, int no) {
 		param.clear();
 		param.put("userid", userid);
@@ -94,12 +94,22 @@ public class UserDao {
 		sqlSession.getMapper(UserMapper.class).setPoint(param);
 	}
 
-
 	public User idchk(User user) {
 		return sqlSession.getMapper(UserMapper.class).idchk(user);
 	}
 
 	public Object history() {
 		return null;
+	}
+
+	public void deletewish(String userid, int no) {
+		param.clear();
+		param.put("userid", userid);
+		param.put("no", no);
+		sqlSession.getMapper(UserMapper.class).deletewish(param);
+	}
+
+	public List<Integer> nolist(String userid) {
+		return sqlSession.getMapper(UserMapper.class).selectNo(userid);
 	}
 }

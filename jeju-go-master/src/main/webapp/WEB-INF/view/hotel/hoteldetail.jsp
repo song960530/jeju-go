@@ -76,8 +76,28 @@ function showDivs(n) {
       <c:set value="${hotel}" var="h" />
       <div class="w3-panel">
          <h1 style="font-family: 'Shrikhand', cursive;">
-            <p>${h.hname}<a class="w3-right" id="wishck" href="../user/wishList.jeju" style="color: red" ><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-            <a class="w3-right" id="wishck" href="../user/wishList.jeju" style="color: red" ><i class="fa fa-heart" aria-hidden="true"></i></a> 
+            <p>${h.hname}</p>
+            <p class="w3-right">
+            <c:if test="${!empty login}">
+            <c:if test="${w == 0}">
+            	<form action="../user/wish.jeju" method="post">
+	            			<input type="hidden" value="${login.userid}" name="userid">
+	            			<input type="hidden" value="${h.no}" name="no">
+            		<button type="submit">
+	            	<i class="fa fa-heart-o" aria-hidden="true" style="color: red;"></i>
+            		</button>
+	            </form>
+	        </c:if>    
+            <c:if test="${w == 1}">
+            	<form action="../user/deletewish.jeju" method="post">
+	            			<input type="hidden" value="${login.userid}" name="userid">
+	            			<input type="hidden" value="${h.no}" name="no">
+            		<button type="submit">
+	            	<i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
+            		</button>
+	            </form>
+	        </c:if>    
+	        </c:if>
             </p>
          </h1>  
       </div>

@@ -179,7 +179,7 @@ body, h1, h2, h3, h4, h5, h6 {
 							class="w3-bar-item w3-button">포인트</a>
 						<a href="${path}/user/history.jeju?userid=${login.userid}"
 							class="w3-bar-item w3-button">예약 내역</a>
-						<a href="${path}/user/wishList.jeju?userid=${login.userid}"
+						<a href="${path}/user/wishlist.jeju?userid=${login.userid}"
 							class="w3-bar-item w3-button">찜</a>
 						<a href="${path}/board/qnalist.jeju?userid=${login.userid}"
 							class="w3-bar-item w3-button">1:1 문의 내역</a>
