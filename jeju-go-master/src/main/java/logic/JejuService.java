@@ -7,6 +7,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -514,14 +515,18 @@ public class JejuService {
 	public int count(int type, Integer type2) {
 		return boarddao.count(type, type2);
 	}
-	
-	public void bigpackregist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
+
+	public int packregist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
 		Package pack = new Package();
 		pack.setNo(packagedao.maxno() + 1);
 		pack.setName(request.getParameter("name"));
 		pack.setContent(request.getParameter("content"));
 		pack.setPrice(Integer.parseInt(request.getParameter("price")));
-		pack.setFirst(pack.getNo());
+		pack.setTravelday(request.getParameter("travelday"));
+		pack.setStartday(request.getParameter("startday"));
+		pack.setMon(Integer.parseInt(request.getParameter("mon")));
+		pack.setMax(Integer.parseInt(request.getParameter("max")));
+		pack.setChk(request.getParameter("chk"));
 		List<MultipartFile> fileList = mtfRequest.getFiles("photoname");
 		for (MultipartFile mf : fileList) {
 			String originFileName = mf.getOriginalFilename();
@@ -541,22 +546,7 @@ public class JejuService {
 				e.printStackTrace();
 			}
 		}
-		packagedao.bigpackregist(pack);
-	}
-	
-	public int packregist(HttpServletRequest request) {
-		Package pack = new Package();
-		pack.setTravelday(request.getParameter("travelday"));
-		pack.setMon(Integer.parseInt(request.getParameter("mon")));
-		pack.setMax(Integer.parseInt(request.getParameter("max")));
-		pack.setCheck(request.getParameter("check"));
-		pack.setFirst(packagedao.maxno());
-		for(int i = 0; i <= 3; i++) {
-			pack.setStartday(request.getParameter("startday").split(",")[i]);
-			pack.setNo(packagedao.maxno() + 1);
-			pack.setSub(pack.getFirst()+i+1);
-			packagedao.insert(pack);
-		}
+		packagedao.packregist(pack);
 		return pack.getNo();
 	}
 
@@ -642,52 +632,65 @@ public class JejuService {
 	public void allFinally(HttpServletRequest request) {
 		// hno, rno, day roomnum start end
 		int no = Integer.parseInt(request.getParameter("no"));
-		int hno = Integer.parseInt(request.getParameter("hno"));
-		int rno = Integer.parseInt(request.getParameter("rno"));
-		int day = Integer.parseInt(request.getParameter("day"));
-		int stmon = Integer.parseInt(request.getParameter("start").split("-")[1]);
-		int startday = Integer.parseInt(request.getParameter("start").split("-")[2]);
-		String name = request.getParameter("name");
-		String roomnum = request.getParameter("roomnum").split("호")[0];
-		String username = request.getParameter("username");
+		int pno = Integer.parseInt(request.getParameter("pno"));
+		if (pno == 0) {
+			int hno = Integer.parseInt(request.getParameter("hno"));
+			int rno = Integer.parseInt(request.getParameter("rno"));
+			int day = Integer.parseInt(request.getParameter("day"));
+			int stmon = Integer.parseInt(request.getParameter("start").split("-")[1]);
+			int startday = Integer.parseInt(request.getParameter("start").split("-")[2]);
+			String name = request.getParameter("name");
+			String roomnum = request.getParameter("roomnum").split("호")[0];
+			String username = request.getParameter("username");
 
-		for (int i = rno; i <= rno + day; i++) {
-			hresdao.nullRoomnum(i);
+			for (int i = rno; i <= rno + day; i++) {
+				hresdao.nullRoomnum(i);
+			}
+
+			int rno2 = hresdao.selectno(hno, roomnum, stmon, startday, name);
+
+			for (int i = rno2; i < rno2 + day; i++) {
+				hresdao.insertfinish(i, username);
+			}
+
+			finaldao.finish(no, roomnum, rno2);
+			int point = (int) (finaldao.selectTotal(no) * 0.05);
+			String userid = request.getParameter("userid");
+			int pointno = userdao.pointmaxno() + 1;
+			finaldao.setPoint(point, userid, pointno);
+		} else {
+			finaldao.Pfinish(no, pno);
+			int point = (int) (finaldao.selectTotal(no) * 0.05);
+			String userid = request.getParameter("userid");
+			int pointno = userdao.pointmaxno() + 1;
+			finaldao.setPoint(point, userid, pointno);
 		}
-
-		int no2 = hresdao.selectno(hno, roomnum, stmon, startday, name);
-
-		for (int i = no2; i < no2 + day; i++) {
-			hresdao.insertfinish(i, username);
-		}
-
-		finaldao.finish(no, roomnum);
 	}
 
 	public Final setFinal(Final f, HttpServletRequest request) {
 		f.setNo(finaldao.maxno() + 1);
 		f.setPno(Integer.parseInt(request.getParameter("pno")));
-		f.setTotal(Integer.parseInt(request.getParameter("price")));
+		f.setTotal(Integer.parseInt(request.getParameter("total")));
 		f.setPoint(Integer.parseInt(request.getParameter("point")));
 		f.setName(request.getParameter("name"));
 		f.setUserid(request.getParameter("userid"));
 		f.setUsername(request.getParameter("username"));
 		String year = request.getParameter("year");
 		String mon = request.getParameter("mon");
-		if(Integer.parseInt(request.getParameter("mon")) < 10) {
+		if (Integer.parseInt(request.getParameter("mon")) < 10) {
 			mon = 0 + request.getParameter("mon");
 		} else {
 			mon = request.getParameter("mon");
 		}
 		String start = null;
-		if(Integer.parseInt(request.getParameter("startday")) < 10) {
+		if (Integer.parseInt(request.getParameter("startday")) < 10) {
 			start = 0 + request.getParameter("startday");
 		} else {
 			start = request.getParameter("startday");
 		}
 		f.setStart(year + "-" + mon + "-" + start);
 		String end = null;
-		if(Integer.parseInt(request.getParameter("endday")) < 10) {
+		if (Integer.parseInt(request.getParameter("endday")) < 10) {
 			end = 0 + request.getParameter("endday");
 		} else {
 			end = request.getParameter("endday");
@@ -695,11 +698,15 @@ public class JejuService {
 		f.setEnd(year + "-" + mon + "-" + end);
 		f.setDay(Integer.parseInt(request.getParameter("travelday")));
 		f.setPnum(Integer.parseInt(request.getParameter("max")));
-		
+
 		return f;
 	}
 
 	public void realFinal(Final fi) {
+		if (fi.getPoint() != 0) {
+			int no = userdao.pointmaxno() + 1;
+			userdao.point(no, fi.getUserid(), fi.getPoint(), "사용");
+		}
 		finaldao.realFinal(fi);
 	}
 
@@ -713,11 +720,116 @@ public class JejuService {
 		packagedao.minermax(pack, pnum);
 	}
 
-	public int chkset(Package pack, HttpServletRequest request) {
-		return packagedao.chkset(pack);
+	public int getPeople(String startday, Integer no) {
+		return packagedao.getPeople(startday, no);
 	}
 
-	public List<Package> subpacklist(Integer no) {
-		return packagedao.subpacklist(no);
+	public void packdelete(Integer no) {
+		packagedao.packdelete(no);
+	}
+
+	public int finalcount(Integer no, String userid) {
+		return finaldao.finalcount(no, userid);
+	}
+
+	public List<Final> reservationmanagement(Integer pageNum, int limit) {
+		return finaldao.reservationmanagement(pageNum, limit);
+	}
+
+	public int reservationcount() {
+		return finaldao.reservationcount();
+	}
+
+	public int deleteForm(HttpServletRequest request) {
+		int hno = Integer.parseInt(request.getParameter("hno"));
+		int stmon = Integer.parseInt(request.getParameter("today").split("-")[1]);
+		int today = Integer.parseInt(request.getParameter("today").split("-")[2]);
+		return hresdao.deleteForm(hno, stmon, today);
+	}
+
+	public void hoteldelete(HttpServletRequest request) {
+		int hno = Integer.parseInt(request.getParameter("hno"));
+		String name = request.getParameter("name");
+		if (name == null || name.trim().equals("")) {
+			hoteldao.hoteldelete(hno);
+			roomdao.roomdelete(hno);
+			photodao.photodelete(hno);
+			hresdao.hoteldelete(hno);
+		} else {
+			roomdao.roomdelete2(hno, name);
+			photodao.photodelete2(hno, name);
+			hresdao.hoteldelete2(hno, name);
+		}
+	}
+
+	public int roomdeleteForm(HttpServletRequest request) {
+		int hno = Integer.parseInt(request.getParameter("hno"));
+		int stmon = Integer.parseInt(request.getParameter("today").split("-")[1]);
+		int today = Integer.parseInt(request.getParameter("today").split("-")[2]);
+		String name = request.getParameter("name");
+		return hresdao.roomdeleteForm(hno, stmon, today, name);
+	}
+
+	public String allcancle(HttpServletRequest request, HttpSession session) {
+		int no = Integer.parseInt(request.getParameter("no"));
+		int point = finaldao.selectPoint(no);
+		Final f = finaldao.selectOne(no);
+		int rno = Integer.parseInt(request.getParameter("rno"));
+		int day = Integer.parseInt(request.getParameter("day"));
+		User login = (User) session.getAttribute("login");
+
+		if (login.getUserid().equals("admin")) {
+			finaldao.cancle(no);
+
+			if (rno != 0) {
+				for (int i = rno; i <= rno + day - 1; i++)
+					hresdao.nullRoomnum(i);
+			}
+
+			if (point != 0) {
+				String userid = request.getParameter("userid");
+				int pointno = userdao.pointmaxno() + 1;
+				finaldao.setPoint(point, userid, pointno);
+			}
+
+			if (f.getChecked().equals("승인완료") || f.getChecked().equals("취소신청")) {
+				int point2 = (int) (finaldao.selectTotal(no) * 0.05);
+				String userid = request.getParameter("userid");
+				int pointno = userdao.pointmaxno() + 1;
+				finaldao.backPoint(point2, userid, pointno);
+			}
+
+		} else if (!login.getUserid().equals("admin") && f.getChecked().equals("승인대기")) {
+			finaldao.cancle(no);
+			if (rno != 0) {
+				for (int i = rno; i <= rno + day - 1; i++)
+					hresdao.nullRoomnum(i);
+			}
+			if (point != 0) {
+				String userid = request.getParameter("userid");
+				int pointno = userdao.pointmaxno() + 1;
+				finaldao.setPoint(point, userid, pointno);
+			}
+		} else {
+			finaldao.pleasecancle(no);
+		}
+
+		return f.getChecked();
+	}
+
+	public void wishBtn(String userid, int no) {
+		userdao.insert(userid, no);
+	}
+
+	public User idchk(User user) {
+		return userdao.idchk(user);
+	}
+
+	public List<Final> history(String userid) {
+		return finaldao.history(userid);
+	}
+
+	public List<Final> cancellationl(String userid) {
+		return finaldao.cancellationl(userid);
 	}
 }

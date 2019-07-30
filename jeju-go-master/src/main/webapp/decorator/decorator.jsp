@@ -27,13 +27,18 @@
 	rel="stylesheet">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href="https://fonts.googleapis.com/css?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Nanum+Pen+Script&display=swap"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap"
+	rel="stylesheet">
 <style>
 body, h1, h2, h3, h4, h5, h6 {
 	font-family: "Raleway", Arial, Helvetica, sans-serif;
 	color: black;
 }
+
 .mySlides {
 	display: none
 }
@@ -48,7 +53,7 @@ body, h1, h2, h3, h4, h5, h6 {
 			document.getElementById("searchP").style.display = "";
 		}
 	}
-	
+
 	function getFormatDate(date) {
 		var year = date.getFullYear(); //yyyy 
 		var month = (1 + date.getMonth()); //M 
@@ -57,41 +62,82 @@ body, h1, h2, h3, h4, h5, h6 {
 		day = day >= 10 ? day : '0' + day; //day  
 		return year + '-' + month + '-' + day;
 	}
+
 	function chksearch(f) {
-		var date = new Date(); 
+		var date = new Date();
 		date = getFormatDate(date);
-		
+
 		var today = new Date(date)
 		var start = new Date(f.start.value)
 		var end = new Date(f.end.value)
-		
-		if(f.start.value=="" || f.end.value==""){
+
+		if (f.start.value == "" || f.end.value == "") {
 			alert('체크인/체크아웃 날짜를 입력해주세요');
 			return false;
 		}
-		if(today>start){
+		if (today > start) {
 			alert('체크인 날짜를 확인해주세요');
 			f.start.focus();
 			return false;
 		}
-		if(f.start.value==f.end.value || start>=end){
+		if (f.start.value == f.end.value || start >= end) {
 			alert('최소 1박이상 예약이 가능합니다');
 			f.end.focus();
 			return false;
 		}
-		if(today>=end){
+		if (today >= end) {
 			alert('체크아웃 날짜를 확인해주세요');
 			f.end.focus();
 			return false;
 		}
-		
-		if(f.people.value<=0){
+
+		if (f.people.value <= 0) {
 			alert('인원수를 확인해주세요')
 			f.people.focus();
 			return false;
 		}
 		return true;
 	}
+	function chkid(f) {
+		if (f.chk.value != "확인") {
+			alert('아이디 중복체크를 해주세요');
+			return false
+		}
+		if (f.password.value != f.checkpassword.value) {
+			alert("비밀번호가 일치하지 않습니다");
+			return false;
+		}
+		if (!f.username.value) {
+			alert("이름을 입력하세요.");
+			return false;
+		}
+		if (!f.phone.value) {
+			alert("전화번호를 입력하세요.");
+			return false;
+		}
+		if(f.chk.value != userid.value) {
+			alert("사용중인 아이디 입니다.")
+			return false;
+		}	
+		return true;
+	}
+	$(document).ready(function() {
+
+		$("#idchk").click(function() {
+			var data = document.getElementById("userid2").value
+			$.ajax({
+				url : "idchk.jeju",
+				type : "post",
+				data : {
+					userid : data
+				},
+				success : function(data) {
+					$("#chkid").text(data);
+					$('#chk').val('확인');
+				}
+			})
+		})
+	})
 </script>
 </head>
 <decorator:head />
@@ -104,7 +150,9 @@ body, h1, h2, h3, h4, h5, h6 {
 		<a href="#" class="w3-bar-item w3-button"></a>
 		<c:if test="${empty sessionScope.login}">
 			<button class="w3-button fa fa-home">
-				&nbsp;<a href="javascript:void(0)" onclick="document.getElementById('login').style.display='block'"><b>로그인을 해주세요</b></a>
+				&nbsp;<a href="javascript:void(0)"
+					onclick="document.getElementById('login').style.display='block'"><b>로그인을
+						해주세요</b></a>
 			</button>
 		</c:if>
 		<c:if test="${!empty sessionScope.login}">
@@ -117,44 +165,56 @@ body, h1, h2, h3, h4, h5, h6 {
 		</c:if>
 
 		<c:if test="${!empty sessionScope.login}">
-         <div class="w3-dropdown-hover">
-            <button class="w3-button fa fa-male">
-               &nbsp;&nbsp;마이페이지 <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="w3-dropdown-content w3-bar-block">
-             <c:if test="${sessionScope.login.userid!='admin'}">
-               <a href="${path}/user/mypage.jeju?userid=${login.userid}"
-                  class="w3-bar-item w3-button">정보 수정</a> <a href="${path}/user/updatepw.jeju"
-                  class="w3-bar-item w3-button">비밀번호 변경</a> <a href="../user/mypoint.jeju?userid=${login.userid}"
-                  class="w3-bar-item w3-button">포인트</a> <a href="${path}/user/history.jeju?userid=${login.userid}"
-                  class="w3-bar-item w3-button">예약 내역</a> <a href="${path}/user/wishList.jeju?userid=${login.userid}"
-                  class="w3-bar-item w3-button">찜</a> <a href="${path}/board/qnalist.jeju?userid=${login.userid}"
-                  class="w3-bar-item w3-button">1:1 문의 내역</a> <a href="${path}/user/withdrawal.jeju"
-                  class="w3-bar-item w3-button">회원탈퇴 신청</a>
-              </c:if>
-              <c:if test="${sessionScope.login.userid=='admin'}">
-              	<a href="${path}/user/mypage.jeju?userid=${login.userid}"
-                  class="w3-bar-item w3-button">정보 수정</a> <a href="${path}/user/updatepw.jeju"
-                  class="w3-bar-item w3-button">비밀번호 변경</a> <a href="../user/mypoint.jeju?userid=${login.userid}"
-                  class="w3-bar-item w3-button">포인트</a>
-              </c:if> 
-            </div>
-         </div>
-      </c:if>
-      <c:if test="${sessionScope.login.userid=='admin'}">
-         <div class="w3-dropdown-hover">
-            <button class="w3-button fa fa-search">
-               &nbsp;&nbsp;회원관리 <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="w3-dropdown-content w3-bar-block">
-               <a href="${path}/admin/list.jeju" class="w3-bar-item w3-button">회원
-                  목록</a> <a href="${path}/admin/deletelist.jeju"
-                  class="w3-bar-item w3-button">탈퇴 신청 목록</a> <a href="${path}/admin/acceptlist.jeju"
-                  class="w3-bar-item w3-button">예약 신청 목록</a> <a href="#"
-                  class="w3-bar-item w3-button">예약 관리 페이지</a> <a href="../admin/qnalist.jeju"
-                  class="w3-bar-item w3-button">1:1문의 목록</a>
-            </div>
-         </div>
+			<div class="w3-dropdown-hover">
+				<button class="w3-button fa fa-male">
+					&nbsp;&nbsp;마이페이지 <i class="fa fa-caret-down"></i>
+				</button>
+				<div class="w3-dropdown-content w3-bar-block">
+					<c:if test="${sessionScope.login.userid!='admin'}">
+						<a href="${path}/user/mypage.jeju?userid=${login.userid}"
+							class="w3-bar-item w3-button">정보 수정</a>
+						<a href="${path}/user/updatepw.jeju" class="w3-bar-item w3-button">비밀번호
+							변경</a>
+						<a href="../user/mypoint.jeju?userid=${login.userid}"
+							class="w3-bar-item w3-button">포인트</a>
+						<a href="${path}/user/history.jeju?userid=${login.userid}"
+							class="w3-bar-item w3-button">예약 내역</a>
+						<a href="${path}/user/wishList.jeju?userid=${login.userid}"
+							class="w3-bar-item w3-button">찜</a>
+						<a href="${path}/board/qnalist.jeju?userid=${login.userid}"
+							class="w3-bar-item w3-button">1:1 문의 내역</a>
+						<a href="${path}/user/withdrawal.jeju"
+							class="w3-bar-item w3-button">회원탈퇴 신청</a>
+					</c:if>
+					<c:if test="${sessionScope.login.userid=='admin'}">
+						<a href="${path}/user/mypage.jeju?userid=${login.userid}"
+							class="w3-bar-item w3-button">정보 수정</a>
+						<a href="${path}/user/updatepw.jeju" class="w3-bar-item w3-button">비밀번호
+							변경</a>
+						<a href="../user/mypoint.jeju?userid=${login.userid}"
+							class="w3-bar-item w3-button">포인트</a>
+					</c:if>
+				</div>
+			</div>
+		</c:if>
+		<c:if test="${sessionScope.login.userid=='admin'}">
+			<div class="w3-dropdown-hover">
+				<button class="w3-button fa fa-search">
+					&nbsp;&nbsp;회원관리 <i class="fa fa-caret-down"></i>
+				</button>
+				<div class="w3-dropdown-content w3-bar-block">
+					<a href="${path}/admin/list.jeju" class="w3-bar-item w3-button">회원
+						목록</a> <a href="${path}/admin/deletelist.jeju"
+						class="w3-bar-item w3-button">탈퇴 신청 목록</a> 
+						<a
+						href="${path}/admin/acceptlist.jeju" class="w3-bar-item w3-button">예약
+						신청 목록</a> 
+						<a href="../admin/reservationmanagement.jeju"
+                  class="w3-bar-item w3-button">예약 관리 페이지</a> <a
+						href="../admin/qnalist.jeju" class="w3-bar-item w3-button">1:1문의
+						목록</a>
+				</div>
+			</div>
 
 			<div class="w3-dropdown-hover">
 				<button class="w3-button fa fa-home">
@@ -171,10 +231,11 @@ body, h1, h2, h3, h4, h5, h6 {
 			</div>
 
 			<div class="w3-dropdown-hover">
-				<button class="w3-button fa fa-plane"> &nbsp;&nbsp;패키지 <i class="fa fa-caret-down"></i>
+				<button class="w3-button fa fa-plane">
+					&nbsp;&nbsp;패키지 <i class="fa fa-caret-down"></i>
 				</button>
 				<div class="w3-dropdown-content w3-bar-block">
-					<a href="../package/bigpackregist.jeju" class="w3-bar-item w3-button">패키지 등록</a>
+					<a href="../package/packregist.jeju" class="w3-bar-item w3-button">패키지 등록</a>
 				</div>
 			</div>
 		</c:if>
@@ -215,17 +276,22 @@ body, h1, h2, h3, h4, h5, h6 {
 								<c:if test="${empty sessionScope.login}">
 									<li role="presentation"><a href="javascript:void(0)"
 										onclick="document.getElementById('signin').style.display='block'"
-										class="w3-bar-item w3-button" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">회원가입</a></li>
+										class="w3-bar-item w3-button"
+										style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">회원가입</a></li>
 									<li role="presentation"><a href="javascript:void(0)"
 										onclick="document.getElementById('login').style.display='block'"
-										class="w3-bar-item w3-button" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">로그인</a></li>
+										class="w3-bar-item w3-button"
+										style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">로그인</a></li>
 								</c:if>
 								<li role="presentation"><a
-									href="${path }/hotel/hotellist.jeju" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">Hotel</a></li>
-								<li role="presentation"><a href="../package/packlist.jeju" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">Packages</a></li>
+									href="${path }/hotel/hotellist.jeju"
+									style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">Hotel</a></li>
+								<li role="presentation"><a href="../package/packlist.jeju"
+									style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">Packages</a></li>
 
 								<li role="presentation"><a
-									href="${path }/board/csboard.jeju" style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">고객센터</a></li>
+									href="${path }/board/csboard.jeju"
+									style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">고객센터</a></li>
 							</ul>
 						</div>
 					</div>
@@ -369,13 +435,11 @@ body, h1, h2, h3, h4, h5, h6 {
 							name="password" placeholder="비밀번호">
 					</p>
 					<p>
-						<a class="btn btn-primary"
-							href="javascript:void(0)"
+						<a class="btn btn-primary" href="javascript:void(0)"
 							onclick="document.getElementById('searchid').style.display='block'">아이디/비밀번호
 							찾기</a>
 					</p>
-					<button type="submit"
-						class="btn btn-primary">로그인</button>
+					<button type="submit" class="btn btn-primary">로그인</button>
 				</form:form>
 			</div>
 		</div>
@@ -390,64 +454,60 @@ body, h1, h2, h3, h4, h5, h6 {
 					class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent"></i>
 				<h2 class="w3-wide">아이디/비밀번호 찾기</h2>
 				<p>인증된 이메일만 정보 찾기가 가능합니다 .</p>
-				</div>
-				
-				<div style="margin-bottom: 10px;"
-					class="custom-control custom-radio custom-control-inline">
-					<input type="radio" class="custom-control-input" id="search_1"
-						name="search_total" onclick="search_check(1)" checked="checked">
-					<label class="custom-control-label font-weight-bold text-white"
-						for="search_1">아이디찾기</label>
-					<input type="radio" class="custom-control-input" id="search_2"
-						name="search_total" onclick="search_check(2)"> <label
-						class="custom-control-label font-weight-bold text-white"
-						for="search_2">비밀번호찾기</label>
-				</div>
-				<div id="searchI">
-					<form name="sf" action="userSearch.jeju" method="post">
-						<div class="form-group">
-							<label class="font-weight-bold text-white" for="inputName_1">이름</label>
-							<div>
-								<input type="text" class="form-control" id="username"
-									name="username" placeholder="ex) 송문준">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="font-weight-bold text-white" for="inputPhone_1">휴대폰번호</label>
-							<div>
-								<input type="text" class="form-control" id="Phone" name="Phone"
-									placeholder="ex) 01077779999">
-							</div>
-						</div>
-						<div class="form-group w3-center">
-							<button id="searchBtn2" type="submit"
-								class="btn btn-primary">확인</button>
-								<button type="reset"
-								class="btn btn-primary">초기화</button>
-						</div>
-					</form>
-				</div>
-				<div id="searchP" style="display: none;">
-					<form name="pf" action="passSearch.jeju" method="post">
-						<div class="form-group">
-							<label class="font-weight-bold text-white" for="inputId">이메일</label>
-							<div>
-								<input type="text" class="form-control" id="userid"
-									style="text-transform: lowercase;" name="userid"
-									placeholder="ex)goodee@aaa.bbb">
-							</div>
-						</div>
-						<div class="form-group w3-center">
-							<button id="searchBtn2" type="submit"
-								class="btn btn-primary">확인</button>
-								<button type="reset"
-								class="btn btn-primary">초기화</button>
-						</div>
-					</form>
-				</div>
-
 			</div>
+
+			<div style="margin-bottom: 10px;"
+				class="custom-control custom-radio custom-control-inline">
+				<input type="radio" class="custom-control-input" id="search_1"
+					name="search_total" onclick="search_check(1)" checked="checked">
+				<label class="custom-control-label font-weight-bold text-white"
+					for="search_1">아이디찾기</label> <input type="radio"
+					class="custom-control-input" id="search_2" name="search_total"
+					onclick="search_check(2)"> <label
+					class="custom-control-label font-weight-bold text-white"
+					for="search_2">비밀번호찾기</label>
+			</div>
+			<div id="searchI">
+				<form name="sf" action="userSearch.jeju" method="post">
+					<div class="form-group">
+						<label class="font-weight-bold text-white" for="inputName_1">이름</label>
+						<div>
+							<input type="text" class="form-control" id="username"
+								name="username" placeholder="ex) 송문준">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="font-weight-bold text-white" for="inputPhone_1">휴대폰번호</label>
+						<div>
+							<input type="text" class="form-control" id="Phone" name="Phone"
+								placeholder="ex) 01077779999">
+						</div>
+					</div>
+					<div class="form-group w3-center">
+						<button id="searchBtn2" type="submit" class="btn btn-primary">확인</button>
+						<button type="reset" class="btn btn-primary">초기화</button>
+					</div>
+				</form>
+			</div>
+			<div id="searchP" style="display: none;">
+				<form name="pf" action="passSearch.jeju" method="post">
+					<div class="form-group">
+						<label class="font-weight-bold text-white" for="inputId">이메일</label>
+						<div>
+							<input type="text" class="form-control" id="userid"
+								style="text-transform: lowercase;" name="userid"
+								placeholder="ex)goodee@aaa.bbb">
+						</div>
+					</div>
+					<div class="form-group w3-center">
+						<button id="searchBtn2" type="submit" class="btn btn-primary">확인</button>
+						<button type="reset" class="btn btn-primary">초기화</button>
+					</div>
+				</form>
+			</div>
+
 		</div>
+	</div>
 	<div id="signin" class="w3-modal" style="display: none;">
 		<div class="w3-modal-content w3-animate-zoom w3-padding-large">
 			<div class="w3-container w3-white w3-center">
@@ -456,30 +516,34 @@ body, h1, h2, h3, h4, h5, h6 {
 				<h2 class="w3-wide">Sign In</h2>
 				<p>회원가입에 필요한 정보를 입력하세요.</p>
 				<form:form modelattribute="user" name="f" action="userEntry.jeju"
-					method="post" onsubmit="return passchk(this)">
+					method="post" onsubmit="return chkid(this)">
+					<input type="hidden" id="chk">
 					<p>
 						<input class="w3-input w3-border" type="text" name="username"
 							style="text-transform: lowercase;" placeholder="이름">
 					</p>
 					<p>
 						<input class="w3-input w3-border" type="text" name="userid"
-							style="text-transform: lowercase;" placeholder="아이디(이메일)">
+							style="text-transform: lowercase;" placeholder="아이디(이메일)"
+							id="userid2">
+						<button id="idchk" type="button" class="btn btn-primary">중복검사</button>
 					</p>
+					<p id="chkid"></p>
 					<p>
 						<input class="w3-input w3-border" type="password" name="password"
 							style="text-transform: lowercase;" placeholder="비밀번호">
 					</p>
 					<p>
-						<input class="w3-input w3-border" type="password" name="checkpassword"
-							style="text-transform: lowercase;" placeholder="비밀번호 확인">
+						<input class="w3-input w3-border" type="password"
+							name="checkpassword" style="text-transform: lowercase;"
+							placeholder="비밀번호 확인">
 					</p>
 					<p>
-						<input class="w3-input w3-border"type="text" name="phone" placeholder="전화번호">
+						<input class="w3-input w3-border" type="text" name="phone"
+							placeholder="전화번호">
 					</p>
-					<button type="submit"
-						class="btn btn-primary">회원가입</button>
-						<button type="reset"
-						class="btn btn-primary">초기화</button>
+					<button type="submit" class="btn btn-primary">회원가입</button>
+					<button type="reset" class="btn btn-primary">초기화</button>
 				</form:form>
 			</div>
 		</div>

@@ -48,15 +48,18 @@ public class PackageDao {
 		sqlSession.getMapper(PackageMapper.class).minermax(param);
 	}
 
-	public int chkset(Package pack) {
-		return sqlSession.getMapper(PackageMapper.class).chkset(pack);
-	}
-
-	public void bigpackregist(Package pack) {
+	public void packregist(Package pack) {
 		sqlSession.getMapper(PackageMapper.class).insert(pack);
 	}
 
-	public List<Package> subpacklist(Integer no) {
-		return sqlSession.getMapper(PackageMapper.class).subpacklist(no);
+	public int getPeople(String startday, Integer no) {
+		param.clear();
+		param.put("startday", startday);
+		param.put("no", no);
+		return sqlSession.getMapper(PackageMapper.class).getPeople(param);
+	}
+
+	public void packdelete(Integer no) {
+		sqlSession.getMapper(PackageMapper.class).packdelete(no);
 	}
 }

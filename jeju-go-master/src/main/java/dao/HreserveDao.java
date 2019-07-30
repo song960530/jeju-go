@@ -66,53 +66,82 @@ public class HreserveDao {
 
 	public void insertdelayRoom(int rno) {
 		sqlSession.getMapper(HreserveMapper.class).insertdelayRoom(rno);
-		
+
 	}
 
 	public List<String> selectRooms(int hno, String name, int stmon, int startday, int endday) {
 		param.clear();
-		param.put("hno",hno);
-		param.put("name",name);
-		param.put("stmon",stmon);
-		param.put("startday",startday);
-		param.put("endday",endday);
+		param.put("hno", hno);
+		param.put("name", name);
+		param.put("stmon", stmon);
+		param.put("startday", startday);
+		param.put("endday", endday);
 		return sqlSession.getMapper(HreserveMapper.class).selectRooms(param);
 	}
 
 	public List<String> selectRooms2(int hno, String name, int stmon, int startday, int lastday, int enmon,
 			int endday) {
 		param.clear();
-		param.put("hno",hno);
-		param.put("name",name);
-		param.put("stmon",stmon);
-		param.put("startday",startday);
-		param.put("lastday",lastday);
-		param.put("enmon",enmon);
-		param.put("endday",endday);
+		param.put("hno", hno);
+		param.put("name", name);
+		param.put("stmon", stmon);
+		param.put("startday", startday);
+		param.put("lastday", lastday);
+		param.put("enmon", enmon);
+		param.put("endday", endday);
 		return sqlSession.getMapper(HreserveMapper.class).selectRooms2(param);
 	}
 
 	public void nullRoomnum(int rno) {
 		param.clear();
-		param.put("rno",rno);
+		param.put("rno", rno);
 		sqlSession.getMapper(HreserveMapper.class).nullRoomnum(param);
-		
+
 	}
 
 	public int selectno(int hno, String roomnum, int stmon, int startday, String name) {
 		param.clear();
-		param.put("hno",hno);
-		param.put("roomnum",roomnum);
-		param.put("stmon",stmon);
-		param.put("startday",startday);
-		param.put("name",name);
+		param.put("hno", hno);
+		param.put("roomnum", roomnum);
+		param.put("stmon", stmon);
+		param.put("startday", startday);
+		param.put("name", name);
 		return sqlSession.getMapper(HreserveMapper.class).selectno(param);
 	}
 
 	public void insertfinish(int i, String username) {
 		param.clear();
-		param.put("no",i);
-		param.put("username",username);
+		param.put("no", i);
+		param.put("username", username);
 		sqlSession.getMapper(HreserveMapper.class).insertfinish(param);
+	}
+
+	public int deleteForm(int hno, int stmon, int today) {
+		param.clear();
+		param.put("hno", hno);
+		param.put("stmon", stmon);
+		param.put("today", today);
+		return sqlSession.getMapper(HreserveMapper.class).deleteForm(param);
+	}
+
+	public void hoteldelete(int hno) {
+		sqlSession.getMapper(HreserveMapper.class).hoteldelete(hno);
+	}
+
+	public int roomdeleteForm(int hno, int stmon, int today, String name) {
+		param.clear();
+		param.put("hno", hno);
+		param.put("stmon", stmon);
+		param.put("today", today);
+		param.put("name", name);
+		return sqlSession.getMapper(HreserveMapper.class).roomdeleteForm(param);
+	}
+
+	public void hoteldelete2(int hno, String name) {
+		param.clear();
+		param.put("hno", hno);
+		param.put("name", name);
+		sqlSession.getMapper(HreserveMapper.class).hoteldelete2(param);
+		
 	}
 }

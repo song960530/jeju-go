@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.PrintStream;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import javax.mail.*;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import logic.Final;
 import logic.JejuService;
 import logic.Point;
 import logic.User;
@@ -18,10 +20,14 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import exception.JejuException;
 import exception.LogInException;
 
 @Controller
@@ -255,6 +261,67 @@ public class UserController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			bindResult.reject("error.user.update");
+		}
+		return mav;
+	}
+
+	@PostMapping("wishBtn")
+	public ModelAndView wishBtn(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		int no = Integer.parseInt(request.getParameter("no"));
+		String userid = request.getParameter("userid");
+		service.wishBtn(userid, no);
+		if (userid == null) {
+			mav.addObject("wish", 2);
+			mav.addObject("msg", "WishList에 추가되었습니다.");
+			mav.addObject("url", "../hoteldetail.jeju?no=" + no);
+			mav.setViewName("alert");
+		} else {
+			mav.addObject("wish", 0);
+			mav.addObject("msg", "WishList 삭제되었습니다.");
+			mav.addObject("url", "../hoteldetail.jeju?no=" + no);
+			mav.setViewName("alert");
+		}
+		return mav;
+	}
+
+	@RequestMapping(value = "idchk", method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView idchk(String userid) {
+		ModelAndView mav = new ModelAndView();
+		User dbUser = service.userSelect(userid);
+		if (userid.trim().equals("")) {
+			mav.addObject("msg", "아이디를 입력하세요");
+		} else if (dbUser == null) {
+			mav.addObject("msg", "등록가능한 아이디 입니다.");
+		} else {
+			mav.addObject("msg", "존재하는 아이디 입니다.");
+		}
+		return mav;
+	}
+
+	@RequestMapping(value = "adminpasschk", method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView simpleWithObject(String inputpass) {
+		ModelAndView mav = new ModelAndView();
+		String dbpass = service.userSelect("admin").getPassword();
+		String pass = service.messageDigest(inputpass);
+		if (dbpass.equals(pass)) {
+			mav.addObject("msg", "비밀번호가 일치합니다");
+		} else {
+			mav.addObject("msg", "비밀번호가 일치하지 않습니다.");
+		}
+		return mav;
+	}
+
+	@GetMapping("history")
+	public ModelAndView acceptlist(String userid) {
+		ModelAndView mav = new ModelAndView();
+		try {
+			List<Final> list = service.history(userid);		
+			mav.addObject("list", list);
+		} catch (Exception e) {
+			throw new JejuException("페이지를 호출하던 중 오류가 발생하였습니다", "../user/main.jeju");
 		}
 		return mav;
 	}

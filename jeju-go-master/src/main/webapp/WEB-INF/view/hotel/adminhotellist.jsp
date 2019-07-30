@@ -20,6 +20,24 @@ a {
 	color: black;
 }
 </style>
+<script type="text/javascript">
+
+function getFormatDate(date) {
+	var year = date.getFullYear(); //yyyy 
+	var month = (1 + date.getMonth()); //M 
+	month = month >= 10 ? month : '0' + month; //month
+	var day = date.getDate(); //d 
+	day = day >= 10 ? day : '0' + day; //day  
+	return year + '-' + month + '-' + day;
+}
+
+function win_delete(no) {
+	var date = new Date(); 
+	date = getFormatDate(date);
+	var op = "width=600, height=193, left=500, top=250";
+	open("deleteForm.jeju?hno="+no+"&today="+date, "", op);
+}
+</script>
 </head>
 <body>
 	<div class="container">
@@ -54,8 +72,10 @@ a {
 									${hotel.content}
 									</div>
 									<div class="ficon">
-										<a href="#" alt="">삭제하기</a> <i class="fa fa-long-arrow-right"></i>
+										<a href="javascript:win_delete(${hotel.no})" alt="">삭제하기</a> <i class="fa fa-long-arrow-right"></i>
 										<br> <a href="roomregist.jeju?no=${hotel.no}" alt="">방 등록하기
+											</a> <i class="fa fa-long-arrow-right"></i>
+										<br> <a href="roomdeleteForm.jeju?no=${hotel.no}" alt="">방 삭제하기
 											</a> <i class="fa fa-long-arrow-right"></i>
 										<br> <a href="hreserveform.jeju?hno=${hotel.no}" alt="">예약
 											가능 방 등록하기</a> <i class="fa fa-long-arrow-right"></i>

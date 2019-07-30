@@ -15,14 +15,14 @@
 	function allPoint() {
 		var b="<fmt:formatNumber value="${countpoint}" pattern="###,###"/>"
 		var c="<b><fmt:formatNumber value="${(pack.price * people) - countpoint}" pattern="###,###"/></b>"
-		document.getElementById("usepoint").value=document.getElementById("userpoint").value
+		document.getElementById("usepoint").value=${countpoint}
 		document.getElementById("halin").innerHTML=b
 		document.getElementById("totalprice1").innerHTML=c
 		document.getElementById("totalprice2").innerHTML=c
 	};
 		function cancle() {
 			var b="<fmt:formatNumber value="${countpoint}" pattern="###,###"/>"
-			var c="<b><fmt:formatNumber value="${pack.price * (people)}" pattern="###,###"/></b>"
+			var c="<b><fmt:formatNumber value="${pack.price * people}" pattern="###,###"/></b>"
 			document.getElementById("usepoint").value=0
 			document.getElementById("halin").innerHTML=0
 			document.getElementById("totalprice1").innerHTML=c
@@ -52,12 +52,13 @@ h3 {
 	<div class="container">
 		<form action="packreservation.jeju" method="post" name="rf" onsubmit="return confirm()">
 		<input type="hidden" name="name" value="${pack.name}">
-		<input type="hidden" name="price" value="${pack.price * people}">
+		<input type="hidden" name="total" value="${pack.price * people}">
+		<input type="hidden" name="price" value="${pack.price}">
 		<input type="hidden" name="startday" value="${startday}">
 		<input type="hidden" name="endday" value="${startday + 7}">
 		<input type="hidden" name="travelday" value="${pack.travelday}">
 		<input type="hidden" name="max" value="${pack.max}">
-		<input type="hidden" name="point" value="${countpoint}">
+		<input type="hidden" name="userpoint" value="${countpoint}">
 		<input type="hidden" name="pno" value="${pack.no}">
 		<input type="hidden" name="mon" value="${pack.mon}">
 		<input type="hidden" name="year" value="${sysYear}">
@@ -183,7 +184,7 @@ h3 {
 										<b style="color:red;">10,000이상부터 사용 가능합니다.</b>
 										</span>
 										</c:if>
-										<span class="prc"><input type="text" name="point" id="usepoint" readonly>원</span>
+										<span class="prc"><input type="text" name="point" id="usepoint" value="0" readonly>원</span>
 									</div>
 								</td>
 							</tr>

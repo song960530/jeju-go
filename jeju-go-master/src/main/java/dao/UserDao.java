@@ -93,4 +93,13 @@ public class UserDao {
 		param.put("type", type);
 		sqlSession.getMapper(UserMapper.class).setPoint(param);
 	}
+
+
+	public User idchk(User user) {
+		return sqlSession.getMapper(UserMapper.class).idchk(user);
+	}
+
+	public Object history() {
+		return null;
+	}
 }

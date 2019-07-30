@@ -1,137 +1,247 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<%@ include file="/WEB-INF/view/jspHeader.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>History</title>
-<script>
-	$(window).on('load', function() {
-		$('.post-module').hover(function() {
-			$(this).find('.description').stop().animate({
-				height : "toggle",
-				opacity : "toggle"
-			}, 300);
-		});
-	});
-</script>
-</head>
-<body style="background-color: #EEEEEE;">
-	<div id="mypage_wrap_cont" class="row">
-		<div id="mypage_cont" class="col-9">
-			<h1 style="text-align: center; padding: 10px; font-weight: 800;">
-				<i class="far fa-grin-hearts"></i>ÏòàÏïΩ ÌòÑÌô©</h1>
-			<div class="container">
-				<!-- Nav pills -->
-				<ul class="nav nav-tabs">
-					<li class="nav-item"><a class="nav-link active"
-						data-toggle="pill" href="#trip">ÏàôÏÜå ÏòàÏïΩ</a></li>
-					<li class="nav-item"><a class="nav-link" data-toggle="pill"
-						href="#history">Ìå®ÌÇ§ÏßÄ ÏòàÏïΩ</a></li>
-				</ul>
+<meta charset="EUC-KR">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 
-				<!-- Tab panes -->
-				<br>
-				<div class="tab-content">
-					<div class="tab-pane container active" id="trip">
-						<c:if test="${empty historys}">
-							<h1 style="text-align: center;">Îã§ÎÖÄÏò® Ïó¨ÌñâÏù¥ ÏóÜÏäµÎãàÎã§.</h1>
-						</c:if>
-						<div class="container_sol row">
-							<c:forEach var="his" items="${historys}">
-								<!-- Normal Demo-->
-								<div class="column col-4">
-									<!-- Post-->
-									<div class="post-module">
-										<!-- Thumbnail-->
-										<div class="thumbnail">
-											<c:forEach var="hisImg" items="${historyImg}">
-												<c:if test="${his.roomsId == hisImg.roomsId}">
-													<img
-														src="http://13.209.99.134:8080/imgserver/resources/upload/${hisImg.filename }" style="height:100%;">
-												</c:if>
-											</c:forEach>
-										</div>
-										<!-- Post Content-->
-										<div class="post-content">
-											<div class="category">
-												<fmt:formatNumber type="int" var="price"
-													value="${his.price}" pattern="#,###" />
-												Ôø¶ ${price}
-											</div>
-											<h1 class="title">${his.address}</h1>
-											<!-- <h2 class="sub_title">The city that never sleeps.</h2> -->
-											<p class="description">
-												<a
-													href="${pageContext.request.contextPath}/rooms/viewRooms?roomsId=${his.roomsId}">
-													${his.details}...</a>
-											</p>
-											<div class="post-meta">
-												<span class="timestamp"><i class="fa fa-clock-">O</i>
-													<fmt:formatDate pattern="YYÎÖÑMMÏõîddÏùº" value="${his.checkIn}" />~<fmt:formatDate pattern="YYÎÖÑMMÏõîddÏùº"
-														value="${his.checkOut}" /></span><span class="comments"><br>
-												<i class="fas fa-user"></i>&ensp;Í≤åÏä§Ìä∏ ${his.people}Î™Ö</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</c:forEach>
-						</div>
-					</div>
-					<div class="tab-pane container" id="history">
-						<c:if test="${empty trip}">
-							<h1 style="text-align: center;">ÏòàÏ†ïÎêú Ïó¨ÌñâÏù¥ ÏóÜÏäµÎãàÎã§.</h1>
-						</c:if>
-						<div class="container_sol row">
-							<c:forEach var="trip" items="${trip}">
-								<!-- Normal Demo-->
-								<div class="column col-4">
-									<!-- Post-->
-									<div class="post-module">
-										<!-- Thumbnail-->
-										<div class="thumbnail">
-											<!-- <div class="date">
-												<div class="day">27</div>
-												<div class="month">Mar</div>
-											</div> -->
-											<c:forEach var="tripImg" items="${tripImg}">
-												<c:if test="${trip.roomsId == tripImg.roomsId}">
-													<img
-														src="http://13.209.99.134:8080/imgserver/resources/upload/${tripImg.filename }" style="height::100%;">
-												</c:if>
-											</c:forEach>
-										</div>
-										<!-- Post Content-->
-										<div class="post-content">
-											<div class="category">
-												<fmt:formatNumber type="int" var="price"
-													value="${trip.price}" pattern="#,###" />
-												Ôø¶ ${price}
-											</div>
-											<h1 class="title">${trip.address}</h1>
-											<!-- <h2 class="sub_title">The city that never sleeps.</h2> -->
-											<p class="description">
-												<a
-													href="${pageContext.request.contextPath}/rooms/viewRooms?roomsId=${trip.roomsId}">
-													${trip.details}...</a>
-											</p>
-											<div class="post-meta">
-												<span class="timestamp"><i class="fa fa-clock-">O</i>
-													<fmt:formatDate pattern="YYÎÖÑMMÏõîddÏùº" value="${trip.checkIn}" />~<fmt:formatDate pattern="YYÎÖÑMMÏõîddÏùº"
-														value="${trip.checkOut}" /></span><span class="comments"><br>
-												<i class="fas fa-user"></i>&ensp;Í≤åÏä§Ìä∏ ${trip.people}Î™Ö</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</c:forEach>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<style>
+body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}\
+div.left {
+   width: 20%;
+   float: left;
+   box-sizing: border-box;
+}
+div.right {
+   width: 70%;
+   float: right;
+   box-sizing: border-box;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th, td {
+  text-align: center;
+  padding: 8px;
+}
+tr:nth-child(even){background-color: #f2f2f2}
+tr:nth-child(odd){background-color: white;}
+th {
+  background-color: #56A9E8;
+  color: white;
+}
+.styled-select {
+   background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+   height: 29px;
+   overflow: hidden;
+   width: 240px;
+}
+
+.styled-select select {
+   background: transparent;
+   border: none;
+   font-size: 14px;
+   height: 29px;
+   padding: 5px; /* If you add too much padding here, the options won't show in IE */
+   width: 268px;
+}
+
+.styled-select.slate {
+   background: url(http://i62.tinypic.com/2e3ybe1.jpg) no-repeat right center;
+   height: 34px;
+   width: 240px;
+}
+
+.styled-select.slate select {
+   border: 1px solid #ccc;
+   font-size: 16px;
+   height: 34px;
+   width: 268px;
+}
+
+/* -------------------- Rounded Corners */
+.rounded {
+   -webkit-border-radius: 20px;
+   -moz-border-radius: 20px;
+   border-radius: 20px;
+}
+
+.semi-square {
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+}
+
+/* -------------------- Colors: Background */
+.slate   { background-color: #ddd; }
+.green   { background-color: #779126; }
+.blue    { background-color: #3b8ec2; }
+.yellow  { background-color: #eec111; }
+.black   { background-color: #000; }
+
+/* -------------------- Colors: Text */
+.slate select   { color: #000; }
+.green select   { color: #fff; }
+.blue select    { color: #fff; }
+.yellow select  { color: #000; }
+.black select   { color: #fff; }
+
+
+/* -------------------- Select Box Styles: danielneumann.com Method */
+/* -------------------- Source: http://danielneumann.com/blog/how-to-style-dropdown-with-css-only/ */
+#mainselection select {
+   border: 0;
+   color: #EEE;
+   background: transparent;
+   font-size: 20px;
+   font-weight: bold;
+   padding: 2px 10px;
+   width: 378px;
+   *width: 350px;
+   *background: #58B14C;
+   -webkit-appearance: none;
+}
+
+#mainselection {
+   overflow:hidden;
+   width:350px;
+   -moz-border-radius: 9px 9px 9px 9px;
+   -webkit-border-radius: 9px 9px 9px 9px;
+   border-radius: 9px 9px 9px 9px;
+   box-shadow: 1px 1px 11px #330033;
+   background: #58B14C url("http://i62.tinypic.com/15xvbd5.png") no-repeat scroll 319px center;
+}
+
+
+/* -------------------- Select Box Styles: stackoverflow.com Method */
+/* -------------------- Source: http://stackoverflow.com/a/5809186 */
+select#soflow, select#soflow-color {
+   -webkit-appearance: button;
+   -webkit-border-radius: 2px;
+   -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+   -webkit-padding-end: 20px;
+   -webkit-padding-start: 2px;
+   -webkit-user-select: none;
+   background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+   background-position: 97% center;
+   background-repeat: no-repeat;
+   border: 1px solid #AAA;
+   color: #555;
+   font-size: inherit;
+   margin: 20px;
+   overflow: hidden;
+   padding: 5px 10px;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   width: 300px;
+}
+
+select#soflow-color {
+   color: #fff;
+   background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#779126, #779126 40%, #779126);
+   background-color: #779126;
+   -webkit-border-radius: 20px;
+   -moz-border-radius: 20px;
+   border-radius: 20px;
+   padding-left: 15px;
+}
+</style>
+<title>»∏ø¯ øπæ‡»Æ¿Œ∆‰¿Ã¡ˆ</title>
+</head>
+<body>
+   <div  class="container">
+      <div>      
+         <button class="btn-primarys">         
+            <h2 class="widgetheading" style="text-align: center;">øπæ‡≥ªø™</h2>
+         </button>
+           <ul class="nav nav-tabs">
+               <li class="nav-item"><a class="nav-link active"
+                   href="../user/history.jeju?userid=${login.userid}">º˜π⁄</a></li>
+               <li class="nav-item"><a class="nav-link" 
+                  href="../user/package.jeju?userid=${login.userid}">∆–≈∞¡ˆ</a></li>
+                </ul>        
+         <table>
+            <tr class="w3-center" style="color: black;">
+               <th>»£≈⁄</th>
+               <th>∑Îπ¯»£</th>
+               <th>øπæ‡¿⁄</th>
+               <th>√º≈©¿Œ</th>
+               <th>√º≈©æ∆øÙ</th>
+               <th>∞·¿Á±›æ◊</th>
+               <th>ªÁøÎ∆˜¿Œ∆Æ</th>
+               <th>√— ∞·¡¶±›æ◊</th>
+               <th>Ω≈√ª¿œ</th>
+               <th></th>
+            </tr>
+            <c:forEach items="${list}" var="list">
+               <tr style="color: black;">
+                 <td>
+                  <c:if test="${list.hno == 0}">
+                    ${list.name}
+                  </c:if>
+                  <c:if test="${list.hno != 0 }">
+                  <a href="../hotel/hoteldetail.jeju?no=${list.hno}">  ${list.hname} - ${list.name} </a>
+                  </c:if>
+                 </td>
+                 <td>${list.roomnum}</td>
+                 <td>${list.username}</td>
+                 <td>${list.start}</td>
+                 <td>${list.end}</td>
+                 <td><fmt:formatNumber value="${list.total}" pattern="###,###"/></td>
+                 <td><fmt:formatNumber value="${list.point}" pattern="###,###"/></td>
+                 <td><fmt:formatNumber value="${list.total - list.point}" pattern="###,###"/></td>
+                 <td><fmt:formatDate value="${list.regdate}" pattern="yyyy-MM-dd"/></td>
+                 <td>
+                    <c:if test="${list.checked=='Ω¬¿Œ¥Î±‚'}">
+                      <button id="bang-btn" onclick="document.getElementById('selectbang${list.no}').style.display='block'"
+                      class="btn btn-success">${list.checked}</button>
+                   </c:if>
+                    <c:if test="${list.checked=='Ω¬¿Œøœ∑·'}">
+                      <button id="bang-btn" onclick="document.getElementById('selectbang${list.no}').style.display='block'"
+                      class="btn btn-primary">${list.checked}</button>
+                   </c:if>
+                    <c:if test="${list.checked=='Ω¬¿Œ√Îº“'}">
+                      <p id="bang-btn" class="btn btn-danger">${list.checked}</p>
+                   </c:if>
+                    <c:if test="${list.checked=='√Îº“Ω≈√ª'}">
+                      <p id="bang-btn" class="btn btn-secondary">${list.checked}</p>
+                   </c:if>
+                 </td>
+               </tr>
+               
+               <div id="selectbang${list.no}" class="w3-modal" style="display: none;">
+                  <div class="w3-modal-content w3-animate-zoom w3-padding-large">
+                     <div class="w3-container w3-white w3-center">
+                        <i onclick="document.getElementById('selectbang${list.no}').style.display='none'"
+                           class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent"></i>
+                           <div class="w3-center">
+                           </div>
+                           <br><br>
+                           <c:if test="${list.checked=='Ω¬¿Œ¥Î±‚' }">
+                             <b style="font-size:20px;">øπæ‡¿ª √Îº“«œΩ√∞⁄Ω¿¥œ±Ó?</b>
+                           </c:if>
+                           <c:if test="${list.checked=='Ω¬¿Œøœ∑·' }">
+                             <b style="font-size:20px;">ªÛ«∞ √Îº“ Ω≈√ª¿ª «œΩ√∞⁄Ω¿¥œ±Ó?</b>
+                           </c:if>
+                           <br><br>
+                           <form action="../hotel/allcancle.jeju" name="df" method="post">
+                           	 <input type="hidden" name="no" value="${list.no}">
+                           	 <input type="hidden" name="rno" value="${list.rno}">
+                           	 <input type="hidden" name="name" value="${list.name}">
+                           	 <input type="hidden" name="userid" value="${list.userid}">
+                           	 <input type="hidden" name="day" value="${list.day}">
+                             <input type="submit" id="bang-btn" class="btn btn-primary" value="»Æ¿Œ">
+                           </form>
+                     </div>
+                  </div>
+               </div>
+            </c:forEach>
+         </table>
+      </div>
+   </div>
 </body>
 </html>

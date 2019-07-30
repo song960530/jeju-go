@@ -59,4 +59,7 @@ public interface UserMapper {
 
 	@Select("select * from Member")
 	User select();
+
+	@Select("select * from member where userid = #{userid}")
+	User idchk(User user);
 }

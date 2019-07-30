@@ -3,6 +3,7 @@ package dao.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
@@ -23,5 +24,10 @@ public interface PhotoMapper {
 
 	@Select("select * from photo where hno = #{hno} and type=#{type}")
 	List<Photo> selectOne3(Map<String, Object> param);
+
+	@Delete("delete from photo where hno=#{hno}")
+	void photodelete(int hno);
+	@Delete("delete from photo where hno=#{hno} and type=#{name}")
+	void photodelete2(Map<String, Object> param);
 
 }

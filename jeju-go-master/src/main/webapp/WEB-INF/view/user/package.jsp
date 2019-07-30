@@ -25,7 +25,7 @@ table {
   width: 100%;
 }
 th, td {
-  text-align: left;
+  text-align: center;
   padding: 8px;
 }
 tr:nth-child(even){background-color: #f2f2f2}
@@ -40,7 +40,6 @@ th {
    overflow: hidden;
    width: 240px;
 }
-
 .styled-select select {
    background: transparent;
    border: none;
@@ -49,48 +48,40 @@ th {
    padding: 5px; /* If you add too much padding here, the options won't show in IE */
    width: 268px;
 }
-
 .styled-select.slate {
    background: url(http://i62.tinypic.com/2e3ybe1.jpg) no-repeat right center;
    height: 34px;
    width: 240px;
 }
-
 .styled-select.slate select {
    border: 1px solid #ccc;
    font-size: 16px;
    height: 34px;
    width: 268px;
 }
-
 /* -------------------- Rounded Corners */
 .rounded {
    -webkit-border-radius: 20px;
    -moz-border-radius: 20px;
    border-radius: 20px;
 }
-
 .semi-square {
    -webkit-border-radius: 5px;
    -moz-border-radius: 5px;
    border-radius: 5px;
 }
-
 /* -------------------- Colors: Background */
 .slate   { background-color: #ddd; }
 .green   { background-color: #779126; }
 .blue    { background-color: #3b8ec2; }
 .yellow  { background-color: #eec111; }
 .black   { background-color: #000; }
-
 /* -------------------- Colors: Text */
 .slate select   { color: #000; }
 .green select   { color: #fff; }
 .blue select    { color: #fff; }
 .yellow select  { color: #000; }
 .black select   { color: #fff; }
-
-
 /* -------------------- Select Box Styles: danielneumann.com Method */
 /* -------------------- Source: http://danielneumann.com/blog/how-to-style-dropdown-with-css-only/ */
 #mainselection select {
@@ -105,7 +96,6 @@ th {
    *background: #58B14C;
    -webkit-appearance: none;
 }
-
 #mainselection {
    overflow:hidden;
    width:350px;
@@ -115,8 +105,6 @@ th {
    box-shadow: 1px 1px 11px #330033;
    background: #58B14C url("http://i62.tinypic.com/15xvbd5.png") no-repeat scroll 319px center;
 }
-
-
 /* -------------------- Select Box Styles: stackoverflow.com Method */
 /* -------------------- Source: http://stackoverflow.com/a/5809186 */
 select#soflow, select#soflow-color {
@@ -139,7 +127,6 @@ select#soflow, select#soflow-color {
    white-space: nowrap;
    width: 300px;
 }
-
 select#soflow-color {
    color: #fff;
    background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#779126, #779126 40%, #779126);
@@ -150,26 +137,31 @@ select#soflow-color {
    padding-left: 15px;
 }
 </style>
-<title>회원 목록</title>
+<title>회원 예약확인페이지</title>
 </head>
 <body>
 	<div class="container">
-		<div>
-			<button class="btn-primarys">
-				<h2 class="widgetheading" style="text-align: center;">신청 목록</h2>
+		<div>		
+			<button class="btn-primarys">			
+				<h2 class="widgetheading" style="text-align: center;">예약내역</h2>
 			</button>
+			   <ul class="nav nav-tabs">
+               <li class="nav-item"><a class="nav-link active"
+                   href="../user/history.jeju?userid=${login.userid}">숙박</a></li>
+               <li class="nav-item"><a class="nav-link" 
+                  href="../user/package.jeju?userid=${login.userid}">패키지</a></li>
+           	  </ul>  		
 			<table>
 				<tr class="w3-center" style="color: black;">
-					<th>상품명</th>
-					<th>아이디</th>
+					<th>호텔</th>
+					<th>룸번호</th>
 					<th>예약자</th>
-					<th>시작일</th>
-					<th>마감일</th>
-					<th>상품금액</th>
+					<th>체크인</th>
+					<th>체크아웃</th>
+					<th>결재금액</th>
 					<th>사용포인트</th>
-					<th>결제금액</th>
+					<th>총 결제금액</th>
 					<th>신청일</th>
-					<th></th>
 					<th></th>
 				</tr>
 				<c:forEach items="${list}" var="list">
@@ -179,10 +171,10 @@ select#soflow-color {
 						  ${list.name}
 						</c:if>
 						<c:if test="${list.hno != 0 }">
-						  ${list.hname} - ${list.name}
+						<a href="../hotel/hoteldetail.jeju?no=${list.hno}">  ${list.hname} - ${list.name} </a>
 						</c:if>
 					  </td>
-					  <td>${list.userid}</td>
+					  <td>${list.roomnum}</td>
 					  <td>${list.username}</td>
 					  <td>${list.start}</td>
 					  <td>${list.end}</td>
@@ -191,72 +183,35 @@ select#soflow-color {
 					  <td><fmt:formatNumber value="${list.total - list.point}" pattern="###,###"/></td>
 					  <td><fmt:formatDate value="${list.regdate}" pattern="yyyy-MM-dd"/></td>
 					  <td>
-					  <c:if test="${list.checked=='승인대기' }">
-					  	<c:if test="${list.hno!=0}">
-						    <button id="bang-btn" onclick="document.getElementById('selectbang${list.no}').style.display='block'"
-					    	class="btn btn-primary">방배정하기</button>
+					  	<c:if test="${list.checked=='승인대기'}">
+					    	<button id="bang-btn" onclick="document.getElementById('selectbang${list.checked}').style.display='block'"
+					    	class="btn btn-success)">${list.checked}</button>
 					    </c:if>
-					  	<c:if test="${list.pno!=0}">
-						    <button id="bang-btn" onclick="location.href='../hotel/allfinal.jeju?no=${list.no}&pno=${list.pno}&userid=${list.userid}'"
-					    	class="btn btn-primary">승인하기</button>
+					  	<c:if test="${list.checked=='승인완료'}">
+					    	<button id="bang-btn" onclick="document.getElementById('selectbang${list.checked}').style.display='block'"
+					    	class="btn btn-primary">${list.checked}</button>
 					    </c:if>
-					  </c:if>
-					  </td>
-					  <td>
-					  <c:if test="${list.checked=='승인대기' }">
-					  	<button id="bang-btn" onclick="location.href='../hotel/allcancle.jeju?no=${list.no}&userid=${list.userid}&rno=${list.rno}&day=${list.day}'"
-					    	class="btn btn-danger">승인취소</button>
-					  </c:if>
-					  <c:if test="${list.checked=='취소신청' }">
-					  <button id="bang-btn" onclick="location.href='../hotel/allcancle.jeju?no=${list.no}&userid=${list.userid}&rno=${list.rno}&day=${list.day}'"
-					    	class="btn btn-secondary">취소승인</button>
-					  </c:if>	
+					  	<c:if test="${list.checked=='승인취소'}">
+					    	<button id="bang-btn" class="btn btn-danger">${list.checked}</button>
+					    </c:if>
 					  </td>
 					</tr>
-					
-					<div id="selectbang${list.no}" class="w3-modal" style="display: none;">
+					<div id="selectbang${list.checked}" class="w3-modal" style="display: none;">
 						<div class="w3-modal-content w3-animate-zoom w3-padding-large">
 							<div class="w3-container w3-white w3-center">
 								<i
 									onclick="document.getElementById('selectbang${list.no}').style.display='none'"
 									class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent"></i>
 									<div class="w3-center">
-									<b style="font-size:20px;">${list.hname} - ${list.name} 방호수를 지정해주세요</b>
+									<b style="font-size:20px;">${list.hname} - ${list.name} 예약 취소</b>
 									</div>
 									<br><br>
-								<form action="../hotel/allfinal.jeju" method="post" name="sf">
-									<input type="hidden" name="no" value="${list.no}"> 
-									<input type="hidden" name="pno" value="${list.pno}"> 
-									<input type="hidden" name="hno" value="${list.hno}"> 
-									<input type="hidden" name="rno" value="${list.rno}"> 
-									<input type="hidden" name="day" value="${list.day}">
-									<input type="hidden" name="start" value="${list.start}">
-									<input type="hidden" name="name" value="${list.name}">
-									<input type="hidden" name="end" value="${list.end}">
-									<input type="hidden" name="username" value="${list.username}">
-									<input type="hidden" name="userid" value="${list.userid}">
-									<div class="w3-display-middle">
-									<div class="styled-select blue semi-square">
-									<select name="roomnum">
-										<c:forEach items="${list.roomnums}" var="rn">
-											<option style="color:black;">${rn}호</option>
-										</c:forEach>
-									</select>
-									</div>
-									</div>
-									<br><br>
-									<input type="submit" value="지정하기" class="btn btn-primary" class="w3-center">
-								</form>
 							</div>
 						</div>
 					</div>
 				</c:forEach>
 			</table>
-
-			
-			
-			
 		</div>
 	</div>
 </body>
-</html>
+</html> 

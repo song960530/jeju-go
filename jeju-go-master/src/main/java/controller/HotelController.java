@@ -10,10 +10,13 @@ import logic.JejuService;
 import logic.Latlng;
 import logic.Room;
 import logic.Room2;
+import logic.User;
 
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.*;
+
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -23,6 +26,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -276,7 +281,7 @@ public class HotelController {
 	}
 
 	@PostMapping("reservation")
-	public ModelAndView lcheckreservation(Final f1,HttpSession session) {
+	public ModelAndView lcheckreservation(Final f1, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			service.subFinally(f1);
@@ -290,7 +295,7 @@ public class HotelController {
 		return mav;
 	}
 
-	@PostMapping("allfinal")
+	@RequestMapping("allfinal")
 	public ModelAndView allfinal(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		try {
@@ -301,4 +306,104 @@ public class HotelController {
 		}
 		return mav;
 	}
+
+	@RequestMapping("deleteForm")
+	public ModelAndView deleteForm(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		try {
+			String name = request.getParameter("name");
+			int hno = Integer.parseInt(request.getParameter("hno"));
+			int count;
+			if (name == null || name.trim().equals("")) {
+				count = service.deleteForm(request);
+			} else {
+				count = service.roomdeleteForm(request);
+				mav.addObject("name", request.getParameter("name"));
+
+			}
+			if (count != 0) {
+				mav.addObject("msg", request.getParameter("today") + "이후<br> 예약된 내역이 조회되어 삭제가 불가능합니다.");
+			}
+			mav.addObject("today", request.getParameter("today"));
+			mav.addObject("hno", hno);
+		} catch (Exception e) {
+			throw new JejuException("호텔 삭제중 오류가 발생하였습니다.", "../admin/adminhotellist.jeju");
+		}
+		return mav;
+	}
+
+	@RequestMapping("hoteldelete")
+	public ModelAndView hoteldelete(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		String name = request.getParameter("name");
+		try {
+			service.hoteldelete(request);
+			if (name == null || name.trim().equals("")) {
+				mav.addObject("msg", "숙소가 성공적으로 삭제되었습니다.");
+				mav.addObject("url", "adminhotellist.jeju");
+			} else {
+				mav.addObject("msg", "방이 성공적으로 삭제되었습니다.");
+				mav.addObject("url", "roomdeleteForm.jeju?no=" + Integer.parseInt(request.getParameter("hno")));
+			}
+			mav.setViewName("alert");
+		} catch (Exception e) {
+			throw new JejuException("호텔 삭제중 오류가 발생하였습니다.", "adminhotellist.jeju");
+		}
+		return mav;
+	}
+
+	@RequestMapping(value = "adminpasschk", method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView simpleWithObject(String inputpass) {
+		ModelAndView mav = new ModelAndView();
+		String dbpass = service.userSelect("admin").getPassword();
+		String pass = service.messageDigest(inputpass);
+		if (dbpass.equals(pass)) {
+			mav.addObject("msg", "비밀번호가 일치합니다");
+		} else {
+			mav.addObject("msg", "비밀번호가 일치하지 않습니다.");
+		}
+		return mav;
+	}
+
+	@GetMapping("roomdeleteForm")
+	public ModelAndView roomdeleteForm(Integer no, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		try {
+			Hotel h = service.selectOne(no);
+			List<Room> r = service.roomList(no);
+			h.setRoom(r);
+			mav.addObject("room", r);
+			mav.addObject("hotel", h);
+		} catch (Exception e) {
+			throw new JejuException("상세페이지를 불러오기에 실패하였습니다.", "../user/main.jeju");
+		}
+		return mav;
+	}
+
+	@RequestMapping("allcancle")
+	public ModelAndView allcancle(HttpServletRequest request, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		User login = (User) session.getAttribute("login");
+		try {
+			String checked = service.allcancle(request, session);
+			if (!login.getUserid().equals("admin")) {
+				if (checked.equals("승인대기")) {
+					mav.addObject("msg", "취소가 완료 되었습니다.");
+				} else if (checked.equals("승인완료")) {
+					mav.addObject("msg", "해당상품 취소 신청이 되었습니다.");
+				}
+				mav.addObject("url", "../user/history.jeju?userid=" + request.getParameter("userid"));
+			} else {
+				mav.addObject("msg", "취소가 완료 되었습니다.");
+				mav.addObject("url", "../admin/acceptlist.jeju");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new JejuException("승인취소중 오류가 발생하였습니다", "../admin/acceptlist.jeju");
+		}
+		mav.setViewName("alert");
+		return mav;
+	}
+
 }
