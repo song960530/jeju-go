@@ -80,9 +80,14 @@ public class HotelController {
 	}
 
 	@GetMapping("hoteldetail")
-	public ModelAndView detail(Integer no, HttpServletRequest request) {
+	public ModelAndView detail(Integer no, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView("hotel/hoteldetail");
 		try {
+			if ((User) session.getAttribute("login") != null) {
+				User user = (User) session.getAttribute("login");
+				int w = service.selctwish(user.getUserid(), no);
+				mav.addObject("w", w);
+			}
 			Hotel h = service.selectOne(no);
 			List<Room> r = service.roomList(no);
 			h.setRoom(r);

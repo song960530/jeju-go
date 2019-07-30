@@ -832,4 +832,25 @@ public class JejuService {
 	public List<Final> cancellationl(String userid) {
 		return finaldao.cancellationl(userid);
 	}
+
+	public List<Integer> noSelect(String userid) {
+		List<Integer> no = userdao.nolist(userid);
+		return no;
+	}
+
+	public List<Hotel> wihslist(List<Integer> no) {
+		List<Hotel> hotel = new ArrayList<Hotel>();
+		for (Integer i : no) {
+			hotel.add(selectOne(i));
+		}
+		return hotel;
+	}
+
+	public void deletewish(String userid, int no) {
+		userdao.deletewish(userid, no);
+	}
+
+	public int selctwish(String userid, Integer no) {
+		return hoteldao.selectwish(userid, no);
+	}
 }
