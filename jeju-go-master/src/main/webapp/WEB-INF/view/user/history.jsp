@@ -150,22 +150,9 @@ select#soflow-color {
    padding-left: 15px;
 }
 </style>
-<script>
-   $(function(){
-      if(${msg ne null}){
-         alert('${msg}');
-      };
-      if($("#cancellation").submit(function(){
-         if(!confirm("예약 취소 하시겠습니까?")){
-            return false;
-         }
-      }));
-   })
-</script>
 <title>회원 예약확인페이지</title>
 </head>
 <body>
-   <form id= "cancellation" action="history.jeju" method="post">
    <div  class="container">
       <div>      
          <button class="btn-primarys">         
@@ -210,27 +197,45 @@ select#soflow-color {
                  <td><fmt:formatDate value="${list.regdate}" pattern="yyyy-MM-dd"/></td>
                  <td>
                     <c:if test="${list.checked=='승인대기'}">
-                      <button id="bang-btn" onclick="document.getElementById('selectbang${list.checked}').style.display='block'"
+                      <button id="bang-btn" onclick="document.getElementById('selectbang${list.no}').style.display='block'"
                       class="btn btn-success">${list.checked}</button>
                    </c:if>
                     <c:if test="${list.checked=='승인완료'}">
-                      <button id="bang-btn" onclick="document.getElementById('selectbang${list.checked}').style.display='block'"
+                      <button id="bang-btn" onclick="document.getElementById('selectbang${list.no}').style.display='block'"
                       class="btn btn-primary">${list.checked}</button>
                    </c:if>
                     <c:if test="${list.checked=='승인취소'}">
                       <p id="bang-btn" class="btn btn-danger">${list.checked}</p>
                    </c:if>
+                    <c:if test="${list.checked=='취소신청'}">
+                      <p id="bang-btn" class="btn btn-secondary">${list.checked}</p>
+                   </c:if>
                  </td>
                </tr>
-               <div id="selectbang${list.checked}" class="w3-modal" style="display: none;">
+               
+               <div id="selectbang${list.no}" class="w3-modal" style="display: none;">
                   <div class="w3-modal-content w3-animate-zoom w3-padding-large">
                      <div class="w3-container w3-white w3-center">
                         <i onclick="document.getElementById('selectbang${list.no}').style.display='none'"
                            class="fa fa-remove w3-button w3-xlarge w3-right w3-transparent"></i>
                            <div class="w3-center">
-                           <b style="font-size:20px;">${list.hname} - ${list.name} 예약 취소</b>
                            </div>
                            <br><br>
+                           <c:if test="${list.checked=='승인대기' }">
+                             <b style="font-size:20px;">예약을 취소하시겠습니까?</b>
+                           </c:if>
+                           <c:if test="${list.checked=='승인완료' }">
+                             <b style="font-size:20px;">상품 취소 신청을 하시겠습니까?</b>
+                           </c:if>
+                           <br><br>
+                           <form action="../hotel/allcancle.jeju" name="df" method="post">
+                           	 <input type="hidden" name="no" value="${list.no}">
+                           	 <input type="hidden" name="rno" value="${list.rno}">
+                           	 <input type="hidden" name="name" value="${list.name}">
+                           	 <input type="hidden" name="userid" value="${list.userid}">
+                           	 <input type="hidden" name="day" value="${list.day}">
+                             <input type="submit" id="bang-btn" class="btn btn-primary" value="확인">
+                           </form>
                      </div>
                   </div>
                </div>
@@ -238,6 +243,5 @@ select#soflow-color {
          </table>
       </div>
    </div>
-   </form>
 </body>
 </html>

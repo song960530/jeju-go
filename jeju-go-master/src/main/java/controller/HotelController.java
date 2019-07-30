@@ -382,13 +382,27 @@ public class HotelController {
 	}
 
 	@RequestMapping("allcancle")
-	public ModelAndView allcancle(HttpServletRequest request) {
+	public ModelAndView allcancle(HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		User login = (User) session.getAttribute("login");
 		try {
-			service.allcancle(request);
-		}catch(Exception e) {
+			String checked = service.allcancle(request, session);
+			if (!login.getUserid().equals("admin")) {
+				if (checked.equals("승인대기")) {
+					mav.addObject("msg", "취소가 완료 되었습니다.");
+				} else if (checked.equals("승인완료")) {
+					mav.addObject("msg", "해당상품 취소 신청이 되었습니다.");
+				}
+				mav.addObject("url", "../user/history.jeju?userid=" + request.getParameter("userid"));
+			} else {
+				mav.addObject("msg", "취소가 완료 되었습니다.");
+				mav.addObject("url", "../admin/acceptlist.jeju");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 			throw new JejuException("승인취소중 오류가 발생하였습니다", "../admin/acceptlist.jeju");
 		}
+		mav.setViewName("alert");
 		return mav;
 	}
 

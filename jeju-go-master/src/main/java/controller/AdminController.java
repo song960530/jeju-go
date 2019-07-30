@@ -129,4 +129,30 @@ public class AdminController {
 		}
 		return mav;
 	}
+	
+	@GetMapping("reservationmanagement")
+	public ModelAndView reservationmanagement(Integer pageNum) {
+		ModelAndView mav = new ModelAndView();
+		if (pageNum == null || pageNum.toString().equals("")) pageNum = 1;
+		int limit = 10;
+		try {
+			List<Final> list = service.reservationmanagement(pageNum, limit);
+			int count = service.reservationcount();
+			int maxpage = (int) ((double) count / limit + 0.95);
+			int startpage = ((int) ((pageNum / 10.0 + 0.9) - 1) * 10 + 1);
+			int endpage = startpage + 9;
+			if (endpage > maxpage) endpage = maxpage;
+			int reserveno = count - (pageNum - 1) * limit;
+			mav.addObject("count", count);
+			mav.addObject("list", list);
+			mav.addObject("pageNum", pageNum);
+			mav.addObject("maxpage", maxpage);
+			mav.addObject("startpage", startpage);
+			mav.addObject("endpage", endpage);
+			mav.addObject("reserveno", reserveno);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
 }

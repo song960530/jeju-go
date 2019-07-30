@@ -38,28 +38,16 @@ public class PackageController {
 		return null;
 	}
 
-	@PostMapping("bigpackregist")
-	public ModelAndView bigpackregist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
-		ModelAndView mav = new ModelAndView();
-		try {
-			service.bigpackregist(request, mtfRequest);
-			mav.setViewName("redirect:packlist.jeju");
-		} catch (Exception e) {
-			throw new JejuException("패키지 등록을 실패하였습니다.", "bigpackregist.jeju");
-		}
-		return mav;
-	}
-
 	@PostMapping("packregist")
-	public ModelAndView packregist(HttpServletRequest request) {
+	public ModelAndView packregist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
 		ModelAndView mav = new ModelAndView();
 		int no2 = 0;
 		try {
-			int no = service.packregist(request);
+			int no = service.packregist(request, mtfRequest);
 			no2 = no;
 			mav.setViewName("redirect:packdetail.jeju?no=" + no);
 		} catch (Exception e) {
-			throw new JejuException("패키지 등록을 실패하였습니다.", "bigpackdetail.jeju?no=" + no2);
+			throw new JejuException("페이지 오류발생.", "../user/main.jeju");
 		}
 		return mav;
 	}
@@ -88,21 +76,11 @@ public class PackageController {
 	@RequestMapping("packlist")
 	public ModelAndView packlist() {
 		ModelAndView mav = new ModelAndView();
-		List<Package> packlist = service.packlist();
-		mav.addObject("packlist", packlist);
-		return mav;
-	}
-
-	@RequestMapping("bigpackdetail")
-	public ModelAndView bigpackdetail(Integer no, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
 		try {
-			Package pack = service.getPack(no);
-			List<Package> subpacklist = service.subpacklist(no);
-			mav.addObject("pack", pack);
-			mav.addObject("packlist", subpacklist);
+			List<Package> packlist = service.packlist();
+			mav.addObject("packlist", packlist);
 		} catch (Exception e) {
-			// throw new JejuException("패키지를 불러오는데 실패하였습니다", "");
+			throw new JejuException("페이지 오류발생.", "../user/main.jeju");
 		}
 		return mav;
 	}
@@ -110,64 +88,127 @@ public class PackageController {
 	@RequestMapping({ "packdetail", "packreserve" })
 	public ModelAndView packdetail(Integer no, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		List<Package> packlist = service.packday(no);
-		List<String> startday = new ArrayList<String>();
-		List<String> endday = new ArrayList<String>();
-		String end = null;
-		int num = 0;
-		Package pack = new Package();
-		pack = service.getPack(no);
-		for (Package p : packlist) {
-			String startdays[] = p.getStartday().split(",");
-			List<String> startday2 = new ArrayList<String>();
-			for (String s : startdays) {
-				startday2.add(s);
+		try {
+			List<Package> packlist = service.packday(no);
+			List<String> startday = new ArrayList<String>();
+			List<String> endday = new ArrayList<String>();
+			String end = null;
+			int num = 0;
+			Package pack = new Package();
+			pack = service.getPack(no);
+			for (Package p : packlist) {
+				String startdays[] = p.getStartday().split(",");
+				List<String> startday2 = new ArrayList<String>();
+				for (String s : startdays) {
+					startday2.add(s);
+				}
+				p.setStartdays(startday2);
+				startday.addAll(p.getStartdays());
+				for (String ss : startday) {
+					num = Integer.parseInt(ss) + 7;
+					end = num + "";
+					endday.add(end);
+				}
 			}
-			p.setStartdays(startday2);
-			startday.addAll(p.getStartdays());
-			for (String ss : startday) {
-				num = Integer.parseInt(ss) + 7;
-				end = num + "";
-				endday.add(end);
-			}
+			mav.addObject("pack", pack);
+			mav.addObject("start", startday);
+			mav.addObject("end", endday);
+		} catch (Exception e) {
+			throw new JejuException("페이지 오류발생.", "packlist.jeju");
 		}
-		int chk = 1;
-		if (service.chkset(pack, request) > 0)
-			chk = 0;
-		mav.addObject("chk", chk);
-		mav.addObject("pack", pack);
-		mav.addObject("start", startday);
-		mav.addObject("end", endday);
 		return mav;
 	}
 
-	@PostMapping("packreservechk")
+	@PostMapping("packreserve")
 	public ModelAndView reservepack(Integer no, HttpSession session, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		Package pack = service.getPack(no);
 		String userid = request.getParameter("userid");
-		int countpoint = service.countPoint(userid);
 		int people = Integer.parseInt(request.getParameter("people"));
-		String startday = request.getParameter("startday");
-		mav.addObject("countpoint", countpoint);
-		mav.addObject("startday", startday);
-		mav.addObject("people", people);
-		mav.addObject("pack", pack);
+		try {
+			Package pack = service.getPack(no);
+			String year = request.getParameter("year");
+			String mon = null;
+			String start = null;
+			if (Integer.parseInt(request.getParameter("mon")) < 10) {
+				mon = 0 + request.getParameter("mon");
+			} else {
+				mon = request.getParameter("mon");
+			}
+			if (Integer.parseInt(request.getParameter("startday")) < 10) {
+				start = 0 + request.getParameter("startday");
+			} else {
+				start = request.getParameter("startday");
+			}
+			String startday = year + "-" + mon + "-" + start;
+			int reservechk = service.getPeople(startday, no);
+			int chk = pack.getMax() - reservechk;
+			if (reservechk <= pack.getMax() && pack.getMax() - reservechk >= people) {
+				mav.addObject("msg", "예약페이지로 이동합니다.");
+				mav.addObject("url", "../package/packreservechk.jeju?no=" + no + "&userid=" + userid + "&people="
+						+ people + "&startday=" + request.getParameter("startday"));
+				mav.setViewName("alert");
+			} else {
+				mav.addObject("msg", "예약가능한 인원은 " + chk + "명 입니다");
+				mav.addObject("url", "../package/packreserve.jeju?no=" + no + "&userid=" + userid);
+				mav.setViewName("alert");
+			}
+		} catch (Exception e) {
+			throw new JejuException("페이지 오류발생.", "packdetail.jeju?no=" + no + "&userid=" + userid);
+		}
+		return mav;
+	}
+
+	@RequestMapping("packreservechk")
+	public ModelAndView packreservechk(Integer no, String userid, int people, String startday, HttpSession session,
+			HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		try {
+			Package pack = service.getPack(no);
+			int countpoint = service.countPoint(userid);
+			mav.addObject("countpoint", countpoint);
+			mav.addObject("startday", startday);
+			mav.addObject("people", people);
+			mav.addObject("pack", pack);
+		} catch (Exception e) {
+			throw new JejuException("페이지 오류발생.", "packdetail.jeju?no=" + no + "&userid=" + userid);
+		}
 		return mav;
 	}
 
 	@PostMapping("packreservation")
 	public ModelAndView reservation(Package pack, Final f, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		Final fi = service.setFinal(f, request);
-		fi.setPnum(Integer.parseInt(request.getParameter("people")));
-		service.realFinal(fi);
-		int point = (fi.getTotal() / 1000) * 50;
-		service.setPoint(point, fi.getUserid());
-		service.minermax(pack, request);
-		mav.addObject("msg", "예약이 완료되었습니다.");
-		mav.addObject("url", "../user/main.jeju");
-		mav.setViewName("alert");
+		try {
+			Final fi = service.setFinal(f, request);
+			fi.setPnum(Integer.parseInt(request.getParameter("people")));
+			service.realFinal(fi);
+			mav.addObject("msg", "예약이 완료되었습니다.");
+			mav.addObject("url", "../user/main.jeju");
+			mav.setViewName("alert");
+		} catch (Exception e) {
+			throw new JejuException("패키지 예약을 실패하였습니다.",
+					"packdetail.jeju?no=" + pack.getNo() + "&userid=" + f.getUserid());
+		}
+		return mav;
+	}
+
+	@PostMapping("packdelete")
+	public ModelAndView packdelete(Integer no, String userid, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		try {
+			if (service.finalcount(no, userid) <= 0) {
+				service.packdelete(no);
+				mav.addObject("msg", "삭제 완료.");
+				mav.addObject("url", "../package/packlist.jeju");
+				mav.setViewName("alert");
+			} else {
+				mav.addObject("msg", "해당 상품은 예약이 있습니다.");
+				mav.addObject("url", "../package/packdetail.jeju?no=" + no + "&userid=" + userid);
+				mav.setViewName("alert");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return mav;
 	}
 }

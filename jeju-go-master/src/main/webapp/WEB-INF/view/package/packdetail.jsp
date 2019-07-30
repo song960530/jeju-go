@@ -63,14 +63,26 @@ function showDivs(n) {
   x[slideIndex-1].style.display = "block";  
   dots[slideIndex-1].className += " w3-white";
 }
+
+
+function packdelchk1(){
+    if(confirm("삭제하시겠습니까?")){
+        document.pd.submit();
+    } else {
+        return false;
+    }
+}
 </script>
 </head>
 <body>
+<form action="packdelete.jeju" method="post" name="pd">
+<input type="hidden" name="no" value="${pack.no}">
+<input type="hidden" name="userid" value="${param.userid}">
 <div class="container">
 	<table style="margin:auto;">
 		<tr>
 			<td rowspan="2" width="60%" ><img alt="" src="${path}/${pack.photourl}" width="600px" height="400px"></td>
-			<td style="font-size:30px; height:50px" align="center" valign="top">상품이름 : ${pack.name}</td>
+			<td style="font-size:30px; height:50px" align="left" valign="top">&nbsp;&nbsp;상품이름 : ${pack.name}</td>
 		</tr>
 		<tr>
 			<td style="font-size:20px;" align="left" valign="top">&nbsp;&nbsp;
@@ -81,6 +93,9 @@ function showDivs(n) {
 				</c:forEach><br>
 				<font color="blue" size="5">&nbsp;&nbsp;총 여행기간 : ${pack.travelday}일</font><br><br>
 				&nbsp;&nbsp;<a href="../package/packreserve.jeju?no=${pack.no}&userid=${login.userid}">[예약하러가기]</a>
+				<c:if test="${login.userid == 'admin' }">
+					<a href="javascript:packdelchk1()" class="btn btn-primary">패키지 삭제</a>
+				</c:if>
 			</td>
 		</tr>
 		<tr>
@@ -88,5 +103,7 @@ function showDivs(n) {
 		</tr>
 	</table>
 	</div>
+	</form>
+	
 </body>
 </html>

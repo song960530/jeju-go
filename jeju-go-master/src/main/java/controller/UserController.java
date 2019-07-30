@@ -306,8 +306,6 @@ public class UserController {
 		ModelAndView mav = new ModelAndView();
 		String dbpass = service.userSelect("admin").getPassword();
 		String pass = service.messageDigest(inputpass);
-		System.out.println(dbpass);
-		System.out.println(pass);
 		if (dbpass.equals(pass)) {
 			mav.addObject("msg", "비밀번호가 일치합니다");
 		} else {
@@ -321,7 +319,6 @@ public class UserController {
 		ModelAndView mav = new ModelAndView();
 		try {
 			List<Final> list = service.history(userid);		
-
 			mav.addObject("list", list);
 		} catch (Exception e) {
 			throw new JejuException("페이지를 호출하던 중 오류가 발생하였습니다", "../user/main.jeju");

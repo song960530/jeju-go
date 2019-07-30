@@ -191,6 +191,7 @@ select#soflow-color {
 					  <td><fmt:formatNumber value="${list.total - list.point}" pattern="###,###"/></td>
 					  <td><fmt:formatDate value="${list.regdate}" pattern="yyyy-MM-dd"/></td>
 					  <td>
+					  <c:if test="${list.checked=='승인대기' }">
 					  	<c:if test="${list.hno!=0}">
 						    <button id="bang-btn" onclick="document.getElementById('selectbang${list.no}').style.display='block'"
 					    	class="btn btn-primary">방배정하기</button>
@@ -199,10 +200,17 @@ select#soflow-color {
 						    <button id="bang-btn" onclick="location.href='../hotel/allfinal.jeju?no=${list.no}&pno=${list.pno}&userid=${list.userid}'"
 					    	class="btn btn-primary">승인하기</button>
 					    </c:if>
+					  </c:if>
 					  </td>
 					  <td>
+					  <c:if test="${list.checked=='승인대기' }">
 					  	<button id="bang-btn" onclick="location.href='../hotel/allcancle.jeju?no=${list.no}&userid=${list.userid}&rno=${list.rno}&day=${list.day}'"
-					    	class="btn btn-danger">승인취소</button>	
+					    	class="btn btn-danger">승인취소</button>
+					  </c:if>
+					  <c:if test="${list.checked=='취소신청' }">
+					  <button id="bang-btn" onclick="location.href='../hotel/allcancle.jeju?no=${list.no}&userid=${list.userid}&rno=${list.rno}&day=${list.day}'"
+					    	class="btn btn-secondary">취소승인</button>
+					  </c:if>	
 					  </td>
 					</tr>
 					
