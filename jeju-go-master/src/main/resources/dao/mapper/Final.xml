@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.mapper.FinalMapper">
@@ -6,5 +7,8 @@
 		<if test="startrow != null and limit != null">
 			order by regdate desc limit #{startrow},#{limit}
 		</if>	
-	</select>	
-</mapper> 
+	</select>
+	<select id="count" parameterType="map" resultType="int">
+		select count(*) from finally where checked='승인대기' or checked='취소신청'
+	</select>
+</mapper>

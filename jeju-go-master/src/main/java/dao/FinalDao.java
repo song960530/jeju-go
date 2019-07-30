@@ -116,4 +116,8 @@ public class FinalDao {
 	public int reservationcount() {
 		return sqlSession.getMapper(FinalMapper.class).reservationcount();
 	}
+
+	public int acceptcount() {
+		return sqlSession.selectOne(NS + "count");
+	}
 }

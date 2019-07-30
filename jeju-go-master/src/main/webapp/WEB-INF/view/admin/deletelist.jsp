@@ -43,9 +43,16 @@ th {
          chks[i].checked = allchk.checked;
       }
    }
+   function listcall(page) {
+	    document.list.pageNum.value = page;
+	    document.list.submit();
+	 }
 </script>
 </head>
 <body>
+<form name="list">
+<input type="hidden" name="pageNum" value="1">
+</form>
 <div class="container">
 		<div>
 		<!-- <div style="margin-left: 5%; margin-right: 5%; width: 90%;"> -->
@@ -71,12 +78,41 @@ th {
 					</tr>
 				</c:if>	
 				</c:forEach>
+				<c:if test="${count == 0}">
+	  				<tr>
+	  					<td colspan="5">µÓ∑œµ» πÆ¿«±€¿Ã æ¯Ω¿¥œ¥Ÿ.</td>
+	  				</tr>
+				</c:if>
 			</table>
 <%-- 				<input type="hidden" name="userId" value="${user.userid}"> --%>
-				<p style="float: right;"><input type="submit" class="btn btn-primary" value="≈ª≈Ω¬¿Œ"></p>
+				<p style="float: right;">
+				<input type="submit" class="btn btn-primary" value="≈ª≈Ω¬¿Œ"></p>
 				<!-- <input type="button" class="btn btn-primary" onclick="location.href='../user/main.jeju'" value="∞≠¡¶≈ª≈"> -->
 			</form>
 		</div>
+		<table>
+				<tr>
+    				<td colspan="5" class="w3-center">
+	       				<c:if test="${pageNum > 1}">
+	          				<a href="javascript:listcall(${pageNum - 1})">[¿Ã¿¸]</a>
+	       				</c:if>
+
+	       				<c:if test="${pageNum <= 1}">[¿Ã¿¸]</c:if>
+	       				<c:forEach var="a" begin="${startpage}" end="${endpage}">
+	          				<c:if test="${a == pageNum}">[${a}]</c:if>
+	          				<c:if test="${a != pageNum}">
+	            				<a href="javascript:listcall(${a})">[${a}]</a>
+	          				</c:if>
+	       				</c:forEach>
+
+	       				<c:if test="${pageNum < maxpage}">
+				           	<a href="javascript:listcall(${pageNum + 1})">[¥Ÿ¿Ω]</a>
+	       				</c:if>
+
+	       				<c:if test="${pageNum >= maxpage}">[¥Ÿ¿Ω]</c:if>
+        			</td>
+     			</tr>
+			</table>
 	</div>
 </body>
 </html>

@@ -180,12 +180,12 @@
 					  	<c:set var="reserveno" value="${reserveno - 1}"/>
 					 	<c:if test="${reserve.hno != 0}">
 							<td style="text-align:left">
-	               				${reserve.hname} - ${reserve.name}
+	               				[호텔]  ${reserve.hname} - ${reserve.name}
 	               			</td>
              			</c:if>
              			<c:if test="${reserve.hno == 0}">
           					<td style="text-align:left">
-             					[패키지] - ${reserve.name}
+             					[패키지]  ${reserve.name}
              				</td>
              			</c:if>
              			<td>${reserve.userid}</td>

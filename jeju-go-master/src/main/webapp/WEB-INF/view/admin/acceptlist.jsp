@@ -153,6 +153,9 @@ select#soflow-color {
 <title>회원 목록</title>
 </head>
 <body>
+<form name="list">
+<input type="hidden" name="pageNum" value="1">
+</form>
 	<div class="container">
 		<div>
 			<button class="btn-primarys">
@@ -251,11 +254,35 @@ select#soflow-color {
 						</div>
 					</div>
 				</c:forEach>
+				<c:if test="${count == 0}">
+	  				<tr>
+	  					<td colspan="5">등록된 문의글이 없습니다.</td>
+	  				</tr>
+				</c:if>
 			</table>
+			<table>
+				<tr>
+    				<td colspan="5" class="w3-center">
+	       				<c:if test="${pageNum > 1}">
+	          				<a href="javascript:listcall(${pageNum - 1})">[이전]</a>
+	       				</c:if>
 
-			
-			
-			
+	       				<c:if test="${pageNum <= 1}">[이전]</c:if>
+	       				<c:forEach var="a" begin="${startpage}" end="${endpage}">
+	          				<c:if test="${a == pageNum}">[${a}]</c:if>
+	          				<c:if test="${a != pageNum}">
+	            				<a href="javascript:listcall(${a})">[${a}]</a>
+	          				</c:if>
+	       				</c:forEach>
+
+	       				<c:if test="${pageNum < maxpage}">
+				           	<a href="javascript:listcall(${pageNum + 1})">[다음]</a>
+	       				</c:if>
+
+	       				<c:if test="${pageNum >= maxpage}">[다음]</c:if>
+        			</td>
+     			</tr>
+			</table>
 		</div>
 	</div>
 </body>

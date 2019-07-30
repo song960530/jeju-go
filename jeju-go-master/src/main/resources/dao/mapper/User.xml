@@ -2,12 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.mapper.UserMapper">
-<select id="list"  parameterType="map" resultType="User">
+	<select id="list"  parameterType="map" resultType="User">
 		select * from member
 		<where>
 			<if test="deleterequest != null">
 				and deleterequest='Y'
 			</if>
 		</where>
+		<if test="startrow != null and limit != null">
+			order by userid asc limit #{startrow}, #{limit}
+		</if>
+	</select>
+	<select id="count" parameterType="map" resultType="int">
+		select count(*) from member
 	</select>
 </mapper>
