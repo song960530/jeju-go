@@ -42,4 +42,12 @@ public class RoomDao {
 	public void roomdelete(int hno) {
 		sqlSession.getMapper(RoomMapper.class).roomdelete(hno);
 	}
+
+	public void roomdelete2(int hno, String name) {
+		param.clear();
+		param.put("hno", hno);
+		param.put("name", name);
+		sqlSession.getMapper(RoomMapper.class).roomdelete2(param);
+		
+	}
 }

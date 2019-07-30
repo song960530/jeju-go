@@ -60,6 +60,6 @@ public interface UserMapper {
 	@Select("select * from Member")
 	User select();
 
-	@Update("update point")
-	void givePoint(double point);
+	@Select("select * from member where userid = #{userid}")
+	User idchk(User user);
 }

@@ -94,7 +94,12 @@ public class UserDao {
 		sqlSession.getMapper(UserMapper.class).setPoint(param);
 	}
 
-	public void givePoint(double point) {
-		sqlSession.getMapper(UserMapper.class).givePoint(point);
+
+	public User idchk(User user) {
+		return sqlSession.getMapper(UserMapper.class).idchk(user);
+	}
+
+	public Object history() {
+		return null;
 	}
 }

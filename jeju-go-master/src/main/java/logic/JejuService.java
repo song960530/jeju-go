@@ -642,30 +642,39 @@ public class JejuService {
 	public void allFinally(HttpServletRequest request) {
 		// hno, rno, day roomnum start end
 		int no = Integer.parseInt(request.getParameter("no"));
-		int hno = Integer.parseInt(request.getParameter("hno"));
-		int rno = Integer.parseInt(request.getParameter("rno"));
-		int day = Integer.parseInt(request.getParameter("day"));
-		int stmon = Integer.parseInt(request.getParameter("start").split("-")[1]);
-		int startday = Integer.parseInt(request.getParameter("start").split("-")[2]);
-		String name = request.getParameter("name");
-		String roomnum = request.getParameter("roomnum").split("ȣ")[0];
-		String username = request.getParameter("username");
+		int pno = Integer.parseInt(request.getParameter("pno"));
+		if (pno == 0) {
+			int hno = Integer.parseInt(request.getParameter("hno"));
+			int rno = Integer.parseInt(request.getParameter("rno"));
+			int day = Integer.parseInt(request.getParameter("day"));
+			int stmon = Integer.parseInt(request.getParameter("start").split("-")[1]);
+			int startday = Integer.parseInt(request.getParameter("start").split("-")[2]);
+			String name = request.getParameter("name");
+			String roomnum = request.getParameter("roomnum").split("ȣ")[0];
+			String username = request.getParameter("username");
 
-		for (int i = rno; i <= rno + day; i++) {
-			hresdao.nullRoomnum(i);
+			for (int i = rno; i <= rno + day; i++) {
+				hresdao.nullRoomnum(i);
+			}
+
+			int no2 = hresdao.selectno(hno, roomnum, stmon, startday, name);
+
+			for (int i = no2; i < no2 + day; i++) {
+				hresdao.insertfinish(i, username);
+			}
+
+			finaldao.finish(no, roomnum);
+			int point = (int) (finaldao.selectTotal(no) * 0.05);
+			String userid = request.getParameter("userid");
+			int pointno = userdao.pointmaxno() + 1;
+			finaldao.setPoint(point, userid, pointno);
+		} else {
+			finaldao.Pfinish(no, pno);
+			int point = (int) (finaldao.selectTotal(no) * 0.05);
+			String userid = request.getParameter("userid");
+			int pointno = userdao.pointmaxno() + 1;
+			finaldao.setPoint(point, userid, pointno);
 		}
-
-		int no2 = hresdao.selectno(hno, roomnum, stmon, startday, name);
-
-		for (int i = no2; i < no2 + day; i++) {
-			hresdao.insertfinish(i, username);
-		}
-
-		finaldao.finish(no, roomnum);
-		int point = (int) (finaldao.selectTotal(no) * 0.05);
-		String userid = request.getParameter("userid");
-		int pointno = userdao.pointmaxno() + 1;
-		finaldao.setPoint(point, userid, pointno);
 	}
 
 	public Final setFinal(Final f, HttpServletRequest request) {
@@ -734,10 +743,59 @@ public class JejuService {
 
 	public void hoteldelete(HttpServletRequest request) {
 		int hno = Integer.parseInt(request.getParameter("hno"));
-		hoteldao.hoteldelete(hno);
-		roomdao.roomdelete(hno);
-		photodao.photodelete(hno);
-		hresdao.hoteldelete(hno);
+		String name = request.getParameter("name");
+		if (name == null || name.trim().equals("")) {
+			hoteldao.hoteldelete(hno);
+			roomdao.roomdelete(hno);
+			photodao.photodelete(hno);
+			hresdao.hoteldelete(hno);
+		} else {
+			roomdao.roomdelete2(hno, name);
+			photodao.photodelete2(hno, name);
+			hresdao.hoteldelete2(hno, name);
+		}
+	}
 
+	public int roomdeleteForm(HttpServletRequest request) {
+		int hno = Integer.parseInt(request.getParameter("hno"));
+		int stmon = Integer.parseInt(request.getParameter("today").split("-")[1]);
+		int today = Integer.parseInt(request.getParameter("today").split("-")[2]);
+		String name = request.getParameter("name");
+		return hresdao.roomdeleteForm(hno, stmon, today, name);
+	}
+
+	public void allcancle(HttpServletRequest request) {
+		int no = Integer.parseInt(request.getParameter("no"));
+		int point = finaldao.selectPoint(no);
+		int rno = Integer.parseInt(request.getParameter("rno"));
+		int day = Integer.parseInt(request.getParameter("day"));
+		finaldao.cancle(no);
+
+		if (rno != 0) {
+			for (int i = rno; i <= rno + day - 1; i++)
+				hresdao.nullRoomnum(i);
+		}
+
+		if (point != 0) {
+			String userid = request.getParameter("userid");
+			int pointno = userdao.pointmaxno() + 1;
+			finaldao.setPoint(point, userid, pointno);
+		}
+	}
+
+	public void wishBtn(String userid, int no) {
+		userdao.insert(userid, no);
+	}
+
+	public User idchk(User user) {
+		return userdao.idchk(user);
+	}
+
+	public List<Final> history(String userid) {
+		return finaldao.history(userid);
+	}
+
+	public List<Final> cancellationl(String userid) {
+		return finaldao.cancellationl(userid);
 	}
 }

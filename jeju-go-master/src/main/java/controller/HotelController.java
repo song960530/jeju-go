@@ -295,7 +295,7 @@ public class HotelController {
 		return mav;
 	}
 
-	@PostMapping("allfinal")
+	@RequestMapping("allfinal")
 	public ModelAndView allfinal(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		try {
@@ -311,26 +311,40 @@ public class HotelController {
 	public ModelAndView deleteForm(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		try {
-			int count = service.deleteForm(request);
-			int hno=Integer.parseInt(request.getParameter("hno"));
+			String name = request.getParameter("name");
+			int hno = Integer.parseInt(request.getParameter("hno"));
+			int count;
+			if (name == null || name.trim().equals("")) {
+				count = service.deleteForm(request);
+			} else {
+				count = service.roomdeleteForm(request);
+				mav.addObject("name", request.getParameter("name"));
+
+			}
 			if (count != 0) {
 				mav.addObject("msg", request.getParameter("today") + "이후<br> 예약된 내역이 조회되어 삭제가 불가능합니다.");
 			}
-			mav.addObject("today",request.getParameter("today"));
+			mav.addObject("today", request.getParameter("today"));
 			mav.addObject("hno", hno);
 		} catch (Exception e) {
 			throw new JejuException("호텔 삭제중 오류가 발생하였습니다.", "../admin/adminhotellist.jeju");
 		}
 		return mav;
 	}
-	
+
 	@RequestMapping("hoteldelete")
 	public ModelAndView hoteldelete(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
+		String name = request.getParameter("name");
 		try {
 			service.hoteldelete(request);
-			mav.addObject("msg", "숙소가 성공적으로 삭제되었습니다.");
-			mav.addObject("url", "adminhotellist.jeju");
+			if (name == null || name.trim().equals("")) {
+				mav.addObject("msg", "숙소가 성공적으로 삭제되었습니다.");
+				mav.addObject("url", "adminhotellist.jeju");
+			} else {
+				mav.addObject("msg", "방이 성공적으로 삭제되었습니다.");
+				mav.addObject("url", "roomdeleteForm.jeju?no=" + Integer.parseInt(request.getParameter("hno")));
+			}
 			mav.setViewName("alert");
 		} catch (Exception e) {
 			throw new JejuException("호텔 삭제중 오류가 발생하였습니다.", "adminhotellist.jeju");
@@ -348,6 +362,32 @@ public class HotelController {
 			mav.addObject("msg", "비밀번호가 일치합니다");
 		} else {
 			mav.addObject("msg", "비밀번호가 일치하지 않습니다.");
+		}
+		return mav;
+	}
+
+	@GetMapping("roomdeleteForm")
+	public ModelAndView roomdeleteForm(Integer no, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		try {
+			Hotel h = service.selectOne(no);
+			List<Room> r = service.roomList(no);
+			h.setRoom(r);
+			mav.addObject("room", r);
+			mav.addObject("hotel", h);
+		} catch (Exception e) {
+			throw new JejuException("상세페이지를 불러오기에 실패하였습니다.", "../user/main.jeju");
+		}
+		return mav;
+	}
+
+	@RequestMapping("allcancle")
+	public ModelAndView allcancle(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		try {
+			service.allcancle(request);
+		}catch(Exception e) {
+			throw new JejuException("승인취소중 오류가 발생하였습니다", "../admin/acceptlist.jeju");
 		}
 		return mav;
 	}

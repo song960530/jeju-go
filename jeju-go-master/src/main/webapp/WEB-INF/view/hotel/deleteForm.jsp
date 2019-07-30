@@ -26,6 +26,7 @@
 		}
 		return true;
 	}
+	
 $(document).ready(function(){
 	$('#btn2').on('click', function() {
 		pass = document.getElementById("password").value;
@@ -61,6 +62,7 @@ $(document).ready(function(){
 					<form action="hoteldelete.jeju" name="f" method="post" onsubmit="return finish(this)">
 						<input type="hidden" name="hno" value="${hno}">
 						<input type="hidden" name="today" value="${today}">
+						<input type="hidden" name="name" value="${name}">
 						<span style="padding-left:20%;"><input type="password" name="password" id="password"></span>
 						<span><input type="button" class="w3-button w3-blue" value="비밀번호 확인" id="btn2"></span>
 						<input type="text" id="result" value="비밀번호를 확인 해주세요" readonly>

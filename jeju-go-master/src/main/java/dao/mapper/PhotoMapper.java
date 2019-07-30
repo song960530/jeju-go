@@ -27,5 +27,7 @@ public interface PhotoMapper {
 
 	@Delete("delete from photo where hno=#{hno}")
 	void photodelete(int hno);
+	@Delete("delete from photo where hno=#{hno} and type=#{name}")
+	void photodelete2(Map<String, Object> param);
 
 }

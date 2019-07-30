@@ -28,4 +28,7 @@ public interface RoomMapper {
 
 	@Delete("delete from room where hno=#{hno}")
 	void roomdelete(int hno);
+
+	@Delete("delete from room where hno=#{hno} and name=#{name}")
+	void roomdelete2(Map<String, Object> param);
 }

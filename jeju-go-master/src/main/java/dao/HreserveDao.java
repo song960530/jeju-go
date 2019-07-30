@@ -127,4 +127,21 @@ public class HreserveDao {
 	public void hoteldelete(int hno) {
 		sqlSession.getMapper(HreserveMapper.class).hoteldelete(hno);
 	}
+
+	public int roomdeleteForm(int hno, int stmon, int today, String name) {
+		param.clear();
+		param.put("hno", hno);
+		param.put("stmon", stmon);
+		param.put("today", today);
+		param.put("name", name);
+		return sqlSession.getMapper(HreserveMapper.class).roomdeleteForm(param);
+	}
+
+	public void hoteldelete2(int hno, String name) {
+		param.clear();
+		param.put("hno", hno);
+		param.put("name", name);
+		sqlSession.getMapper(HreserveMapper.class).hoteldelete2(param);
+		
+	}
 }

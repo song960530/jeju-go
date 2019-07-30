@@ -21,13 +21,15 @@ public class PhotoDao {
 	public List<Photo> selectOne(Integer i) {
 		return sqlSession.getMapper(PhotoMapper.class).selectOne(i);
 	}
-	public List<Photo> selectOne2(Integer hno,String roomnum) {
+
+	public List<Photo> selectOne2(Integer hno, String roomnum) {
 		param.clear();
 		param.put("hno", hno);
 		param.put("roomnum", roomnum);
 		return sqlSession.getMapper(PhotoMapper.class).selectOne2(param);
 	}
-	public List<Photo> selectOne3(Integer hno,String type) {
+
+	public List<Photo> selectOne3(Integer hno, String type) {
 		param.clear();
 		param.put("hno", hno);
 		param.put("type", type);
@@ -40,6 +42,14 @@ public class PhotoDao {
 
 	public void photodelete(int hno) {
 		sqlSession.getMapper(PhotoMapper.class).photodelete(hno);
-		
+
+	}
+
+	public void photodelete2(int hno, String name) {
+		param.clear();
+		param.put("hno", hno);
+		param.put("name", name);
+		sqlSession.getMapper(PhotoMapper.class).photodelete2(param);
+
 	}
 }

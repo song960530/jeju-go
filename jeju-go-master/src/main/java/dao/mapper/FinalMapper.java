@@ -19,7 +19,6 @@ public interface FinalMapper {
 			+ " values(#{no},#{hno},#{name},#{pno},#{pnum},#{rno},#{total},#{userid},#{username},#{start},#{end},#{day},'½ÂÀÎ´ë±â',now(),#{point},#{hname},#{roomnum})")
 	void insert(Final f1);
 
-	
 	@Select("select * from finally where checked='½ÂÀÎ´ë±â'")
 	List<Final> acceptList();
 
@@ -31,4 +30,19 @@ public interface FinalMapper {
 
 	@Select("select total from finally where no=#{no}")
 	int selectTotal(int no);
+
+	@Update("update finally set pno=#{pno},checked='½ÂÀÎ¿Ï·á' where no=#{no}")
+	void Pfinish(Map<String, Object> param);
+
+	@Update("update finally set checked='½ÂÀÎÃë¼Ò' where no=#{no}")
+	void cancle(int no);
+
+	@Select("select point from finally where no=#{no}")
+	int selectPoint(int no);
+	
+	@Select("select * from finally where userid = #{userid}")
+	List<Final> history(String userid);
+
+	@Update("update finally set checked='½ÂÀÎÃë¼Ò' where no=#{no}")
+	List<Final> cancellationl(String userid);
 }

@@ -58,4 +58,9 @@ public interface HreserveMapper {
 	@Delete("delete from hreserve where hno=#{hno} and subscriber is null")
 	void hoteldelete(int hno);
 
+	@Select("select ifnull(count(*),0) from hreserve where hno=#{hno} and name=#{name} and mon>=#{stmon} and day>=#{today} and subscriber is not null")
+	int roomdeleteForm(Map<String, Object> param);
+
+	@Delete("delete from hreserve where hno=#{hno} and name=#{name} and subscriber is null")
+	void hoteldelete2(Map<String, Object> param);
 }

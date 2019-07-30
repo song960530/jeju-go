@@ -18,22 +18,22 @@ public class FinalDao {
 	private SqlSessionTemplate sqlSession;
 	private final String NS = "dao.mapper.FinallyDao.";
 	private Map<String, Object> param = new HashMap<String, Object>();
-	
+
 	public int maxno() {
 		return sqlSession.getMapper(FinalMapper.class).maxno();
-		
+
 	}
 
 	public void insert(Final f1) {
 		sqlSession.getMapper(FinalMapper.class).insert(f1);
-		
+
 	}
 
 	public List<Final> acceptList() {
 		return sqlSession.getMapper(FinalMapper.class).acceptList();
 
 	}
-	
+
 	public void finish(int no, String roomnum) {
 		param.clear();
 		param.put("no", no);
@@ -55,5 +55,29 @@ public class FinalDao {
 
 	public int selectTotal(int no) {
 		return sqlSession.getMapper(FinalMapper.class).selectTotal(no);
+	}
+
+	public void Pfinish(int no, int pno) {
+		param.clear();
+		param.put("no", no);
+		param.put("pno", pno);
+		sqlSession.getMapper(FinalMapper.class).Pfinish(param);
+	}
+
+	public void cancle(int no) {
+		sqlSession.getMapper(FinalMapper.class).cancle(no);
+	}
+
+	public int selectPoint(int no) {
+		return sqlSession.getMapper(FinalMapper.class).selectPoint(no);
+
+	}
+
+	public List<Final> history(String userid) {
+		return sqlSession.getMapper(FinalMapper.class).history(userid);
+	}
+
+	public List<Final> cancellationl(String userid) {
+		return sqlSession.getMapper(FinalMapper.class).cancellationl(userid);
 	}
 }

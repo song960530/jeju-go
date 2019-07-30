@@ -75,6 +75,8 @@ function win_delete(no) {
 										<a href="javascript:win_delete(${hotel.no})" alt="">삭제하기</a> <i class="fa fa-long-arrow-right"></i>
 										<br> <a href="roomregist.jeju?no=${hotel.no}" alt="">방 등록하기
 											</a> <i class="fa fa-long-arrow-right"></i>
+										<br> <a href="roomdeleteForm.jeju?no=${hotel.no}" alt="">방 삭제하기
+											</a> <i class="fa fa-long-arrow-right"></i>
 										<br> <a href="hreserveform.jeju?hno=${hotel.no}" alt="">예약
 											가능 방 등록하기</a> <i class="fa fa-long-arrow-right"></i>
 									</div>
