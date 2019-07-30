@@ -38,10 +38,26 @@ public class AdminController {
 	}
 
 	@RequestMapping({ "list", "deletelist" })
-	public ModelAndView list(HttpServletRequest request) {
+	public ModelAndView list(Integer pageNum, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		List<User> list = service.userList(request);
+		if (pageNum == null || pageNum.toString().equals("")) pageNum = 1;
+		int limit = 10;
+		List<User> list = service.userList(pageNum, limit, request);
+		int count = service.usercount();
+		int maxpage = (int) ((double) count / limit + 0.95);
+		int startpage = ((int) ((pageNum / 10.0 + 0.9) - 1) * 10 + 1);
+		int endpage = startpage + 9;
+		if (endpage > maxpage) {
+			endpage = maxpage;
+		}
+		int userno = count - (pageNum - 1) * limit;
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("maxpage", maxpage);
+		mav.addObject("startpage", startpage);
+		mav.addObject("endpage", endpage);
+		mav.addObject("count", count);
 		mav.addObject("list", list);
+		mav.addObject("userno", userno);
 		return mav;
 	}
 
@@ -114,15 +130,28 @@ public class AdminController {
 	}
 
 	@GetMapping("acceptlist")
-	public ModelAndView acceptlist() {
+	public ModelAndView acceptlist(Integer pageNum) {
 		ModelAndView mav = new ModelAndView();
 		try {
+			if (pageNum == null || pageNum.toString().equals("")) pageNum = 1;
+			int limit = 10;
 			List<Final> list = service.acceptList();
-
 			for (Final f : list) {
 				f.setRoomnums(service.roomnums(f));
 			}
-
+			int count = service.acceptcount();
+			int maxpage = (int) ((double) count / limit + 0.95);
+			int startpage = ((int) ((pageNum / 10.0 + 0.9) - 1) * 10 + 1);
+			int endpage = startpage + 9;
+			if (endpage > maxpage) endpage = maxpage;
+			int reserveno = count - (pageNum - 1) * limit;
+			mav.addObject("count", count);
+			mav.addObject("list", list);
+			mav.addObject("pageNum", pageNum);
+			mav.addObject("maxpage", maxpage);
+			mav.addObject("startpage", startpage);
+			mav.addObject("endpage", endpage);
+			mav.addObject("reserveno", reserveno);
 			mav.addObject("list", list);
 		} catch (Exception e) {
 			throw new JejuException("페이지를 호출하던 중 오류가 발생하였습니다", "../user/main.jeju");

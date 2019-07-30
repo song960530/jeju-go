@@ -37,20 +37,26 @@ th {
 </style>
 <title>회원 목록</title>
 <script type="text/javascript">
-   function allchkbox(allchk) {
-      var chks = document.getElementsByName("idchks");
-      for (var i = 0; i < chks.length; i++) {
-         chks[i].checked = allchk.checked;
-      }
-   }
-   function passchk(id){
-	   alert("dz")
-	   return false;
-	   
-   }
+	function allchkbox(allchk) {
+	   var chks = document.getElementsByName("idchks");
+	   for (var i = 0; i < chks.length; i++) {
+	      chks[i].checked = allchk.checked;
+	   }
+	}
+	function passchk(id){
+		alert("dz")
+	 	return false;
+	 
+	}
+	function listcall(page) {
+	    document.list.pageNum.value = page;
+	    document.list.submit();
+	 }
 </script>
 </head>
 <body>
+<form name="list">
+<input type="hidden" name="pageNum" value="1">
 	<div class="container">
 		<div>
 			<button class="btn-primarys">
@@ -95,13 +101,39 @@ th {
 										<button type="submit"
 											class="w3-button w3-padding-large w3-green w3-margin-bottom">강제탈퇴</button>
 									</form>
-									<%-- </form:form> --%>
-			</div>
-		</div>
-	</div>
+								</div>
+							</div>
+						</div>
 				</c:forEach>
+				<tr>
+    				<td colspan="5" class="w3-center">
+	       				<c:if test="${pageNum > 1}">
+	          				<a href="javascript:listcall(${pageNum - 1})">[이전]</a>
+	       				</c:if>
+
+	       				<c:if test="${pageNum <= 1}">[이전]</c:if>
+	       				<c:forEach var="a" begin="${startpage}" end="${endpage}">
+	          				<c:if test="${a == pageNum}">[${a}]</c:if>
+	          				<c:if test="${a != pageNum}">
+	            				<a href="javascript:listcall(${a})">[${a}]</a>
+	          				</c:if>
+	       				</c:forEach>
+
+	       				<c:if test="${pageNum < maxpage}">
+				           	<a href="javascript:listcall(${pageNum + 1})">[다음]</a>
+	       				</c:if>
+
+	       				<c:if test="${pageNum >= maxpage}">[다음]</c:if>
+        			</td>
+     			</tr>
+				<c:if test="${count == 0}">
+	  				<tr>
+	  					<td colspan="5">등록된 문의글이 없습니다.</td>
+	  				</tr>
+				</c:if>
 			</table>
 		</div>
 	</div>
+	</form>
 </body>
 </html>

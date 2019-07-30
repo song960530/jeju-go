@@ -25,9 +25,11 @@ public class UserDao {
 		return sqlSession.getMapper(UserMapper.class).selectOne(userId);
 	}
 
-	public List<User> list(String d) {
+	public List<User> list(String d, Integer pageNum, int limit) {
 		param.clear();
 		param.put("delete", d);
+		param.put("startrow", (pageNum - 1) * limit);
+		param.put("limit", limit);
 		return sqlSession.selectList(NS + "list", param);
 	}
 
@@ -111,5 +113,9 @@ public class UserDao {
 
 	public List<Integer> nolist(String userid) {
 		return sqlSession.getMapper(UserMapper.class).selectNo(userid);
+	}
+
+	public int usercount() {
+		return sqlSession.selectOne(NS + "count");
 	}
 }

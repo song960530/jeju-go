@@ -225,12 +225,12 @@ public class JejuService {
 		userdao.update(user);
 	}
 
-	public List<User> userList(HttpServletRequest request) {
+	public List<User> userList(Integer pageNum, int limit, HttpServletRequest request) {
 		String d = request.getParameter("delete");
 		if (d == null || d.trim().equals("")) {
 			d = null;
 		}
-		List<User> list = userdao.list(d);
+		List<User> list = userdao.list(d, pageNum, limit);
 		return list;
 	}
 
@@ -852,5 +852,13 @@ public class JejuService {
 
 	public int selctwish(String userid, Integer no) {
 		return hoteldao.selectwish(userid, no);
+	}
+
+	public int usercount() {
+		return userdao.usercount();
+	}
+
+	public int acceptcount() {
+		return finaldao.acceptcount();
 	}
 }
