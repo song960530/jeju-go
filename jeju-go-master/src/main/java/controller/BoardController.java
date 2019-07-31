@@ -96,7 +96,7 @@ public class BoardController {
 	}
 
 	@RequestMapping("qnalist")
-	public ModelAndView qnalist(Integer pageNum, Integer type2, String userid) {
+	public ModelAndView lcheckqnalist(Integer pageNum, Integer type2, String userid, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		if (pageNum == null || pageNum.toString().equals("")) {
 			pageNum = 1;
@@ -176,7 +176,7 @@ public class BoardController {
 	}
 
 	@PostMapping("qnareply")
-	public ModelAndView reply(Board board, HttpServletRequest request) {
+	public ModelAndView adcheckreply(Board board, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			service.reply(board, request);
@@ -209,7 +209,7 @@ public class BoardController {
 	}
 
 	@PostMapping("replydelete")
-	public ModelAndView replydelete(Board board, HttpServletRequest request, HttpSession session) {
+	public ModelAndView adcheckreplydelete(Board board, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			service.replydelete(board);

@@ -9,6 +9,8 @@
 		<typeAlias type="logic.Board" alias="Board" />
 		<typeAlias type="logic.Package" alias="Package" />
 		<typeAlias type="logic.Final" alias="Final" />
+		<typeAlias type="logic.Point" alias="Point" />
+		
 	</typeAliases>
 	<mappers>
 		<mapper resource="dao/mapper/Hotel.xml"/>
@@ -20,5 +22,6 @@
 		<mapper resource="dao/mapper/Package.xml"/>
 		<mapper resource="dao/mapper/Final.xml"/>
 		<mapper resource="dao/mapper/Review.xml"/>
+		<mapper resource="dao/mapper/Point.xml"/>
 	</mappers>
 </configuration>

@@ -17,7 +17,7 @@ public class UserAspect {
 	public Object userLoginCheck(ProceedingJoinPoint joinPoint, HttpSession session) throws Throwable {
 		User login = (User) session.getAttribute("login");
 		if (login == null) {
-			throw new LogInException("로그인 후 거래하세요.", "../user/main.jeju");
+			throw new LogInException("로그인을 해주세요.", "../user/login.jeju");
 		}
 		Object ret = joinPoint.proceed();
 		return ret;

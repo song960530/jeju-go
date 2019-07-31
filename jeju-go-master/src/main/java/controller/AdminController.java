@@ -38,9 +38,10 @@ public class AdminController {
 	}
 
 	@RequestMapping({ "list", "deletelist" })
-	public ModelAndView list(Integer pageNum, HttpServletRequest request) {
+	public ModelAndView adchecklist(Integer pageNum, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		if (pageNum == null || pageNum.toString().equals("")) pageNum = 1;
+		if (pageNum == null || pageNum.toString().equals(""))
+			pageNum = 1;
 		int limit = 10;
 		List<User> list = service.userList(pageNum, limit, request);
 		int count = service.usercount();
@@ -62,7 +63,7 @@ public class AdminController {
 	}
 
 	@RequestMapping("delete")
-	public ModelAndView delete(String[] idchks) {
+	public ModelAndView adcheckdelete(String[] idchks, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			for (String id : idchks) {
@@ -78,7 +79,7 @@ public class AdminController {
 	}
 
 	@RequestMapping("qnalist")
-	public ModelAndView qnalist(Integer pageNum, Integer type2, String userid) {
+	public ModelAndView adcheckqnalist(Integer pageNum, Integer type2, String userid, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		if (pageNum == null || pageNum.toString().equals("")) {
 			pageNum = 1;
@@ -107,7 +108,7 @@ public class AdminController {
 	}
 
 	@RequestMapping("admindelete")
-	public ModelAndView admindelete(User user, HttpSession session) {
+	public ModelAndView adcheckadmindelete(User user, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		User dbUser = (User) session.getAttribute("login");
 		String password = service.MessageDigest(user.getPassword());
@@ -130,10 +131,11 @@ public class AdminController {
 	}
 
 	@GetMapping("acceptlist")
-	public ModelAndView acceptlist(Integer pageNum) {
+	public ModelAndView adcheckacceptlist(Integer pageNum, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
-			if (pageNum == null || pageNum.toString().equals("")) pageNum = 1;
+			if (pageNum == null || pageNum.toString().equals(""))
+				pageNum = 1;
 			int limit = 10;
 			List<Final> list = service.acceptList();
 			for (Final f : list) {
@@ -143,7 +145,8 @@ public class AdminController {
 			int maxpage = (int) ((double) count / limit + 0.95);
 			int startpage = ((int) ((pageNum / 10.0 + 0.9) - 1) * 10 + 1);
 			int endpage = startpage + 9;
-			if (endpage > maxpage) endpage = maxpage;
+			if (endpage > maxpage)
+				endpage = maxpage;
 			int reserveno = count - (pageNum - 1) * limit;
 			mav.addObject("count", count);
 			mav.addObject("list", list);
@@ -158,11 +161,12 @@ public class AdminController {
 		}
 		return mav;
 	}
-	
+
 	@GetMapping("reservationmanagement")
-	public ModelAndView reservationmanagement(Integer pageNum) {
+	public ModelAndView adcheckreservationmanagement(Integer pageNum, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		if (pageNum == null || pageNum.toString().equals("")) pageNum = 1;
+		if (pageNum == null || pageNum.toString().equals(""))
+			pageNum = 1;
 		int limit = 10;
 		try {
 			List<Final> list = service.reservationmanagement(pageNum, limit);
@@ -170,7 +174,8 @@ public class AdminController {
 			int maxpage = (int) ((double) count / limit + 0.95);
 			int startpage = ((int) ((pageNum / 10.0 + 0.9) - 1) * 10 + 1);
 			int endpage = startpage + 9;
-			if (endpage > maxpage) endpage = maxpage;
+			if (endpage > maxpage)
+				endpage = maxpage;
 			int reserveno = count - (pageNum - 1) * limit;
 			mav.addObject("count", count);
 			mav.addObject("list", list);
@@ -179,7 +184,7 @@ public class AdminController {
 			mav.addObject("startpage", startpage);
 			mav.addObject("endpage", endpage);
 			mav.addObject("reserveno", reserveno);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return mav;

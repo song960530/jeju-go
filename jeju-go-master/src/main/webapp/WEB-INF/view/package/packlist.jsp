@@ -1,81 +1,191 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+    pageEncoding="EUC-KR"%>
 <%@ include file="/WEB-INF/view/jspHeader.jsp"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>패키지 리스트</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="//css.skyscnr.com/sttc/hotels-website/hotels-website//static/css/main.e29e5cd7.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href="https://cdn.datahc.com/Styles/StyleSheet.ashx?key=Homepage&cdn=1.0.2019.204001-Cba67369227c2b38a3428f1d50a94ca8576c452d0" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<style>
+   .w3-sidebar a {font-family: "Roboto", sans-serif}
+   body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
+   div.left {
+      width: 20%;
+      float: left;
+      box-sizing: border-box;
+   }
+   div.right {
+      width: 70%;
+      float: right;
+      box-sizing: border-box;
+   }
+   table {
+     border-collapse: collapse;
+     width: 100%;
+   }
+   th, td {
+     text-align: left;
+     padding: 8px;
+   }
+   tr:nth-child(even){background-color: white}
+   tr:nth-child(odd){background-color: white;}
+   th {
+     background-color: #56A9E8; 
+     color: white;
+   }
+   .styled-select {
+      background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+      height: 29px;
+      overflow: hidden;
+      width: 240px;
+   }
+   
+   .styled-select select {
+      background: transparent;
+      border: none;
+      font-size: 14px;
+      height: 29px;
+      padding: 5px; /* If you add too much padding here, the options won't show in IE */
+      width: 268px;
+   }
+   
+   .styled-select.slate {
+      background: url(http://i62.tinypic.com/2e3ybe1.jpg) no-repeat right center;
+      height: 34px;
+      width: 240px;
+   }
+   
+   .styled-select.slate select {
+      border: 1px solid #ccc;
+      font-size: 16px;
+      height: 34px;
+      width: 268px;
+   }
+   
+   /* -------------------- Rounded Corners */
+   .rounded {
+      -webkit-border-radius: 20px;
+      -moz-border-radius: 20px;
+      border-radius: 20px;
+   }
+   
+   .semi-square {
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+   }
+   
+   /* -------------------- Colors: Background */
+   .slate   { background-color: #ddd; }
+   .green   { background-color: #779126; }
+   .blue    { background-color: #3b8ec2; }
+   .yellow  { background-color: #eec111; }
+   .black   { background-color: #000; }
+   
+   /* -------------------- Colors: Text */
+   .slate select   { color: #000; }
+   .green select   { color: #fff; }
+   .blue select    { color: #fff; }
+   .yellow select  { color: #000; }
+   .black select   { color: #fff; }
+   
+   
+   /* -------------------- Select Box Styles: danielneumann.com Method */
+   /* -------------------- Source: http://danielneumann.com/blog/how-to-style-dropdown-with-css-only/ */
+   #mainselection select {
+      border: 0;
+      color: #EEE;
+      background: transparent;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 2px 10px;
+      width: 378px;
+      *width: 350px;
+      *background: #58B14C;
+      -webkit-appearance: none;
+   }
+   
+   #mainselection {
+      overflow:hidden;
+      width:350px;
+      -moz-border-radius: 9px 9px 9px 9px;
+      -webkit-border-radius: 9px 9px 9px 9px;
+      border-radius: 9px 9px 9px 9px;
+      box-shadow: 1px 1px 11px #330033;
+      background: #58B14C url("http://i62.tinypic.com/15xvbd5.png") no-repeat scroll 319px center;
+   }
+   
+   
+   /* -------------------- Select Box Styles: stackoverflow.com Method */
+   /* -------------------- Source: http://stackoverflow.com/a/5809186 */
+   select#soflow, select#soflow-color {
+      -webkit-appearance: button;
+      -webkit-border-radius: 2px;
+      -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+      -webkit-padding-end: 20px;
+      -webkit-padding-start: 2px;
+      -webkit-user-select: none;
+      background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+      background-position: 97% center;
+      background-repeat: no-repeat;
+      border: 1px solid #AAA;
+      color: #555;
+      font-size: inherit;
+      margin: 20px;
+      overflow: hidden;
+      padding: 5px 10px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 300px;
+   }
+   
+   select#soflow-color {
+      color: #fff;
+      background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#779126, #779126 40%, #779126);
+      background-color: #779126;
+      -webkit-border-radius: 20px;
+      -moz-border-radius: 20px;
+      border-radius: 20px;
+      padding-left: 15px;
+   }
+</style>
+<title>패키지 리스트</title>
 </head>
 <body>
-	<div class="container"
-		style="margin-left: 5%; margin-right: 5%; width: 90%;">
-		<div class="row">
-			<div class="recent">
-				<button class="btn-primarys"
-					style="margin-left: 45%; margin-right: 45%;">
-					<h3 class="w3-center">Package List</h3>
-				</button>
-			</div>
-		</div>
-	</div>
-	<div class="container" style="margin:auto; width: 50%;">
-		<div class="SearchResultsDisplay_SearchResultsDisplay__card__2-jVd">
-			<c:forEach items="${packlist}" var="pack">
-			<fmt:formatNumber value="${pack.price}" var="price" pattern="#,###.###"/>
-				<a href="packdetail.jeju?no=${pack.no}&userid=${login.userid}" class="BpkCard_bpk-card__287qD CardLayout_CardLayout__x65BH">
-					<div class="CardLayout_CardLayout__colLeft__1YR5c">
-						<div class="CardImage_CardImage__3uGof HotelCard_HotelCard__img__j5ZIV">
-							<picture>
-								<img src="${path}/${pack.photourl}" style="width: 100%; height: 100%;" alt="">
-							</picture>
-						</div>
-					</div>
-					<div class="CardLayout_CardLayout__colRight__1_bJA">
-						<div class="CardLayout_CardLayout__colRightRowTop__2x9Et">
-							<div class="CardLayout_CardLayout__colRightRowTopColLeft__1OwZD">
-								<div class="CardLayout_CardLayout__nameAndStarsContainer__1l7OY">
-									<div class="CardLayout_CardLayout__name__3PlSj">
-										<div class="HotelCard_HotelCard__name__2jTNm" data-test-id="hotel-name">패키지 명 : ${pack.name}</div>
-									</div>
-								</div>
-								<div class="CardLayout_CardLayout__nameAndStarsContainer__1l7OY">
-									<div class="CardLayout_CardLayout__name__3PlSj">
-										<div class="HotelCard_HotelCard__name__2jTNm" data-test-id="hotel-name">가격 : ${price}원</div>
-									</div>
-								</div>
-								<div>
-									<div class="CardLayout_CardLayout__scoreMobile__1s2wf">
-										<span class="BpkText_bpk-text__WdiWu BpkText_bpk-text--sm__1-aIF CardScore_CardScore__2Gv9K CardScore_CardScore--rating_very_good__3WgpZ">8.5</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="CardLayout_CardLayout__colRightRowBottom__3eZwK">
-							<div class="CardLayout_CardLayout__colRightRowBottomColRight__RWwIj">
-								<!-- <div class="HotelCard_HotelCard__price__pZRWW">싯가</div>
-								<div class="CardLayout_CardLayout__mediumLargeViewport__1r4P7">
-									<div class="HotelCard_HotelCard__cta__1n4MC">
-										<button type="button" class="BpkButton_bpk-button__2Jd0U">세부정보 보기&nbsp;
-											<span style="line-height: 1.125rem; display: inline-block; margin-top: 0.1875rem; vertical-align: top;">
-											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="BpkIcon_bpk-icon--rtl-support__2Qefw" style="width: 1.125rem; height: 1.125rem;">
-											<path d="M14.4 19.5l5.7-5.3c.4-.4.7-.9.8-1.5.1-.3.1-.5.1-.7s0-.4-.1-.6c-.1-.6-.4-1.1-.8-1.5l-5.7-5.3c-.8-.8-2.1-.7-2.8.1-.8.8-.7 2.1.1 2.8l2.7 2.5H5c-1.1 0-2 .9-2 2s.9 2 2 2h9.4l-2.7 2.5c-.5.4-.7 1-.7 1.5s.2 1 .5 1.4c.8.8 2.1.8 2.9.1z"></path></svg></span>
-										</button>
-									</div>
-								</div> -->
-							</div>
-						</div>
-					</div>
-				</a>
-			</c:forEach>
-		</div>
-	</div>
+   <div class="container">
+      <h2 class="widgetheading" style="text-align: center;">패키지</h2>
+      <table class="w3-center" style="color: black;">
+         <c:forEach items="${packlist}" var="pack">
+            <tr style="color: black;">
+               <td style="text-align:left" rowspan="2" width="30%">
+                  <img alt="" src="${path}/${pack.photourl}" width="400px" height="300px">
+                     </td>
+                     <td colspan="2" valign="top"><font size="6%" style="font-weight:bolder">${pack.name} [${pack.mon}월]</font><br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<font size="3%">여행기간 - 6박 ${pack.travelday}일</font><br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<font size="3%">여행출발 -
+                        <c:forEach items="${pack.startday}" var="start">
+                           ${start}일&nbsp;
+                        </c:forEach></font><br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<font size="3%">최대 인원 - ${pack.max}명</font>
+                     </td>
+                     <td class="w3-center" rowspan="2">
+                        <input type="button" onclick="location.href='../package/packdetail.jeju?no=${pack.no}&userid=${login.userid}'" 
+                           style="width:100%; height:200pt; background-color:white; color:black; font-size:20px;" class="btn btn-primary" value="상세보기">
+               </td>
+                  </tr>
+                  <tr>
+                   <td height="30%">
+                      <font size="5%" style="font-weight:bolder">
+                      가격 : 
+                         <fmt:formatNumber value="${pack.price}" pattern="###,###" />원 ~ 
+                         <fmt:formatNumber value="${pack.price * pack.max}" pattern="###,###" />원
+                      </font>
+                   </td>
+              </tr>
+           </c:forEach>
+      </table>
+   </div>
 </body>
-</html>
+</html> 
