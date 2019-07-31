@@ -64,7 +64,7 @@ public class UserController {
 	}
 
 	@PostMapping("login")
-	public ModelAndView login(@Valid User user, BindingResult bindResult, HttpSession session) {
+	public ModelAndView login(@Valid User user, BindingResult bindResult, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			User dbUser = service.userSelect(user.getUserid());
@@ -100,7 +100,7 @@ public class UserController {
 	}
 
 	@PostMapping("userSearch")
-	public ModelAndView userSearch(User user, BindingResult bindResult, HttpSession session) {
+	public ModelAndView adcheckuserSearch(User user, BindingResult bindResult, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		User dbUser = service.userSelect(user.getUserid());
 		if (user.getUsername() != null && user.getUsername().length() != 0 && user.getPhone() != null
@@ -297,7 +297,7 @@ public class UserController {
 	}
 
 	@GetMapping("history")
-	public ModelAndView acceptlist(String userid) {
+	public ModelAndView lcheckacceptlist(String userid, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			List<Final> list = service.history(userid);
@@ -309,7 +309,7 @@ public class UserController {
 	}
 
 	@RequestMapping("wish")
-	public ModelAndView wishBtn(HttpServletRequest request) {
+	public ModelAndView lcheckwishBtn(HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		int no = Integer.parseInt(request.getParameter("no"));
 		String userid = request.getParameter("userid");
@@ -321,7 +321,7 @@ public class UserController {
 	}
 
 	@RequestMapping("deletewish")
-	public ModelAndView deletewish(HttpServletRequest request) {
+	public ModelAndView lcheckdeletewish(HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		int no = Integer.parseInt(request.getParameter("no"));
 		String userid = request.getParameter("userid");
@@ -333,22 +333,18 @@ public class UserController {
 	}
 
 	@RequestMapping("wishlist")
-	public ModelAndView detail(String userid, HttpSession session) {
+	public ModelAndView lcheckdetail(String userid, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		User user = service.userSelect(userid);
-		System.out.println(userid);
-//		User dbUser = service.userSelect(user.getUserid());
 		List<Integer> no = service.noSelect(userid);
 		List<Hotel> list = service.wihslist(no);
-		System.out.println(no);
-		System.out.println(list);
 		mav.addObject("list", list);
 		mav.addObject("no", no);
 		return mav;
 	}
 
 	@RequestMapping("reviewForm")
-	public ModelAndView reviewForm(HttpServletRequest request, HttpSession session) {
+	public ModelAndView lcheckreviewForm(HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		int no = Integer.parseInt(request.getParameter("no"));
 		Final f = service.selectFinal(no);
@@ -358,7 +354,7 @@ public class UserController {
 	}
 
 	@PostMapping("writereview")
-	public ModelAndView wrietreview(Review review, HttpSession session) {
+	public ModelAndView lcheckwrietreview(Review review, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			service.writeReview(review);
@@ -367,6 +363,34 @@ public class UserController {
 			mav.setViewName("alert");
 		} catch (Exception e) {
 			throw new JejuException("리뷰 작성을 실패하였습니다", "../user/history?userid=" + review.getUserid());
+		}
+		return mav;
+	}
+
+	@RequestMapping("mypoint")
+	public ModelAndView lcheckmypoint(Integer pageNum, String userid, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		if (pageNum == null || pageNum.toString().equals(""))
+			pageNum = 1;
+		int limit = 10;
+		try {
+			List<Point> list = service.mypoint(pageNum, limit, userid);
+			int count = service.mypointcount(userid);
+			int maxpage = (int) ((double) count / limit + 0.95);
+			int startpage = ((int) ((pageNum / 10.0 + 0.9) - 1) * 10 + 1);
+			int endpage = startpage + 9;
+			if (endpage > maxpage)
+				endpage = maxpage;
+			int pointno = count - (pageNum - 1) * limit;
+			mav.addObject("count", count);
+			mav.addObject("list", list);
+			mav.addObject("pageNum", pageNum);
+			mav.addObject("maxpage", maxpage);
+			mav.addObject("startpage", startpage);
+			mav.addObject("endpage", endpage);
+			mav.addObject("pointno", pointno);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return mav;
 	}

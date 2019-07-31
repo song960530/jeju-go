@@ -39,7 +39,8 @@ public class PackageController {
 	}
 
 	@PostMapping("packregist")
-	public ModelAndView packregist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
+	public ModelAndView adcheckpackregist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest,
+			HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		int no2 = 0;
 		try {
@@ -120,7 +121,7 @@ public class PackageController {
 	}
 
 	@PostMapping("packreserve")
-	public ModelAndView reservepack(Integer no, HttpSession session, HttpServletRequest request) {
+	public ModelAndView lcheckreservepack(Integer no, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		String userid = request.getParameter("userid");
 		int people = Integer.parseInt(request.getParameter("people"));
@@ -159,8 +160,8 @@ public class PackageController {
 	}
 
 	@RequestMapping("packreservechk")
-	public ModelAndView packreservechk(Integer no, String userid, int people, String startday, HttpSession session,
-			HttpServletRequest request) {
+	public ModelAndView lcheckpackreservechk(Integer no, String userid, int people, String startday,
+			HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			Package pack = service.getPack(no);
@@ -176,7 +177,7 @@ public class PackageController {
 	}
 
 	@PostMapping("packreservation")
-	public ModelAndView reservation(Package pack, Final f, HttpServletRequest request) {
+	public ModelAndView lcheckreservation(Package pack, Final f, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			Final fi = service.setFinal(f, request);
@@ -193,7 +194,7 @@ public class PackageController {
 	}
 
 	@PostMapping("packdelete")
-	public ModelAndView packdelete(Integer no, String userid, HttpServletRequest request) {
+	public ModelAndView adcheckpackdelete(Integer no, String userid, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			if (service.finalcount(no, userid) <= 0) {

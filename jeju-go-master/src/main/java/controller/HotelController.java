@@ -45,7 +45,7 @@ public class HotelController {
 	}
 
 	@PostMapping("register")
-	public ModelAndView register(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
+	public ModelAndView adcheckregister(HttpServletRequest request, MultipartHttpServletRequest mtfRequest, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			int hno = service.regist(request, mtfRequest);
@@ -69,7 +69,7 @@ public class HotelController {
 	}
 
 	@RequestMapping("adminhotellist")
-	public ModelAndView adminhotellist() {
+	public ModelAndView adcheckadminhotellist(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			List<Hotel> list = service.list();
@@ -126,7 +126,7 @@ public class HotelController {
 	}
 
 	@GetMapping("roomregist")
-	public ModelAndView register2(Integer no, Model model) {
+	public ModelAndView adcheckregister2(Integer no, Model model, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("no", no);
 		model.addAttribute(new Room());
@@ -134,7 +134,7 @@ public class HotelController {
 	}
 
 	@PostMapping("roomregister")
-	public ModelAndView roomregister(Room room, HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
+	public ModelAndView adcheckroomregister(Room room, HttpServletRequest request, MultipartHttpServletRequest mtfRequest, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			service.regist2(room, request, mtfRequest);
@@ -167,7 +167,7 @@ public class HotelController {
 	}
 
 	@GetMapping("hreserveform")
-	public ModelAndView hreserveform(Integer hno) {
+	public ModelAndView adcheckhreserveform(Integer hno, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		List<Room2> r2 = service.selectRoom2(hno);
 		for (Room2 r : r2) {
@@ -184,7 +184,7 @@ public class HotelController {
 	}
 
 	@PostMapping("yesroom")
-	public ModelAndView yesroom(Hreserve hreserve, HttpServletRequest request) {
+	public ModelAndView adcheckyesroom(Hreserve hreserve, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			service.yesroom(hreserve, request);
@@ -320,7 +320,7 @@ public class HotelController {
 	}
 
 	@RequestMapping("allfinal")
-	public ModelAndView allfinal(HttpServletRequest request) {
+	public ModelAndView adcheckallfinal(HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			service.allFinally(request);
@@ -332,7 +332,7 @@ public class HotelController {
 	}
 
 	@RequestMapping("deleteForm")
-	public ModelAndView deleteForm(HttpServletRequest request) {
+	public ModelAndView adcheckdeleteForm(HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			String name = request.getParameter("name");
@@ -357,7 +357,7 @@ public class HotelController {
 	}
 
 	@RequestMapping("hoteldelete")
-	public ModelAndView hoteldelete(HttpServletRequest request) {
+	public ModelAndView adcheckhoteldelete(HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		String name = request.getParameter("name");
 		try {
@@ -391,7 +391,7 @@ public class HotelController {
 	}
 
 	@GetMapping("roomdeleteForm")
-	public ModelAndView roomdeleteForm(Integer no, HttpServletRequest request) {
+	public ModelAndView adcheckroomdeleteForm(Integer no, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			Hotel h = service.selectOne(no);
@@ -406,7 +406,7 @@ public class HotelController {
 	}
 
 	@RequestMapping("allcancle")
-	public ModelAndView allcancle(HttpServletRequest request, HttpSession session) {
+	public ModelAndView lcheckallcancle(HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		User login = (User) session.getAttribute("login");
 		try {

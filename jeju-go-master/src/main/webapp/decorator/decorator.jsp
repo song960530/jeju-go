@@ -21,17 +21,11 @@
 <link rel="stylesheet" href="../Arsha/css/magnific-popup.css"> -->
 <link href="../Arsha/css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link
-	href="https://fonts.googleapis.com/css?family=Nanum+Brush+Script&display=swap"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link
-	href="https://fonts.googleapis.com/css?family=Nanum+Pen+Script&display=swap"
-	rel="stylesheet">
-<link
-	href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Arimo&display=swap" rel="stylesheet">
 <style>
 body, h1, h2, h3, h4, h5, h6 {
 	font-family: "Raleway", Arial, Helvetica, sans-serif;
@@ -265,9 +259,9 @@ body, h1, h2, h3, h4, h5, h6 {
 					<div class="container-fluid">
 						<div class="navbar-header">
 							<div class="navbar-brand">
-								<a href="../user/main.jeju"><h1
-										style="font-family: 'Nanum Brush Script', cursive; font-size: 100px">JeJu
-										Go</h1></a>
+								<a href="../user/main.jeju">
+								<h1 style="font-family: 'Arimo', sans-serif; font-size: 80px">JeJu Go</h1>
+								</a>
 							</div>
 						</div>
 						<div class="menu">
@@ -276,21 +270,21 @@ body, h1, h2, h3, h4, h5, h6 {
 									<li role="presentation"><a href="javascript:void(0)"
 										onclick="document.getElementById('signin').style.display='block'"
 										class="w3-bar-item w3-button"
-										style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">회원가입</a></li>
+										style="font-family: 'Arimo', sans-serif; font-size: 20px;">회원가입</a></li>
 									<li role="presentation"><a href="javascript:void(0)"
 										onclick="document.getElementById('login').style.display='block'"
 										class="w3-bar-item w3-button"
-										style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">로그인</a></li>
+										style="font-family: 'Arimo', sans-serif; font-size: 20px;">로그인</a></li>
 								</c:if>
 								<li role="presentation"><a
 									href="${path }/hotel/hotellist.jeju"
-									style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">Hotel</a></li>
+									style="font-family: 'Arimo', sans-serif; font-size: 20px;">Hotel</a></li>
 								<li role="presentation"><a href="../package/packlist.jeju"
-									style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">Packages</a></li>
+									style="font-family: 'Arimo', sans-serif; font-size: 20px;">Packages</a></li>
 
 								<li role="presentation"><a
 									href="${path }/board/csboard.jeju"
-									style="font-family: 'Nanum Pen Script', cursive; font-size: 30px;">고객센터</a></li>
+									style="font-family: 'Arimo', sans-serif; font-size: 20px;">고객센터</a></li>
 							</ul>
 						</div>
 					</div>
@@ -525,9 +519,8 @@ body, h1, h2, h3, h4, h5, h6 {
 						<input class="w3-input w3-border" type="text" name="userid"
 							style="text-transform: lowercase;" placeholder="아이디(이메일)"
 							id="userid2">
-						<button id="idchk" type="button" class="btn btn-primary">중복검사</button>
+					<i id="chkid"></i>
 					</p>
-					<p id="chkid"></p>
 					<p>
 						<input class="w3-input w3-border" type="password" name="password"
 							style="text-transform: lowercase;" placeholder="비밀번호">
@@ -543,6 +536,7 @@ body, h1, h2, h3, h4, h5, h6 {
 					</p>
 					<button type="submit" class="btn btn-primary">회원가입</button>
 					<button type="reset" class="btn btn-primary">초기화</button>
+					<button id="idchk" type="button" class="btn btn-primary">중복검사</button>
 				</form:form>
 			</div>
 		</div>

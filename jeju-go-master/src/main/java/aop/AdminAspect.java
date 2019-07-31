@@ -13,14 +13,14 @@ import logic.User;
 @Component
 @Aspect
 public class AdminAspect {
-	@Around("execution(* controller.Admin*.*(..)) && args(.., session)")
+	@Around("execution(* controller.*.adcheck*(..)) && args(.., session)")
 	public Object adminCheck(ProceedingJoinPoint joinPoint, HttpSession session) throws Throwable {
 		User login = (User)session.getAttribute("login");
 		if(login == null) {
-			throw new LogInException("로그인 후 이용하세요", "../user/login.shop");
+			throw new LogInException("로그인 후 이용하세요", "../user/login.jeju");
 		}
 		if(!login.getUserid().equals("admin")) {
-			throw new LogInException("관리자만 접근가능한 페이지 입니다.", "../user/mypage.shop?id=" + login.getUserid());
+			throw new LogInException("관리자만 접근가능한 페이지 입니다.", "../user/main.jeju");
 		}
 		Object ret = joinPoint.proceed();
 		return ret;

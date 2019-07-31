@@ -34,6 +34,8 @@ public class JejuService {
 	FinalDao finaldao;
 	@Autowired
 	ReviewDao reviewdao;
+	@Autowired
+	PointDao pointdao;
 
 	public int regist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
 		Hotel h = new Hotel();
@@ -885,5 +887,13 @@ public class JejuService {
 	public int sumSepoint(Integer no) {
 		return reviewdao.sumSepoint(no);
 
+	}
+	
+	public int mypointcount(String userid) {
+		return pointdao.mypointcount(userid);
+	}
+
+	public List<Point> mypoint(Integer pageNum, int limit, String userid) {
+		return pointdao.mypoint(pageNum, limit, userid);
 	}
 }
