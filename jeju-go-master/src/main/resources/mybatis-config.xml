@@ -19,5 +19,6 @@
 		<mapper resource="dao/mapper/Board.xml"/>
 		<mapper resource="dao/mapper/Package.xml"/>
 		<mapper resource="dao/mapper/Final.xml"/>
+		<mapper resource="dao/mapper/Review.xml"/>
 	</mappers>
 </configuration>

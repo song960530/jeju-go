@@ -17,6 +17,7 @@
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/css?family=Shrikhand&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
+<link href="../css/star.css" rel="stylesheet">
 <style>
 html, body, h1, h2, h3, h4 {
    font-family: "Lato", sans-serif
@@ -35,6 +36,17 @@ html, body, h1, h2, h3, h4 {
    width: 15px;
    padding: 0;
    margin-top: 6px
+}
+
+hr{
+    margin: 10px 0;
+}
+.panel-body{
+	padding : 10px;
+}
+h4 {
+    margin-block-start: 0.33em;
+    margin-block-end: 0.33em;
 }
 </style>
 <script type="text/javascript">
@@ -158,6 +170,109 @@ function showDivs(n) {
          </div>
       </c:forEach>
       <div id="map" style="width: 100%; height: 400px;"></div>
+<!-- 리뷰 부분 -->
+  <hr>
+    <div class="row">
+      <div class="col-md-4" style="width:100%;">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong>이용 후기</strong>
+          </div>
+          <!-- 리뷰가 없을때 부분 -->
+          <c:if test="${empty review}">
+         	 <div class="panel-body">
+	            <div class="media">
+	                <h4 class="media-heading">별점이 없어요 리뷰가 없어서!!!!!!</h4>
+	            </div>
+	          	<hr>
+	          </div>
+          	<div class="panel-body">
+	            <div class="media">
+	                <h4 class="media-heading">작성된 리뷰가 없습니다 ㅠㅠ</h4>
+	            </div>
+	            <hr>
+	          </div>
+          </c:if>
+          <!-- End 리뷰가 없을때 부분 -->
+          
+          <!-- 리뷰 있음 -->
+          <c:if test="${!empty review}">
+	          <div class="panel-body">
+	            <div class="media">
+	                <h4 class="media-heading">
+	                 	평균별점 :
+						<span class="star-input">
+							<span class="input focus">
+								<c:if test="${sumpoint==1 }">
+						    		<input name="star-input" id="p1" type="radio" value="1">
+						    		<label for="p1">1</label>
+						    	</c:if>
+						    	<c:if test="${sumpoint==2 }">
+						    		<input name="star-input" id="p2" type="radio" value="2">
+						    		<label for="p2">2</label>
+						    	</c:if>
+						    	<c:if test="${sumpoint==3 }">
+							    	<input name="star-input" id="p3" type="radio" value="3">
+							    	<label for="p3">3</label>
+						    	</c:if>
+						    	<c:if test="${sumpoint==4 }">
+							    	<input name="star-input" id="p4" type="radio" value="4">
+							    	<label for="p4">4</label>
+							    </c:if>
+							    <c:if test="${sumpoint==5 }">
+							    	<input name="star-input" id="p5" type="radio" value="5">
+							    	<label for="p5">5</label>
+							    </c:if>
+						  	</span>
+						</span>
+					</h4>
+	            </div>
+	          	<hr>
+	          </div>
+	          
+          	<c:forEach items="${review}" var="r">
+	          <div class="panel-body">
+	            <div class="media">
+	                <h4 class="media-heading">
+	                	<span class="star-input">
+							<span class="input focus">
+								<c:if test="${r.sepoint==1 }">
+						    		<input name="star-input" id="p1" type="radio" value="1">
+						    		<label for="p1">1</label>
+						    	</c:if>
+						    	<c:if test="${r.sepoint==2 }">
+						    		<input name="star-input" id="p2" type="radio" value="2">
+						    		<label for="p2">2</label>
+						    	</c:if>
+						    	<c:if test="${r.sepoint==3 }">
+							    	<input name="star-input" id="p3" type="radio" value="3">
+							    	<label for="p3">3</label>
+						    	</c:if>
+						    	<c:if test="${r.sepoint==4 }">
+							    	<input name="star-input" id="p4" type="radio" value="4">
+							    	<label for="p4">4</label>
+							    </c:if>
+							    <c:if test="${r.sepoint==5 }">
+							    	<input name="star-input" id="p5" type="radio" value="5">
+							    	<label for="p5">5</label>
+							    </c:if>
+						  	</span>
+						  	<span style="font-size: 15px;">
+	                			&nbsp;&nbsp;${r.userid}
+						  	</span>
+						</span>
+	                </h4>
+	                <p>&nbsp;&nbsp;${r.content}</p>
+	            </div>
+	            <hr>
+	          </div>
+	        </c:forEach>
+          </c:if>
+          <!-- End 리뷰 있음 -->
+        </div>
+      </div>
+    </div>
+    <!-- End 리뷰 부분 -->
    </div>
 <script>
 var markers = [];

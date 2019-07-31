@@ -8,6 +8,7 @@
 		<pattern>/hotel/deleteForm*</pattern>
 		<pattern>/hotel/adminpasschk*</pattern>
 		<pattern>/user/idchk*</pattern>
+		<pattern>/user/reviewForm*</pattern>
 		<!-- <pattern>/user/main.*</pattern> -->
 	</excludes>
 </decorators>

@@ -8,6 +8,7 @@ import logic.Hotel;
 import logic.Hreserve;
 import logic.JejuService;
 import logic.Latlng;
+import logic.Review;
 import logic.Room;
 import logic.Room2;
 import logic.User;
@@ -104,10 +105,20 @@ public class HotelController {
 				entity.setLng(str[11]);
 				arr.add(entity);
 			}
+			
+			List<Review> reviewlist = service.reviewList(no);
+			int sumpoint=0;
+			if(reviewlist.size()!=0) {
+				sumpoint = (int)service.sumSepoint(no);
+			}
+			
+			
 			arr.remove(0);
 			mav.addObject("cctv", arr);
 			mav.addObject("room", r);
 			mav.addObject("hotel", h);
+			mav.addObject("review", reviewlist);
+			mav.addObject("sumpoint", sumpoint);
 		} catch (Exception e) {
 			throw new JejuException("상세페이지를 불러오기에 실패하였습니다.", "../user/main.jeju");
 		}
@@ -219,12 +230,20 @@ public class HotelController {
 				entity.setLng(str[11]);
 				arr.add(entity);
 			}
+			
+			List<Review> reviewlist = service.reviewList(no);
+			int sumpoint=0;
+			if(reviewlist.size()!=0) {
+				sumpoint = (int)service.sumSepoint(no);
+			}
 			arr.remove(0);
 			mav.addObject("cctv", arr);
 			mav.addObject("hotel", hotel);
 			mav.addObject("startday", start);
 			mav.addObject("endday", end);
 			mav.addObject("people", people);
+			mav.addObject("review", reviewlist);
+			mav.addObject("sumpoint", sumpoint);
 
 			mav.setViewName("hotel/hoteldetail2");
 		} catch (Exception e) {

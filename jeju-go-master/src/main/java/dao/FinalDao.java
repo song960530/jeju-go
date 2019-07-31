@@ -120,4 +120,12 @@ public class FinalDao {
 	public int acceptcount() {
 		return sqlSession.selectOne(NS + "count");
 	}
+
+	public Final selectFinal(int no) {
+		return sqlSession.getMapper(FinalMapper.class).selectFinal(no);
+	}
+
+	public void reviewOk(int no) {
+		sqlSession.getMapper(FinalMapper.class).reviewOk(no);		
+	}
 }
