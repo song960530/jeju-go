@@ -32,6 +32,8 @@ public class JejuService {
 	PackageDao packagedao;
 	@Autowired
 	FinalDao finaldao;
+	@Autowired
+	ReviewDao reviewdao;
 
 	public int regist(HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
 		Hotel h = new Hotel();
@@ -860,5 +862,28 @@ public class JejuService {
 
 	public int acceptcount() {
 		return finaldao.acceptcount();
+	}
+
+	public Final selectFinal(int no) {
+		return finaldao.selectFinal(no);
+	}
+
+	public void writeReview(Review review) {
+		reviewdao.insert(review);
+
+	}
+
+	public void reviewOk(int no) {
+		finaldao.reviewOk(no);
+		
+	}
+
+	public List<Review> reviewList(Integer no) {
+		return reviewdao.selectList(no);
+	}
+
+	public int sumSepoint(Integer no) {
+		return reviewdao.sumSepoint(no);
+
 	}
 }

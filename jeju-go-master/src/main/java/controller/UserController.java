@@ -14,6 +14,7 @@ import logic.Final;
 import logic.Hotel;
 import logic.JejuService;
 import logic.Point;
+import logic.Review;
 import logic.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -343,6 +344,30 @@ public class UserController {
 		System.out.println(list);
 		mav.addObject("list", list);
 		mav.addObject("no", no);
+		return mav;
+	}
+
+	@RequestMapping("reviewForm")
+	public ModelAndView reviewForm(HttpServletRequest request, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		int no = Integer.parseInt(request.getParameter("no"));
+		Final f = service.selectFinal(no);
+
+		mav.addObject("f", f);
+		return mav;
+	}
+
+	@PostMapping("writereview")
+	public ModelAndView wrietreview(Review review, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		try {
+			service.writeReview(review);
+			service.reviewOk(review.getNo());
+			mav.addObject("msg", "리뷰가 등록되었습니다.");
+			mav.setViewName("alert");
+		} catch (Exception e) {
+			throw new JejuException("리뷰 작성을 실패하였습니다", "../user/history?userid=" + review.getUserid());
+		}
 		return mav;
 	}
 }

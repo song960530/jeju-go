@@ -23,8 +23,16 @@ public class Final {
 	private String hname;
 	private String roomnum;
 	private List<String> roomnums;
+	private String reviewchk;
 
-	
+	public String getReviewchk() {
+		return reviewchk;
+	}
+
+	public void setReviewchk(String reviewchk) {
+		this.reviewchk = reviewchk;
+	}
+
 	public List<String> getRoomnums() {
 		return roomnums;
 	}
@@ -184,6 +192,5 @@ public class Final {
 				+ checked + ", regdate=" + regdate + ", point=" + point + ", room=" + room + ", day=" + day
 				+ ", username=" + username + ", hname=" + hname + ", roomnum=" + roomnum + "]";
 	}
-
 
 }

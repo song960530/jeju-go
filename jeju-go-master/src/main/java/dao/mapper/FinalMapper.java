@@ -60,4 +60,10 @@ public interface FinalMapper {
 
 	@Select("select count(*) from finally")
 	int reservationcount();
+
+	@Select("select * from finally where no = #{no}")
+	Final selectFinal(int no);
+
+	@Update("update finally set reviewchk='ok' where no=#{no}")
+	void reviewOk(int no);
 }
