@@ -99,10 +99,11 @@ function win_delete(no,name) {
                <h2>
                   <a href="roomdetail.jeju?hno=${r.hno}&name=${r.name}" style="color:black;">${r.name}</a>
                </h2>
-               <span style="text-align: right;"><a href="javascript:win_delete(${r.hno},'${r.name}')" alt="">삭제하기</a> <i class="fa fa-long-arrow-right"></i></span>
                <h4 style="color: green; padding-left:5%">편의시설</h4> <span style="padding-left:8%">- ${r.convenient}</span>
                <h4 style="color: green; padding-left:5%">침대</h4> <span style="padding-left:8%">${r.bed}&nbsp;/&nbsp;${r.bedcount}개</span>
-               <p><fmt:formatNumber value="${r.price}" pattern="###,###"/></p>
+               <br>
+               <span style="font-size: 20px; color:red;"class="w3-right"><a href="javascript:win_delete(${r.hno},'${r.name}')" alt="">삭제하기</a> <i class="fa fa-long-arrow-right"></i></span>
+               <span><b style="font-size: 30px;" class="w3-right"><fmt:formatNumber value="${r.price}" pattern="###,###"/>원</b></span>
             </div>
          </div>
       </c:forEach>
