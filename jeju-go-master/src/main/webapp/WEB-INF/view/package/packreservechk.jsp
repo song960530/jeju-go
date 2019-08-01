@@ -15,18 +15,22 @@
 	function allPoint() {
 		var b="<fmt:formatNumber value="${countpoint}" pattern="###,###"/>"
 		var c="<b><fmt:formatNumber value="${(pack.price * people) - countpoint}" pattern="###,###"/></b>"
+		var f="<fmt:formatNumber value="${(pack.price * people) - countpoint}" pattern="###,###"/>"
 		document.getElementById("usepoint").value=${countpoint}
 		document.getElementById("halin").innerHTML=b
 		document.getElementById("totalprice1").innerHTML=c
 		document.getElementById("totalprice2").innerHTML=c
+		document.getElementById("totalprice3").innerHTML=f
 	};
 		function cancle() {
 			var b="<fmt:formatNumber value="${countpoint}" pattern="###,###"/>"
 			var c="<b><fmt:formatNumber value="${pack.price * people}" pattern="###,###"/></b>"
+			var f="<fmt:formatNumber value="${pack.price * people}" pattern="###,###"/>"
 			document.getElementById("usepoint").value=0
 			document.getElementById("halin").innerHTML=0
 			document.getElementById("totalprice1").innerHTML=c
 			document.getElementById("totalprice2").innerHTML=c
+			document.getElementById("totalprice3").innerHTML=f
 		};
 		
 	function confirm(){
@@ -192,6 +196,36 @@ h3 {
 						</tbody>
 					</table>
 				</div>
+				
+				<div class="odr_sheet">
+				<h3>
+					<span>4</span>. 입금 계좌
+				</h3>
+				<table>
+					<colgroup>
+						<col style="width: 220px;">
+						<col>
+					</colgroup>
+					<tbody>
+							<tr style="">
+							<th scope="row">계좌 정보</th>
+							<td>
+								<div class="dis">
+									<span class="tx">은행: 
+											<b style="color:blue;">하나은행</b>
+									</span>
+									<span class="tx">계좌번호: 
+											<b style="color:blue;">123-456789-123</b> 
+									</span>
+									<span class="tx">금액: 
+											<b style="color:blue;" id="totalprice3"><fmt:formatNumber value="${pack.price * people}" pattern="###,###"/>원</b>
+									</span>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 			
 	
 			<div class="odr_insFixed">
