@@ -162,8 +162,8 @@
                <td style="text-align:left" rowspan="2" width="30%">
                   <img alt="" src="${path}/${pack.photourl}" width="400px" height="300px">
                      </td>
-                     <td colspan="2" valign="top"><font size="6%" style="font-weight:bolder">${pack.name} [${pack.mon}월]</font><br><br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<font size="3%">여행기간 - 6박 ${pack.travelday}일</font><br><br>
+                     <td colspan="2" valign="top"><font size="6%" style="font-weight:bolder">${pack.name} - ${pack.mon}월</font><br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<font size="3%">여행기간 - 2박 ${pack.travelday}일</font><br><br>
                         &nbsp;&nbsp;&nbsp;&nbsp;<font size="3%">여행출발 -
                         <c:forEach items="${pack.startday}" var="start">
                            ${start}일&nbsp;

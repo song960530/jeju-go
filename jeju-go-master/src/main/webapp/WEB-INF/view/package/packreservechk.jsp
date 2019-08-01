@@ -93,9 +93,9 @@ h3 {
 								</td>
 							<td><dt style="font-size: 20px; color:grey;">${pack.name}</dt></td>
 							<td><span class="prc"><b data-cart-seq="0"></b></span></td>
-							<td><span class="ori"><b style="font-size: 20px;"><fmt:formatNumber
-											value="${pack.price}" pattern="###,###" />원</b></span></td>
-							<td><span class="nm">출발 : ${startday}일 ~ 도착 : ${startday+7}일</span></td>
+							<td><span class="ori"><b style="font-size: 20px;">
+							<fmt:formatNumber value="${pack.price}" pattern="###,###" />원<br> x ${people}명</b></span></td>
+							<td><span class="nm">출발 : ${startday}일 ~ 도착 : ${startday + 3}일</span></td>
 							<td><span class="ori"><b data-cart-seq="0" style="font-size: 20px;"> 
 							<fmt:formatNumber value="${pack.price * people}" pattern="###,###" /></b>원</span></td>
 						</tr>

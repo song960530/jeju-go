@@ -40,7 +40,7 @@
            <div id="errormessage"></div>
          <form name="f" method="post" action="packregist.jeju" enctype="multipart/form-data" onsubmit="return inputchk(this)">
          <input type="hidden" name="startday" value="1,7,14,21">
-         <input type="hidden" name="travelday" value="7">
+         <input type="hidden" name="travelday" value="3">
          <input type="hidden" name="year" value="${sysYear}">
               <div class="form-group">
                    <input type="text" class="form-control" name="name" placeholder="패키지 명">
