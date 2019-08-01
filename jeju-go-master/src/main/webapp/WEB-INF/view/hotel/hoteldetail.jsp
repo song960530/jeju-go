@@ -56,7 +56,7 @@ hr {
   margin-right: auto;
   border-style: inset;
   border-width: 1px;
-} 
+}
 </style>
 <script type="text/javascript">
 var lat = null;
@@ -144,9 +144,9 @@ function showDivs(n) {
             </c:forEach>
          </div>
       </div>
-      <h2 style="font-family: 'Do Hyeon', sans-serif;">
+      <h2 style="font-family: 'Do Hyeon', sans-serif; font-size:20px;">
       	 <hr>
-         ${h.content}
+         	${h.content}
          <hr>
          <b style="font-size:20px;">주소 : ${h.address}</b><br>
          <b style="font-size:20px;">연락처 : ${h.tel}</b>

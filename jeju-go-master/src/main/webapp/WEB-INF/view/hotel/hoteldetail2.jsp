@@ -122,7 +122,7 @@ function showDivs(n) {
             </c:forEach>
          </div>
       </div>
-      <h2 style="font-family: 'Do Hyeon', sans-serif;">
+      <h2 style="font-family: 'Do Hyeon', sans-serif; font-size:20px;">
       	 <hr>
          ${h.content}
          <hr>
