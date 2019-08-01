@@ -117,7 +117,7 @@ div.right {
                            <div class="CardLayout_CardLayout__mediumLargeViewport__1r4P7">
                               <div class="HotelCard_HotelCard__cta__1n4MC">
                                  <button type="button" class="BpkButton_bpk-button__2Jd0U">
-                                    세부정보 보기&nbsp;
+										세부정보 보기&nbsp;
                                     <span
                                        style="line-height: 1.125rem; display: inline-block; margin-top: 0.1875rem; vertical-align: top;"><svg
                                           xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -168,10 +168,6 @@ div.right {
                origin : new naver.maps.Point(0, 0)
             },
             zIndex : 100
-         });
-         var contents = '호텔소개'
-         var infoWindow = new naver.maps.InfoWindow({
-            content : contents
          });
          markers.push(marker);
          infoWindows.push(infoWindow);

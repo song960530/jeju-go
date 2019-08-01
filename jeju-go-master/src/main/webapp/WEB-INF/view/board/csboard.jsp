@@ -189,153 +189,158 @@ $(document).ready(function() {
 <title>예약 목록</title>
 </head>
 <body>
-<form action="csboard.jeju" method="post" name="csboard">
-<input type="hidden" name="notpageNum" value="1"> 
-<input type="hidden" name="qnapageNum" value="1">
-   <div class="container">
-      <div>
-      <div id="minfo" class="info" style="width: 100%;">
-        <h2 class="widgetheading w3-center" style="font-family: 'Sunflower', sans-serif;"><b>공지사항</b></h2>
-         <table class="w3-center" style="color: black;">
-         <c:if test="${noticecount > 0}">
-            <tr>
-               <ul class="nav nav-tabs">
-               <li class="nav-item"><a class="nav-link active"
-                  data-toggle="tab" href="javascript:disp_div('minfo', 'tab2')" style="font-family: 'Arimo', sans-serif;">공지사항</a></li>
-               <li class="nav-item"><a class="nav-link"
-                  data-toggle="tab" href="javascript:disp_div('oinfo','tab1')" style="font-family: 'Arimo', sans-serif;">Q&A</a></li>
-               </ul>
-            </tr>
-            <tr>
-               <th width="10%" class="w3-center">번호</th>
-                 <th width="40%" class="w3-center">제목</th>
-                 <th width="20%" class="w3-center">작성자</th>
-                 <th width="30%" class="w3-center">날짜</th>
-            </tr>
-            <c:forEach items="${noticelist}" var="board">
-               <tr style="color: black;">
-                  <td class="w3-center">${notboardno}</td>
-                    <c:set var="notboardno" value="${notboardno - 1}"/>
-                     <td style="text-align:center">
-                              <a href="../board/csdetail.jeju?no=${board.no}&type=${board.type}&type2=${board.type2}">${board.subject}</a></td>
-                      <td class="w3-center">${board.userid}</td>
-                      <td class="w3-center"><fmt:formatDate var="rdate" value="${board.regdate}"
-                                 pattern="yyyyMMdd" /> <c:if test="${today == rdate}">
-                                 <fmt:formatDate value="${board.regdate}" pattern="HH:mm:ss" />
-                              </c:if> <c:if test="${today != rdate}">
-                                 <fmt:formatDate value="${board.regdate}"
-                                    pattern="yy-MM-dd HH:mm" />
-                              </c:if>
-                        </td>
-                 </tr>
-              </c:forEach>
-              </c:if>
-              <tr>
-                <td colspan="4" class="w3-center">
-                      <c:if test="${notpageNum > 1}">
-                         <a href="javascript:notlistcall(${notpageNum - 1})">[이전]</a>
-                      </c:if>
-
-                      <c:if test="${notpageNum <= 1}">[이전]</c:if>
-                      <c:forEach var="a" begin="${notstartpage}" end="${notendpage}">
-                         <c:if test="${a == notpageNum}">[${a}]</c:if>
-                         <c:if test="${a != notpageNum}">
-                           <a href="javascript:notlistcall(${a})">[${a}]</a>
-                         </c:if>
-                      </c:forEach>
-
-                      <c:if test="${notpageNum < notmaxpage}">
-                          <a href="javascript:notlistcall(${notpageNum + 1})">[다음]</a>
-                      </c:if>
-
-                      <c:if test="${notpageNum >= notmaxpage}">[다음]</c:if>
-                 </td>
-              </tr>
-            <c:if test="${notcount == 0}">
-                 <tr>
-                    <td colspan="5">등록된 문의글이 없습니다.</td>
-                 </tr>
-            </c:if>
-         </table>
-         <c:if test="${login.userid == 'admin'}">
-               <p style="float: right;">
-                  <input type="button"
-                     onclick="location.href='../board/cswrite.jeju?type=1'"
-                     class="btn btn-primary" value="글쓰기">
-               </p>
-            </c:if>
-      </div>
-      <div id="oinfo" class="info">
-            <h2 class="widgetheading w3-center" style="font-family: 'Sunflower', sans-serif;"><b>Q&A</b></h2>
-               <table class="w3-center">
-                  <c:if test="${qnacount > 0}">
-                      <tr>
-                  <ul class="nav nav-tabs">
-                     <li class="nav-item"><a class="nav-link active"
-                        data-toggle="tab" href="javascript:disp_div('minfo', 'tab2')">공지사항</a></li>
-                     <li class="nav-item"><a class="nav-link"
-                        data-toggle="tab" href="javascript:disp_div('oinfo','tab1')">Q&A</a></li>
-                  </ul>
-                </tr>
-                <tr>
-                  <th width="10%" class="w3-center">번호</th>
-                    <th width="40%" class="w3-center">제목</th>
-                    <th width="20%" class="w3-center">작성자</th>
-                    <th width="30%" class="w3-center">날짜</th>
-                </tr>
-                     <c:forEach items="${qnalist}" var="board">
-                        <tr>
-                           <td class="w3-center">${qnaboardno}</td>
-                           <c:set var="qnaboardno" value="${qnaboardno - 1}" />
-                           <td style="text-align: center"><a
-                              href="../board/csdetail.jeju?no=${board.no}&type=${board.type}&type2=${board.type2}">${board.subject}</a></td>
-                           <td class="w3-center">${board.userid}</td>
-                           <td class="w3-center"><fmt:formatDate var="rdate" value="${board.regdate}"
-                                 pattern="yyyyMMdd" /> <c:if test="${today == rdate}">
-                                 <fmt:formatDate value="${board.regdate}" pattern="HH:mm:ss" />
-                              </c:if> <c:if test="${today != rdate}">
-                                 <fmt:formatDate value="${board.regdate}"
-                                    pattern="yy-MM-dd HH:mm" />
-                              </c:if></td>
-                        </tr>
-                     </c:forEach>
-                     <tr>
-                        <td colspan="4" class="w3-center"><c:if test="${qnapageNum > 1}">
-                              <a href="javascript:qnalistcall(${qnapageNum - 1})">[이전]</a>
-                           </c:if> <c:if test="${qnapageNum <= 1}">[이전]</c:if> <c:forEach var="a"
-                              begin="${qnastartpage}" end="${qnaendpage}">
-                              <c:if test="${a == qnapageNum}">[${a}]</c:if>
-                              <c:if test="${a != qnapageNum}">
-                                 <a href="javascript:qnalistcall(${a})">[${a}]</a>
-                              </c:if>
-                           </c:forEach> <c:if test="${qnapageNum < qnamaxpage}">
-                              <a href="javascript:qnalistcall(${qnapageNum + 1})">[다음]</a>
-                           </c:if> <c:if test="${qnapageNum >= qnamaxpage}">[다음]</c:if></td>
-                     </tr>
-                  </c:if>
-                  <c:if test="${qnacount == 0}">
-                     <tr>
-                        <td colspan="5">등록된 게시물이 없습니다.</td>
-                     </tr>
-                  </c:if>
-               </table>
-               <c:if test="${login.userid != 'admin'}">
-                  <p style="float: right;">
-                     <input type="button"
-                        onclick="location.href='../board/qnawrite.jeju?type=3'"
-                        class="btn btn-primary" value="문의하기">
-                  </p>
-               </c:if>
-               <c:if test="${login.userid == 'admin'}">
-               <p style="float: right;">
-                  <input type="button"
-                     onclick="location.href='../board/cswrite.jeju?type=2'"
-                     class="btn btn-primary" value="글쓰기">
-               </p>
-            </c:if>
-            </div>
-            </div>
-            </div>
-         </form>
+	<form action="csboard.jeju" method="post" name="csboard">
+		<input type="hidden" name="notpageNum" value="1"> 
+		<input type="hidden" name="qnapageNum" value="1">
+		<div class="container">
+      		<div>
+      			<div id="minfo" class="info" style="width: 100%;">
+        			<h2 class="widgetheading w3-center" style="font-family: 'Sunflower', sans-serif;"><b>공지사항</b></h2>
+         			<table class="w3-center" style="color: black;">
+				<tr>
+               		<ul class="nav nav-tabs">
+               			<li class="nav-item">
+               				<a class="nav-link active" data-toggle="tab" href="javascript:disp_div('minfo', 'tab2')" style="font-family: 'Arimo', sans-serif;">공지사항</a>
+               			</li>
+               			<li class="nav-item">
+               				<a class="nav-link" data-toggle="tab" href="javascript:disp_div('oinfo','tab1')" style="font-family: 'Arimo', sans-serif;">Q&A</a>
+               			</li>
+					</ul>
+            	</tr>
+            	<c:if test="${noticecount > 0}">
+            		<tr>
+               			<th width="10%" class="w3-center">번호</th>
+                 		<th width="40%" class="w3-center">제목</th>
+                 		<th width="20%" class="w3-center">작성자</th>
+                 		<th width="30%" class="w3-center">날짜</th>
+            		</tr>
+            		<c:forEach items="${noticelist}" var="board">
+               			<tr style="color: black;">
+                  			<td class="w3-center">${notboardno}</td>
+                    		<c:set var="notboardno" value="${notboardno - 1}"/>
+                     		<td style="text-align:center">
+								<a href="../board/csdetail.jeju?no=${board.no}&type=${board.type}&type2=${board.type2}">${board.subject}</a>
+							</td>
+                      		<td class="w3-center">${board.userid}</td>
+                      		<td class="w3-center">
+                      			<fmt:formatDate var="rdate" value="${board.regdate}" pattern="yyyyMMdd"/> 
+                      			<c:if test="${today == rdate}">
+									<fmt:formatDate value="${board.regdate}" pattern="HH:mm:ss" />
+                              	</c:if>
+                              	<c:if test="${today != rdate}">
+                                	<fmt:formatDate value="${board.regdate}" pattern="yy-MM-dd HH:mm" />
+                              	</c:if>
+                        	</td>
+                 		</tr>
+              		</c:forEach>
+              	<tr>
+                	<td colspan="4" class="w3-center">
+						<c:if test="${notpageNum > 1}">
+							<a href="javascript:notlistcall(${notpageNum - 1})">[이전]</a>
+                      	</c:if>
+                      	<c:if test="${notpageNum <= 1}">[이전]</c:if>
+                      	<c:forEach var="a" begin="${notstartpage}" end="${notendpage}">
+							<c:if test="${a == notpageNum}">[${a}]</c:if>
+							<c:if test="${a != notpageNum}">
+                           		<a href="javascript:notlistcall(${a})">[${a}]</a>
+                         	</c:if>
+                      	</c:forEach>
+                      	<c:if test="${notpageNum < notmaxpage}">
+							<a href="javascript:notlistcall(${notpageNum + 1})">[다음]</a>
+                      	</c:if>
+                      	<c:if test="${notpageNum >= notmaxpage}">[다음]</c:if>
+                 	</td>
+              	</tr>
+			</c:if>
+            <c:if test="${noticecount == 0}">
+				<tr>
+					<td colspan="5">등록된 게시글이 없습니다.</td>
+				</tr>
+			</c:if>
+		</table>
+		<c:if test="${login.userid == 'admin'}">
+			<p style="float: right;">
+                  <input type="button" onclick="location.href='../board/cswrite.jeju?type=1'" class="btn btn-primary" value="글쓰기">
+            </p>
+		</c:if>
+      	</div>
+      	<div id="oinfo" class="info">
+			<h2 class="widgetheading w3-center" style="font-family: 'Sunflower', sans-serif;"><b>Q&A</b></h2>
+            	<table class="w3-center">
+					<tr>
+						<ul class="nav nav-tabs">
+	                     	<li class="nav-item">
+	                     		<a class="nav-link active" data-toggle="tab" href="javascript:disp_div('minfo', 'tab2')">공지사항</a>
+	                     	</li>
+	                     	<li class="nav-item">
+	                     		<a class="nav-link" data-toggle="tab" href="javascript:disp_div('oinfo','tab1')">Q&A</a>
+	                     	</li>
+                  		</ul>
+                	</tr>
+                	<c:if test="${qnacount > 0}">
+                		<tr>
+                  			<th width="10%" class="w3-center">번호</th>
+                    		<th width="40%" class="w3-center">제목</th>
+                    		<th width="20%" class="w3-center">작성자</th>
+                    		<th width="30%" class="w3-center">날짜</th>
+                		</tr>
+                     	<c:forEach items="${qnalist}" var="board">
+                        	<tr>
+                           		<td class="w3-center">${qnaboardno}</td>
+                           		<c:set var="qnaboardno" value="${qnaboardno - 1}" />
+                           		<td style="text-align: center">
+                           			<a href="../board/csdetail.jeju?no=${board.no}&type=${board.type}&type2=${board.type2}">${board.subject}</a>
+                           		</td>
+                           		<td class="w3-center">${board.userid}</td>
+                           		<td class="w3-center">
+                           			<fmt:formatDate var="rdate" value="${board.regdate}" pattern="yyyyMMdd" />
+                           			<c:if test="${today == rdate}">
+										<fmt:formatDate value="${board.regdate}" pattern="HH:mm:ss" />
+                              		</c:if>
+                              		<c:if test="${today != rdate}">
+										<fmt:formatDate value="${board.regdate}" pattern="yy-MM-dd HH:mm" />
+                              		</c:if>
+                              	</td>
+                        	</tr>
+                     	</c:forEach>
+						<tr>
+							<td colspan="4" class="w3-center">
+								<c:if test="${qnapageNum > 1}">
+									<a href="javascript:qnalistcall(${qnapageNum - 1})">[이전]</a>
+	                           	</c:if>
+	                           	<c:if test="${qnapageNum <= 1}">[이전]</c:if>
+	                           	<c:forEach var="a" begin="${qnastartpage}" end="${qnaendpage}">
+									<c:if test="${a == qnapageNum}">[${a}]</c:if>
+	                              	<c:if test="${a != qnapageNum}">
+	                                 	<a href="javascript:qnalistcall(${a})">[${a}]</a>
+	                              	</c:if>
+	                           	</c:forEach>
+	                           	<c:if test="${qnapageNum < qnamaxpage}">
+									<a href="javascript:qnalistcall(${qnapageNum + 1})">[다음]</a>
+	                           	</c:if>
+	                           	<c:if test="${qnapageNum >= qnamaxpage}">[다음]</c:if>
+							</td>
+						</tr>
+					</c:if>
+                  	<c:if test="${qnacount == 0}">
+                     	<tr>
+                        	<td colspan="5">등록된 게시글이 없습니다.</td>
+                     	</tr>
+                  	</c:if>
+               	</table>
+               	<c:if test="${login.userid != 'admin'}">
+                  	<p style="float: right;">
+                     	<input type="button" onclick="location.href='../board/qnawrite.jeju?type=3'" class="btn btn-primary" value="문의하기">
+                  	</p>
+               	</c:if>
+               	<c:if test="${login.userid == 'admin'}">
+               		<p style="float: right;">
+                  		<input type="button" onclick="location.href='../board/cswrite.jeju?type=2'" class="btn btn-primary" value="글쓰기">
+               		</p>
+            	</c:if>
+			</div>
+		</div>
+	</div>
+</form>
 </body>
 </html> 
