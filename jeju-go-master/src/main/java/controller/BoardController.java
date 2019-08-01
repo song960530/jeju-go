@@ -166,7 +166,7 @@ public class BoardController {
 					mav.setViewName("alert");
 				} else {
 					service.noticedelete(board);
-					mav.setViewName("redirect:board/qnalist.jeju?userid=" + user.getUserid());
+					mav.setViewName("redirect:../board/qnalist.jeju?userid=" + user.getUserid());
 				}
 			}
 		} catch (Exception e) {

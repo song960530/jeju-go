@@ -150,6 +150,7 @@ color:black;}
             <c:if test="${param.type == 1 || param.type == 2}">
             <div style="text-align:center">
                <a href="../board/csboard.jeju" class="btn btn-primary">게시글 목록</a>
+               <a href="javascript:delchk2()" class="btn btn-primary">게시글 삭제</a>
             </div>
             </c:if>
             </form>

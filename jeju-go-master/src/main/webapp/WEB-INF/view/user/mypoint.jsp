@@ -162,12 +162,13 @@
 <form name="reservationmanagement">
 <input type="hidden" name="pageNum" value="1">
 <input type="hidden" name="userid" value="${login.userid }">
-	<div class="container">
+<div class="container">
 		<div>
 			<button class="btn-primarys">
-				<h2 class="widgetheading" style="text-align: center;">예약 목록</h2>
+				<h2 class="widgetheading" style="text-align:center">포인트 내역</h2>
 			</button>
 			<table>
+			<c:if test="${count > 0}">
 				<tr class="w3-center" style="color: black;">
 					<th>번호</th>
      				<th>아이디</th>
@@ -228,9 +229,10 @@
 	       				<c:if test="${pageNum >= maxpage}">[다음]</c:if>
         			</td>
      			</tr>
+     			</c:if>
 				<c:if test="${count == 0}">
 	  				<tr>
-	  					<td colspan="5">등록된 문의글이 없습니다.</td>
+	  					<td colspan="5" style="text-align:center">포인트 내역이 없습니다.</td>
 	  				</tr>
 				</c:if>
 			</table>
