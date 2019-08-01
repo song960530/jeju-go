@@ -425,12 +425,12 @@ body, h1, h2, h3, h4, h5, h6 {
 							style="text-transform: lowercase;" type="password"
 							name="password" placeholder="비밀번호">
 					</p>
+					<button type="submit" class="btn btn-primary">로그인</button>
 					<p>
 						<a class="btn btn-primary" href="javascript:void(0)"
 							onclick="document.getElementById('searchid').style.display='block'">아이디/비밀번호
 							찾기</a>
 					</p>
-					<button type="submit" class="btn btn-primary">로그인</button>
 				</form:form>
 			</div>
 		</div>
