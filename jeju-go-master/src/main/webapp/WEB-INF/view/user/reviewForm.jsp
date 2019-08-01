@@ -8,7 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="../star/js/star.js"></script>
-<link href="../css/star.css" rel="stylesheet">
+<link href="../css/star2.css" rel="stylesheet">
 <link href="../Arsha/css/bootstrap.min.css" rel="stylesheet">
 <link href="../Arsha/css/responsive-slider.css" rel="stylesheet">
 <link href="../Arsha/css/style.css" rel="stylesheet">

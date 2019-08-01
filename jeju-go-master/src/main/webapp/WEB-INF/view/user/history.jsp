@@ -96,10 +96,12 @@ function win_reviewForm(no) {
                  </td>
                  <td>
                     <c:if test="${list.checked=='승인완료'}">
+                      <c:if test="${list.pno==0}">
                     	<c:if test="${list.reviewchk !='ok'}">
                       		<button id="bang-btn" onclick="win_reviewForm(${list.no})"
                       		class="btn btn-success">리뷰작성</button>
                     	</c:if>
+                      </c:if>
                     	<c:if test="${list.reviewchk == 'ok'}">
                       		<button id="bang-btn" onclick="#"
                       		class="btn btn-primary">작성완료</button>
@@ -107,9 +109,6 @@ function win_reviewForm(no) {
                    </c:if>
                  </td>
                </tr>
-               
-               
-               
                <div id="selectbang${list.no}" class="w3-modal" style="display: none;">
                   <div class="w3-modal-content w3-animate-zoom w3-padding-large">
                      <div class="w3-container w3-white w3-center">
