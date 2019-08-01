@@ -48,6 +48,15 @@ h4 {
     margin-block-start: 0.33em;
     margin-block-end: 0.33em;
 }
+hr { 
+  display: block;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  margin-left: auto;
+  margin-right: auto;
+  border-style: inset;
+  border-width: 1px;
+} 
 </style>
 <script type="text/javascript">
 var lat = null;
@@ -88,8 +97,8 @@ function showDivs(n) {
       <c:set value="${hotel}" var="h" />
       <div class="w3-panel">
          <h1 style="font-family: 'Shrikhand', cursive;">
-            <p>${h.hname}</p>
-            <p class="w3-right">
+            <span style="font-family: 'Arimo', sans-serif;">${h.hname}</span>
+            <span class="w3-right">
             <c:if test="${!empty login}">
             <c:if test="${w == 0}">
             	<form action="../user/wish.jeju" method="post">
@@ -110,7 +119,7 @@ function showDivs(n) {
 	            </form>
 	        </c:if>    
 	        </c:if>
-            </p>
+            </span>
          </h1>  
       </div>
       <c:forEach items="${h.photo}" var="photo">
@@ -136,7 +145,11 @@ function showDivs(n) {
          </div>
       </div>
       <h2 style="font-family: 'Do Hyeon', sans-serif;">
-         <p>${h.address}</p>
+      	 <hr>
+         ${h.content}
+         <hr>
+         <b style="font-size:20px;">주소 : ${h.address}</b><br>
+         <b style="font-size:20px;">연락처 : ${h.tel}</b>
          <script>input(${h.lat}, ${h.lng})
          function input(location1, location2) {
             lat = location1
@@ -149,8 +162,6 @@ function showDivs(n) {
         	 cctvlng.push(loc2)
          }</script>
          </c:forEach>
-         <p>${h.content}</p>
-         <p>${h.tel}</p>
       </h2>
       <br>
       <hr>
@@ -159,13 +170,17 @@ function showDivs(n) {
          <div class="w3-row w3-margin">
             <div class="w3-third">
                <img src="${path}/${r.photourl}"
-                  style="width: 100%; height: 100%; max-height: 200px; max-weight: 300px;">
+                  style="width: 100%; height: 100%; min-height: 200px; max-height: 200px; max-weight: 300px;">
             </div>
             <div class="w3-twothird w3-container">
                <h2>
                   <a href="roomdetail.jeju?hno=${r.hno}&name=${r.name}" style="color:black;">${r.name}</a>
                </h2>
-               <p>${r.price}${r.convenient}${r.bed} / ${r.bedcount}개</p>
+               <h4 style="color: green; padding-left:5%">편의시설</h4> <span style="padding-left:8%">- ${r.convenient}</span>
+               <span><b style="font-size: 30px; color:blue;" class="w3-right"><fmt:formatNumber value="${r.price}" pattern="###,###"/>원</b></span>
+               <h4 style="color: green; padding-left:5%">침대</h4> <span style="padding-left:8%">${r.bed}&nbsp;/&nbsp;${r.bedcount}개</span>
+               <br>
+               <span style="font-size: 20px; color:black;"class="w3-right"><a href="${path}/hotel/roomdetail.jeju?hno=${r.hno}&name=${r.name}" alt="">상세보기</a> <i class="fa fa-long-arrow-right"></i></span>
             </div>
          </div>
       </c:forEach>

@@ -13,18 +13,22 @@
 	function allPoint() {
 		var b="<fmt:formatNumber value="${countpoint}" pattern="###,###"/>"
 		var c="<b><fmt:formatNumber value="${(f.room.price * (f.day-1))-countpoint }" pattern="###,###"/></b>"
+		var f="<fmt:formatNumber value="${(f.room.price * (f.day-1))-countpoint }" pattern="###,###"/>"
 		document.getElementById("usepoint").value=document.getElementById("userpoint").value
 		document.getElementById("halin").innerHTML=b
 		document.getElementById("totalprice1").innerHTML=c
 		document.getElementById("totalprice2").innerHTML=c
+		document.getElementById("totalprice3").innerHTML=f
 	};
 		function cancle() {
 			var b="<fmt:formatNumber value="${countpoint}" pattern="###,###"/>"
 			var c="<b><fmt:formatNumber value="${(f.room.price * (f.day-1))}" pattern="###,###"/></b>"
+			var f="<fmt:formatNumber value="${(f.room.price * (f.day-1))}" pattern="###,###"/>"
 			document.getElementById("usepoint").value=0
 			document.getElementById("halin").innerHTML=0
 			document.getElementById("totalprice1").innerHTML=c
 			document.getElementById("totalprice2").innerHTML=c
+			document.getElementById("totalprice3").innerHTML=f
 		};
 		
 	function confirm(){
@@ -129,8 +133,6 @@ h3 {
 								<label for="cert_email" class="ir">이메일 입력</label> 
 								<input type="text" name="userid"class="nmb_mail"
 									value="${login.userid }" readonly>
-									<span class="dwCk">주문관련 정보에 대한 이메일과 SMS는
-									자동으로 전송됩니다.</span>
 							</div>
 						</td>
 					</tr>
@@ -190,8 +192,36 @@ h3 {
 					</tbody>
 				</table>
 			</div>
-		
-
+			
+		<div class="odr_sheet">
+				<h3>
+					<span>4</span>. 입금 계좌
+				</h3>
+				<table>
+					<colgroup>
+						<col style="width: 220px;">
+						<col>
+					</colgroup>
+					<tbody>
+							<tr style="">
+							<th scope="row">계좌 정보</th>
+							<td>
+								<div class="dis">
+									<span class="tx">은행: 
+											<b style="color:blue;">하나은행</b>
+									</span>
+									<span class="tx">계좌번호: 
+											<b style="color:blue;">123-456789-123</b> 
+									</span>
+									<span class="tx">금액: 
+											<b style="color:blue;" id="totalprice3"><fmt:formatNumber value="${f.room.price * (f.day-1) }" pattern="###,###"/>원</b>
+									</span>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		<div class="odr_insFixed">
 				<div class="contain" style="position: absolute; top: 33px;">
 					<div class="top">
@@ -220,8 +250,8 @@ h3 {
 						</dl>
 							<div class="total_prc">
 								<span class="prc"><strong style="color:#50c0e9;">최종 결제금액</strong><span>
-									<div id="totalprice2"><b style="color:#50c0e9;"><fmt:formatNumber value="${f.room.price * (f.day-1) }"
-										pattern="###,###"/>원</b></div>
+									<div id="totalprice2"><b><fmt:formatNumber value="${f.room.price * (f.day-1) }"
+										pattern="###,###"/></b></div>
 								</span></span>
 							</div>
 						</div>

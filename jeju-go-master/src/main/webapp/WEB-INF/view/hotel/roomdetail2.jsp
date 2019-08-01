@@ -122,7 +122,7 @@ function showDivs(n) {
    <div class="w3-content">
       <c:set value="${room}" var="r" />
          <h1 style="font-family: 'Shrikhand', cursive;">
-            <p>${r.name}</p>
+            <p style="font-family: 'Arimo', sans-serif;">${r.name}</p>
          </h1>
       
       <c:forEach items="${r.photo}" var="photo">
@@ -149,19 +149,46 @@ function showDivs(n) {
          </div>
       </div>
       <h2 style="font-family: 'Do Hyeon', sans-serif;">
-      	<p>
+	     <hr>
+	     <b style="font-size:20px;">
       	편의시설 :
       	<c:forEach items="${convenient}" var="con" varStatus="i">
-      		${con}
+      		<c:if test="${con == '엘레베이터' }">
+	      		<img src="${path}/img/conve/ele.jpg" width="40px" height="40px" >${con}
+      		</c:if>
+      		<c:if test="${con == '비품류' }">
+	      		<img src="${path}/img/conve/b.jpg" width="40px" height="40px" >${con}
+      		</c:if>
+      		<c:if test="${con == '에어컨' }">
+	      		<img src="${path}/img/conve/e.jpg" width="40px" height="40px" >${con}
+      		</c:if>
+      		<c:if test="${con == '주차장' }">
+	      		<img src="${path}/img/conve/ju.jpg" width="40px" height="40px" >${con}
+      		</c:if>
+      		<c:if test="${con == '주방시설' }">
+	      		<img src="${path}/img/conve/jubang.jpg" width="40px" height="40px" >${con}
+      		</c:if>
+      		<c:if test="${con == '냉장고' }">
+	      		<img src="${path}/img/conve/nang.jpg" width="40px" height="40px" >${con}
+      		</c:if>
+      		<c:if test="${con == '스파' }">
+	      		<img src="${path}/img/conve/s.jpg" width="40px" height="40px" >${con}
+      		</c:if>
+      		<c:if test="${con == '세탁기' }">
+	      		<img src="${path}/img/conve/se.jpg" width="40px" height="40px" >${con}
+      		</c:if>
+      		<c:if test="${con == 'TV' }">
+	      		<img src="${path}/img/conve/TV.jpg" width="40px" height="40px" >${con}
+      		</c:if>
+      		<c:if test="${con == 'wi-fi' }">
+	      		<img src="${path}/img/conve/w.jpg" width="40px" height="40px" >${con}
+      		</c:if>
       	</c:forEach>
-      	
-      	</p>
-         <p>가격 : ${r.price}</p>
-         <p>침대/개수 : ${r.bed}/${r.bedcount }</p>
-         <p>제한인원수 : ${r.max}</p>
+      	</b><br>
+         <b style="font-size:20px;">가격 : <fmt:formatNumber value="${r.price}" pattern="###,###"/>원</b><br>
+         <b style="font-size:20px;">침대/개수 : ${r.bed}/${r.bedcount }</b><br>
+         <b style="font-size:20px;">제한인원수 : ${r.max}</b>
       </h2>
-      <br>
-      <hr>
       <br>
    </div>
 </body>
