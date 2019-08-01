@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import dao.mapper.PointMapper;
 import logic.Point;
 
 @Repository
@@ -29,5 +30,9 @@ public class PointDao {
 		param.clear();
 		param.put("userid", userid);
 		return sqlSession.selectOne(NS + "count", param);
+	}
+
+	public int mypointsum(String userid) {
+		return sqlSession.getMapper(PointMapper.class).mypointsum(userid);
 	}
 }

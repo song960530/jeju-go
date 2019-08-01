@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <style>
-.w3-sidebar a {font-family: "Roboto", sans-serif}
 body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}\
 div.left {
    width: 20%;
@@ -158,9 +157,7 @@ select#soflow-color {
 </form>
 	<div class="container">
 		<div>
-			<button class="btn-primarys">
 				<h2 class="widgetheading" style="text-align: center;">신청 목록</h2>
-			</button>
 			<table>
 				<tr class="w3-center" style="color: black;">
 					<th>상품명</th>
@@ -256,7 +253,7 @@ select#soflow-color {
 				</c:forEach>
 				<c:if test="${count == 0}">
 	  				<tr>
-	  					<td colspan="5">등록된 문의글이 없습니다.</td>
+	  					<td colspan="11">등록된 문의글이 없습니다.</td>
 	  				</tr>
 				</c:if>
 			</table>

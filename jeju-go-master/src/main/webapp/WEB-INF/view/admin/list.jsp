@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <style>
-.w3-sidebar a {font-family: "Roboto", sans-serif}
 body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}\
 div.left {
    width: 20%;
@@ -25,7 +24,7 @@ table {
   width: 100%;
 }
 th, td {
-  text-align: left;
+  text-align: center;
   padding: 8px;
 }
 tr:nth-child(even){background-color: #f2f2f2}
@@ -59,15 +58,13 @@ th {
 <input type="hidden" name="pageNum" value="1">
 	<div class="container">
 		<div>
-			<button class="btn-primarys">
 				<h2 class="widgetheading" style="text-align: center;">회원 목록</h2>
-			</button>
 			<table>
 				<tr style="color: black;">
 					<th>아이디</th>
 					<th>이름</th>
 					<th>전화</th>
-					<th>&nbsp;</th>
+					<th>권한</th>
 					<!-- <th><input type="checkbox" name="allchk"
 						onchange="allchkbox(this)"></th> -->
 				</tr>

@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <style>
-	.w3-sidebar a {font-family: "Roboto", sans-serif}
 	body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 	div.left {
 	   width: 20%;
@@ -163,9 +162,7 @@
 <input type="hidden" name="pageNum" value="1">
 	<div class="container">
 		<div>
-			<button class="btn-primarys">
 				<h2 class="widgetheading" style="text-align: center;">예약 목록</h2>
-			</button>
 			<table>
 				<tr class="w3-center" style="color: black;">
 					<th>번호</th>

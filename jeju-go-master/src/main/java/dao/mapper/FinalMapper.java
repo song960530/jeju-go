@@ -55,7 +55,7 @@ public interface FinalMapper {
 	@Insert("insert into point(no, userid, point, regdate, type) values(#{no}, #{userid}, #{point}, now(), 'È¸¼ö')")
 	void backPoint(Map<String, Object> param);
 
-	@Select("select count(*) from finally where pno = #{no} and userid = #{userid}")
+	@Select("select ifnull(count(*),0) from finally where pno = #{no}")
 	int finalcount(Map<String, Object> param);
 
 	@Select("select count(*) from finally")
