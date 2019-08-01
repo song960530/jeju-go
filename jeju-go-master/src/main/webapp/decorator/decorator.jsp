@@ -216,9 +216,7 @@ body, h1, h2, h3, h4, h5, h6 {
 				<div class="w3-dropdown-content w3-bar-block">
 					<a href="${path}/hotel/regist.jeju" class="w3-bar-item w3-button">숙소
 						등록</a> <a href="${path}/hotel/adminhotellist.jeju"
-						class="w3-bar-item w3-button">숙소 방 등록</a> <a
-						href="${path}/hotel/adminhotellist.jeju"
-						class="w3-bar-item w3-button">예약 가능 방 등록</a> <a href="#"
+						class="w3-bar-item w3-button">숙소 관리</a> <a href="#"
 						class="w3-bar-item w3-button">숙소/패키지별 이용 횟수</a>
 				</div>
 			</div>
