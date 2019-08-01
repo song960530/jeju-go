@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <style>
-	.w3-sidebar a {font-family: "Roboto", sans-serif}
 	body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 	div.left {
 	   width: 20%;
@@ -164,9 +163,8 @@
 <input type="hidden" name="userid" value="${login.userid }">
 <div class="container">
 		<div>
-			<button class="btn-primarys">
-				<h2 class="widgetheading" style="text-align:center">포인트 내역</h2>
-			</button>
+			<span class="w3-center"><h2 class="widgetheading">포인트 내역</h2></span>
+			<span class="w3-right"><b style="font-size:20px;">내 포인트 : <fmt:formatNumber value="${mypointsum}" pattern="###,###"/>pt</b></span>
 			<table>
 			<c:if test="${count > 0}">
 				<tr class="w3-center" style="color: black;">
@@ -184,7 +182,7 @@
             				${point.userid}
             			</td>
              			<td>
-             				${point.point}
+             				<fmt:formatNumber value="${point.point}" pattern="###,###"/>pt
              			</td>
              			<td>
            					<fmt:formatDate var="rdate" value="${point.regdate}" pattern="yyyyMMdd"/>

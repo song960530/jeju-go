@@ -141,78 +141,101 @@ div.right {
          </fieldset>
       </div>
       <div class="right">
-         <div id="map" style="width: 100%; height: 1000px;"></div>
-      </div>
-   </div>
-   <script>
-      var HOME_PATH = window.HOME_PATH || '.';
-      var map = new naver.maps.Map('map', {
-         center : new naver.maps.LatLng(33.381355, 126.546380),
-         zoom : 6,
-         zoomControl : true, // 줌 컨트롤 표시 (기본값 표시안함)
-         zoomControlOptions : { // 줌 컨트롤 오른쪽 위로 위치 설정
-            position : naver.maps.Position.TOP_RIGHT // 오른쪽 위로 설정값
-         },
-         mapTypeControl : true, // 일반ㆍ위성 지도보기 컨트롤 표시 (기본값 표시안함)
-      });
-      var markers = [], infoWindows = [];
-      for (var i = 0; i < lat.length; i++) {
-         var position = new naver.maps.LatLng(lat[i], lng[i]);
-         var marker = new naver.maps.Marker({
-            map : map,
-            position : position,
-            title : name[i],
-            icon : {
-               url : HOME_PATH + '/img/pin_default.png',
-               anchor : new naver.maps.Point(12, 37),
-               origin : new naver.maps.Point(0, 0)
-            },
-            zIndex : 100
-         });
-         markers.push(marker);
-         infoWindows.push(infoWindow);
-      };
-      naver.maps.Event.addListener(map, 'idle', function() {
-         updateMarkers(map, markers);
-      });
-      function updateMarkers(map, markers) {
-         var mapBounds = map.getBounds();
-         var marker, position;
-         for (var i = 0; i < markers.length; i++) {
-            marker = markers[i]
-            position = marker.getPosition();
-            if (mapBounds.hasLatLng(position)) {
-               showMarker(map, marker);
-            } else {
-               hideMarker(map, marker);
-            }
-         }
-      }
-      function showMarker(map, marker) {
-         if (marker.setMap())
-            return;
-         marker.setMap(map);
-      }
-      function hideMarker(map, marker) {
-         if (!marker.setMap())
-            return;
-         marker.setMap(null);
-      }
-      // 해당 마커의 인덱스를 seq라는 클로저 변수로 저장하는 이벤트 핸들러를 반환합니다.
-      function getClickHandler(seq) {
-         return function(e) {
-            var marker = markers[seq], infoWindow = infoWindows[seq];
-            if (infoWindow.getMap()) {
-               infoWindow.close();
-            } else {
-               infoWindow.open(map, marker);
-            }
-         }
-      }
-      for (var i = 0, ii = markers.length; i < ii; i++) {
-         naver.maps.Event.addListener(markers[i], 'click',
-               getClickHandler(i));
-      }
-   </script>
+			<div id="map" style="width: 100%; height: 1000px;"></div>
+		</div>
+	</div>
+	<script>
+		var HOME_PATH = window.HOME_PATH || '.';
+
+		var map = new naver.maps.Map('map', {
+			center : new naver.maps.LatLng(33.381355, 126.546380),
+			zoom : 6,
+			zoomControl : true, // 줌 컨트롤 표시 (기본값 표시안함)
+			zoomControlOptions : { // 줌 컨트롤 오른쪽 위로 위치 설정
+				position : naver.maps.Position.TOP_RIGHT // 오른쪽 위로 설정값
+			},
+			mapTypeControl : true, // 일반ㆍ위성 지도보기 컨트롤 표시 (기본값 표시안함)
+		});
+
+		var markers = [], infoWindows = [];
+
+		for (var i = 0; i < lat.length; i++) {
+			var position = new naver.maps.LatLng(lat[i], lng[i]);
+
+			var marker = new naver.maps.Marker({
+				map : map,
+				position : position,
+				title : name[i],
+				icon : {
+					url : HOME_PATH + '/img/pin_default.png',
+					anchor : new naver.maps.Point(12, 37),
+					origin : new naver.maps.Point(0, 0)
+				},
+				zIndex : 100
+			});
+			var contents = '호텔소개'
+
+			var infoWindow = new naver.maps.InfoWindow({
+				content : contents
+			});
+
+			markers.push(marker);
+			infoWindows.push(infoWindow);
+		};
+
+		naver.maps.Event.addListener(map, 'idle', function() {
+			updateMarkers(map, markers);
+		});
+
+		function updateMarkers(map, markers) {
+
+			var mapBounds = map.getBounds();
+			var marker, position;
+
+			for (var i = 0; i < markers.length; i++) {
+
+				marker = markers[i]
+				position = marker.getPosition();
+
+				if (mapBounds.hasLatLng(position)) {
+					showMarker(map, marker);
+				} else {
+					hideMarker(map, marker);
+				}
+			}
+		}
+
+		function showMarker(map, marker) {
+
+			if (marker.setMap())
+				return;
+			marker.setMap(map);
+		}
+
+		function hideMarker(map, marker) {
+
+			if (!marker.setMap())
+				return;
+			marker.setMap(null);
+		}
+
+		// 해당 마커의 인덱스를 seq라는 클로저 변수로 저장하는 이벤트 핸들러를 반환합니다.
+		function getClickHandler(seq) {
+			return function(e) {
+				var marker = markers[seq], infoWindow = infoWindows[seq];
+
+				if (infoWindow.getMap()) {
+					infoWindow.close();
+				} else {
+					infoWindow.open(map, marker);
+				}
+			}
+		}
+
+		for (var i = 0, ii = markers.length; i < ii; i++) {
+			naver.maps.Event.addListener(markers[i], 'click',
+					getClickHandler(i));
+		}
+	</script>
 </body>
 </html>

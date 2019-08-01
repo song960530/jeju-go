@@ -382,6 +382,8 @@ public class UserController {
 			if (endpage > maxpage)
 				endpage = maxpage;
 			int pointno = count - (pageNum - 1) * limit;
+			int mypointsum=service.mypointsum(userid);
+			mav.addObject("mypointsum", mypointsum);
 			mav.addObject("count", count);
 			mav.addObject("list", list);
 			mav.addObject("pageNum", pageNum);

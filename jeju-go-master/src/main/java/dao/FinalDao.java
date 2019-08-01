@@ -99,9 +99,8 @@ public class FinalDao {
 		sqlSession.getMapper(FinalMapper.class).backPoint(param);
 	}
 
-	public int finalcount(Integer no, String userid) {
+	public int finalcount(Integer no) {
 		param.clear();
-		param.put("userid", userid);
 		param.put("no", no);
 		return sqlSession.getMapper(FinalMapper.class).finalcount(param);
 	}

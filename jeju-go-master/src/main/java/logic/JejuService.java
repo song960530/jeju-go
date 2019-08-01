@@ -732,8 +732,8 @@ public class JejuService {
 		packagedao.packdelete(no);
 	}
 
-	public int finalcount(Integer no, String userid) {
-		return finaldao.finalcount(no, userid);
+	public int finalcount(Integer no) {
+		return finaldao.finalcount(no);
 	}
 
 	public List<Final> reservationmanagement(Integer pageNum, int limit) {
@@ -895,5 +895,9 @@ public class JejuService {
 
 	public List<Point> mypoint(Integer pageNum, int limit, String userid) {
 		return pointdao.mypoint(pageNum, limit, userid);
+	}
+
+	public int mypointsum(String userid) {
+		return pointdao.mypointsum(userid);
 	}
 }

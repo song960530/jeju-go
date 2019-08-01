@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <style>
-.w3-sidebar a {font-family: "Roboto", sans-serif}
 body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}\
 div.left {
    width: 20%;
@@ -56,9 +55,7 @@ th {
 <div class="container">
 		<div>
 		<!-- <div style="margin-left: 5%; margin-right: 5%; width: 90%;"> -->
-			<button class="btn-primarys">
 				<h2 class="widgetheading" style="text-align: center;">Å»Åð ½ÅÃ» È¸¿ø ¸ñ·Ï</h2>
-			</button>
 			<form action="delete.jeju" method="post" id="delete">
 			<table>
 				<tr style="color: black;">

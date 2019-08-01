@@ -197,18 +197,18 @@ public class PackageController {
 	public ModelAndView adcheckpackdelete(Integer no, String userid, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
-			if (service.finalcount(no, userid) <= 0) {
+			if (service.finalcount(no) == 0) {
 				service.packdelete(no);
 				mav.addObject("msg", "삭제 완료.");
 				mav.addObject("url", "../package/packlist.jeju");
 				mav.setViewName("alert");
 			} else {
 				mav.addObject("msg", "해당 상품은 예약이 있습니다.");
-				mav.addObject("url", "../package/packdetail.jeju?no=" + no + "&userid=" + userid);
+				mav.addObject("url", "../package/packdetail.jeju?no=" + no);
 				mav.setViewName("alert");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new JejuException("패키지 삭제를 실패하였습니다","../package/packdetail.jeju?no=" + no);
 		}
 		return mav;
 	}
