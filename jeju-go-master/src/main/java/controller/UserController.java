@@ -157,7 +157,7 @@ public class UserController {
 	public void mailSender(String ran, String email) throws AddressException, MessagingException {
 		String host = "smtp.naver.com";
 		final String username = "htn314@naver.com";
-		final String password = "!smc20070778!";
+		final String password = "!smc20070778!@";
 		int port = 465;
 		String subject = "안녕하세요 제주Go 입니다(임시비밀번호).";
 		String body = "임시로 발급 드린 비밀번호는  " + ran + " 이며 로그인 후 마이페이지에서 비밀번호를 변경해주시면 됩니다.";
