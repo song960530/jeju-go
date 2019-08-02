@@ -184,7 +184,7 @@ public class PackageController {
 			fi.setPnum(Integer.parseInt(request.getParameter("people")));
 			service.realFinal(fi);
 			mav.addObject("msg", "예약이 완료되었습니다.");
-			mav.addObject("url", "../user/main.jeju");
+			mav.addObject("url", "../hotel/end.jeju?total="+(f.getTotal()-f.getPoint()));
 			mav.setViewName("alert");
 		} catch (Exception e) {
 			throw new JejuException("패키지 예약을 실패하였습니다.",

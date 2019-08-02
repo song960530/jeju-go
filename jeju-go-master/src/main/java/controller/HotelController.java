@@ -310,7 +310,7 @@ public class HotelController {
 		try {
 			service.subFinally(f1);
 			mav.addObject("msg", "예약 신청이 완료되었습니다.");
-			mav.addObject("url", "../user/main.jeju");
+			mav.addObject("url", "../hotel/end.jeju?total="+(f1.getTotal()-f1.getPoint()));
 			mav.setViewName("alert");
 		} catch (Exception e) {
 			throw new JejuException("예약 신청중 오류가 발생하였습니다.", "searchroomdetail.jeju?no=" + f1.getHno() + "&start="
